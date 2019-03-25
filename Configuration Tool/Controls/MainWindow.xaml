@@ -1,0 +1,62 @@
+﻿<Window x:Class="Configuration_Tool.Controls.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Configuration_Tool.Controls"
+        mc:Ignorable="d"
+        Title="Configuration Tool" Height="400" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Save"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel/>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <TabControl TabStripPlacement="Left">
+                <TabItem Header="Local Users" Width="80">
+                    <Grid>
+                        <Button VerticalAlignment="Top" Margin="10,10,10,5" 
+                                Content="Add User Configuration Row" Click="btnAddUserConfig_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
+                            <ItemsControl x:Name="listUserConfigs" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="local:ControlUserSettings">
+                                        <Setter Property="Margin" Value="10,0,10,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Local Groups">
+                    <Grid>
+                        <Button VerticalAlignment="Top" Margin="10,10,10,0"
+                                Content="Add Group Configuration" Click="btnAddGroupConfig_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
+                            <ItemsControl x:Name="listGroupConfigs" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="local:ControlGroupSettings">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Other">
+                    <Grid>
+
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
