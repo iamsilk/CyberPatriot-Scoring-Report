@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Configuration_Tool
+namespace Configuration_Tool.Configuration
 {
     public class ScoredItem<T> : INotifyPropertyChanged
     {

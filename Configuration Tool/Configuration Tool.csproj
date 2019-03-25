@@ -55,8 +55,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="ScoredItem.cs" />
-    <Compile Include="UserSettings.cs" />
+    <Compile Include="Configuration\ScoredItem.cs" />
+    <Compile Include="Configuration\UserSettings.cs" />
     <Page Include="Controls\ControlGroupSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
