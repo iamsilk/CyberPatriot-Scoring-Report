@@ -125,5 +125,21 @@ namespace Configuration_Tool.Configuration
 
             return true;
         }
+
+        private static void loadUserSettings(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Number of user settings instances
+            int count = reader.ReadInt32();
+
+            // For each user settings instance
+            for (int i = 0; i < count; i++)
+            {
+                // Parse user settings instance from binary reader
+                UserSettings settings = UserSettings.Parse(reader);
+
+                // Add user settings to user settings items control
+                mainWindow.listUserConfigs.Items.Add(settings);
+            }
+        }
     }
 }
