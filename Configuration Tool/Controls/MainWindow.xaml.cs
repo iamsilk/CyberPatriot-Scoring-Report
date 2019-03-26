@@ -80,6 +80,7 @@ namespace Configuration_Tool.Controls
 
         private void btnFileSave_Click(object sender, RoutedEventArgs e)
         {
+            // Saves at current/default configuration path
             ConfigurationManager.Save();
         }
 
