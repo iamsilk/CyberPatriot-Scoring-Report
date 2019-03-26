@@ -68,17 +68,17 @@ namespace Configuration_Tool.Configuration
             }
         }
 
-        public ScoredItem<string> Password { get; } = new ScoredItem<string>("", false);
+        public ScoredItem<string> Password { get; private set; } = new ScoredItem<string>("", false);
 
-        public ScoredItem<bool> PasswordExpired { get; } = new ScoredItem<bool>(false, false);
+        public ScoredItem<bool> PasswordExpired { get; private set; } = new ScoredItem<bool>(false, false);
 
-        public ScoredItem<bool> PasswordChangeDisabled { get; } = new ScoredItem<bool>(false, false);
+        public ScoredItem<bool> PasswordChangeDisabled { get; private set; } = new ScoredItem<bool>(false, false);
 
-        public ScoredItem<bool> PasswordNeverExpires { get; } = new ScoredItem<bool>(false, false);
+        public ScoredItem<bool> PasswordNeverExpires { get; private set; } = new ScoredItem<bool>(false, false);
 
-        public ScoredItem<bool> AccountDisabled { get; } = new ScoredItem<bool>(false, false);
+        public ScoredItem<bool> AccountDisabled { get; private set; } = new ScoredItem<bool>(false, false);
 
-        public ScoredItem<bool> AccountLockedOut { get; } = new ScoredItem<bool>(false, false);
+        public ScoredItem<bool> AccountLockedOut { get; private set; } = new ScoredItem<bool>(false, false);
 
         public UserSettings()
         {
