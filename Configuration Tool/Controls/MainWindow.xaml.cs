@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using Configuration_Tool.Configuration;
 
 namespace Configuration_Tool.Controls
@@ -80,6 +81,31 @@ namespace Configuration_Tool.Controls
         private void btnFileSave_Click(object sender, RoutedEventArgs e)
         {
             ConfigurationManager.Save();
+        }
+
+        private void btnFileSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+
+            // Sets filter and default file extension for file dialog
+            fileDialog.DefaultExt = ".dat";
+            fileDialog.Filter = "DAT Files (*.dat)|*.dat|All Files (*.*)|*.*";
+
+            // Show file dialog
+            bool? fileChosen = fileDialog.ShowDialog();
+
+            // If result has no value or value is false
+            if (!fileChosen.HasValue || !fileChosen.Value)
+            {
+                // Stop attempting save
+                return;
+            }
+
+            // Get chosen file path
+            string filePath = fileDialog.FileName;
+
+            // Save at chosen file path
+            ConfigurationManager.Save(filePath);
         }
     }
 }

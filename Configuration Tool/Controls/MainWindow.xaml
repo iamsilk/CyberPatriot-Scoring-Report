@@ -16,6 +16,7 @@
                 <MenuItem Header="File">
                     <MenuItem Header="Open..." Click="btnFileOpen_Click"/>
                     <MenuItem Header="Save" Click="btnFileSave_Click"/>
+                    <MenuItem Header="Save As..." Click="btnFileSaveAs_Click"/>
                 </MenuItem>
             </Menu>
             <StackPanel/>
