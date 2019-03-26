@@ -50,10 +50,10 @@ namespace Configuration_Tool.Configuration
 
         }
 
-        public ScoredItem(T value, bool isScored)
+        public ScoredItem(T value, bool _isScored)
         {
             _value = value;
-            isScored = IsScored;
+            isScored = _isScored;
         }
 
         public static ScoredItem<bool> ParseBoolean(BinaryReader reader)
