@@ -51,5 +51,10 @@ namespace Configuration_Tool.Controls
 
             listGroupConfigs.Items.Add(groupSettings);
         }
+
+        private void btnFileSave_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigurationManager.Save();
+        }
     }
 }
