@@ -52,6 +52,31 @@ namespace Configuration_Tool.Controls
             listGroupConfigs.Items.Add(groupSettings);
         }
 
+        private void btnFileOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            // Sets filter and default file extension for file dialog
+            fileDialog.DefaultExt = ".dat";
+            fileDialog.Filter = "DAT Files (*.dat)|*.dat|All Files (*.*)|*.*";
+
+            // Show file dialog
+            bool? fileChosen = fileDialog.ShowDialog();
+
+            // If result has no value or value is false
+            if (!fileChosen.HasValue || !fileChosen.Value)
+            {
+                // Stop attempting load
+                return;
+            }
+
+            // Get chosen file path
+            string filePath = fileDialog.FileName;
+
+            // Attempt to load chosen file
+            ConfigurationManager.LoadConfig(filePath);
+        }
+
         private void btnFileSave_Click(object sender, RoutedEventArgs e)
         {
             ConfigurationManager.Save();
