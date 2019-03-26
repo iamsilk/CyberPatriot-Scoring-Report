@@ -90,19 +90,25 @@ namespace Configuration_Tool.Configuration
         {
             UserSettings settings = new UserSettings();
 
+            // Get identification type
             settings.IdentifiedByUsername = reader.ReadBoolean();
 
+            // Read next string
             string usernameOrSID = reader.ReadString();
 
+            // If the user is identified by their username
             if (settings.IdentifiedByUsername)
             {
+                // Next string is their username
                 settings.Username = usernameOrSID;
             }
             else
             {
+                // Next string is their security identifier
                 settings.SecurityID = usernameOrSID;
             }
 
+            // Get other settings
             settings.Password = ScoredItem<string>.ParseString(reader);
             settings.PasswordExpired = ScoredItem<bool>.ParseBoolean(reader);
             settings.PasswordChangeDisabled = ScoredItem<bool>.ParseBoolean(reader);
