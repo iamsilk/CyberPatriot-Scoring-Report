@@ -141,5 +141,21 @@ namespace Configuration_Tool.Configuration
                 mainWindow.listUserConfigs.Items.Add(settings);
             }
         }
+
+        private static void saveUserSettings(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get number of user settings instances
+            int count = mainWindow.listUserConfigs.Items.Count;
+
+            // Write number of user settings instances
+            writer.Write(count);
+
+            // For each user settings instance
+            foreach (UserSettings settings in mainWindow.listUserConfigs.Items)
+            {
+                // Write user settings to stream
+                settings.Write(writer);
+            }
+        }
     }
 }
