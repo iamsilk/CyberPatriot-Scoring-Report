@@ -265,6 +265,8 @@ namespace Configuration_Tool.Configuration
                     }
                     break;
             }
+
+            writer.Write(IsScored);
         }
     }
 }
