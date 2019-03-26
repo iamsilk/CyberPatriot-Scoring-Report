@@ -183,6 +183,9 @@ namespace Configuration_Tool.Configuration
 
         private static void loadUserSettings(BinaryReader reader, MainWindow mainWindow)
         {
+            // Clear current list of user settings
+            mainWindow.listUserConfigs.Items.Clear();
+
             // Number of user settings instances
             int count = reader.ReadInt32();
 
