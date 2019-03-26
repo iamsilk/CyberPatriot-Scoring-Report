@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Configuration_Tool.Controls;
+using System.Windows;
 
 namespace Configuration_Tool.Configuration
 {
@@ -73,7 +75,36 @@ namespace Configuration_Tool.Configuration
              * as little file permission errors to occur
              * as possible. We do not need write permissions
              * until it is time to save */
-            ConfigFileStream = File.Open(CurrentConfigPath, FileMode.Open, FileAccess.Read);
+            using (ConfigFileStream = File.Open(CurrentConfigPath, FileMode.Open, FileAccess.Read))
+            {
+                MainWindow mainWindow = null;
+
+                // For each window in current application
+                foreach (Window window in Application.Current.Windows)
+                {
+                    // If window is main window (should only be one)
+                    if (window is MainWindow)
+                    {
+                        // Set instance of main window to 
+                        // current iteration and exit loop
+                        mainWindow = window as MainWindow;
+                        break;
+                    }
+                }
+
+                // If main window wasn't found
+                if (mainWindow != null)
+                {
+                    // Don't know what happened here :/
+                    throw new Exception("Couldn't find main window while loading configuration.");
+                }
+
+                // Binary reader for parsing of data
+                using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                {
+                    loadUserSettings(reader, mainWindow);
+                }
+            }
         }
 
         private static bool checkFiles()
