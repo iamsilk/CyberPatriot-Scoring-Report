@@ -92,21 +92,10 @@ namespace Configuration_Tool.Configuration
 
             // Get identification type
             settings.IdentifiedByUsername = reader.ReadBoolean();
-
-            // Read next string
-            string usernameOrSID = reader.ReadString();
-
-            // If the user is identified by their username
-            if (settings.IdentifiedByUsername)
-            {
-                // Next string is their username
-                settings.Username = usernameOrSID;
-            }
-            else
-            {
-                // Next string is their security identifier
-                settings.SecurityID = usernameOrSID;
-            }
+            
+            // Get username and security identifier
+            settings.Username = reader.ReadString();
+            settings.SecurityID = reader.ReadString();
 
             // Get other settings
             settings.Password = ScoredItem<string>.ParseString(reader);
