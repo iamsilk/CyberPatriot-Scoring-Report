@@ -107,6 +107,61 @@ namespace Configuration_Tool.Configuration
             }
         }
 
+        public static void Save(string configPath = "")
+        {
+            // If path is specified
+            if (!string.IsNullOrWhiteSpace(configPath))
+            {
+                // Set current config path
+                CurrentConfigPath = configPath;
+
+                // Set current config directory
+                CurrentConfigDirectory = Path.GetDirectoryName(configPath);
+            }
+
+            saveConfig();
+        }
+
+        private static void saveConfig()
+        {
+            // If config directory doesn't exist
+            if (!Directory.Exists(CurrentConfigDirectory))
+            {
+                Directory.CreateDirectory(CurrentConfigDirectory);
+            }
+
+            MainWindow mainWindow = null;
+
+            // For each window in current application
+            foreach (Window window in Application.Current.Windows)
+            {
+                // If window is main window (should only be one)
+                if (window is MainWindow)
+                {
+                    // Set instance of main window to 
+                    // current iteration and exit loop
+                    mainWindow = window as MainWindow;
+                    break;
+                }
+            }
+
+            // If main window wasn't found
+            if (mainWindow == null)
+            {
+                // Don't know what happened here :/
+                throw new Exception("Couldn't find main window while loading configuration.");
+            }
+
+            // Get stream
+            using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
+                {
+                    saveUserSettings(writer, mainWindow);
+                }
+            }
+        }
+
         private static bool checkFiles()
         {
             // If config file directory doesn't exist
