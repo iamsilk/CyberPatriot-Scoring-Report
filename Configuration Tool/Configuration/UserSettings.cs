@@ -113,17 +113,11 @@ namespace Configuration_Tool.Configuration
             // Write user identification
             writer.Write(IdentifiedByUsername);
 
-            // If user is identified by their username
-            if (IdentifiedByUsername)
-            {
-                // Write the username to configuration
-                writer.Write(Username);
-            }
-            else
-            {
-                // Write the security identifier to configuration
-                writer.Write(SecurityID);
-            }
+            // Write the username to configuration
+            writer.Write(Username);
+
+            // Write the security identifier to configuration
+            writer.Write(SecurityID);
 
             // Write other settings
             Password.Write(writer);
