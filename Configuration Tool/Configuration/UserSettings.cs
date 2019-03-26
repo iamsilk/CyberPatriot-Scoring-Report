@@ -118,5 +118,31 @@ namespace Configuration_Tool.Configuration
 
             return settings;
         }
+
+        public void Write(BinaryWriter writer)
+        {
+            // Write user identification
+            writer.Write(IdentifiedByUsername);
+
+            // If user is identified by their username
+            if (IdentifiedByUsername)
+            {
+                // Write the username to configuration
+                writer.Write(Username);
+            }
+            else
+            {
+                // Write the security identifier to configuration
+                writer.Write(SecurityID);
+            }
+
+            // Write other settings
+            Password.Write(writer);
+            PasswordExpired.Write(writer);
+            PasswordChangeDisabled.Write(writer);
+            PasswordNeverExpires.Write(writer);
+            AccountDisabled.Write(writer);
+            AccountLockedOut.Write(writer);
+        }
     }
 }
