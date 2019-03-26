@@ -211,9 +211,12 @@ namespace Configuration_Tool.Configuration
             // Write number of user settings instances
             writer.Write(count);
 
-            // For each user settings instance
-            foreach (UserSettings settings in mainWindow.listUserConfigs.Items)
+            // For each user settings control
+            foreach (ControlUserSettings control in mainWindow.listUserConfigs.Items)
             {
+                // Get user settings instance
+                UserSettings settings = control.Settings;
+
                 // Write user settings to stream
                 settings.Write(writer);
             }
