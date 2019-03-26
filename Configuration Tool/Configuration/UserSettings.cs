@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,6 +84,33 @@ namespace Configuration_Tool.Configuration
         public UserSettings()
         {
 
+        }
+
+        public static UserSettings Parse(BinaryReader reader)
+        {
+            UserSettings settings = new UserSettings();
+
+            settings.IdentifiedByUsername = reader.ReadBoolean();
+
+            string usernameOrSID = reader.ReadString();
+
+            if (settings.IdentifiedByUsername)
+            {
+                settings.Username = usernameOrSID;
+            }
+            else
+            {
+                settings.SecurityID = usernameOrSID;
+            }
+
+            settings.Password = ScoredItem<string>.ParseString(reader);
+            settings.PasswordExpired = ScoredItem<bool>.ParseBoolean(reader);
+            settings.PasswordChangeDisabled = ScoredItem<bool>.ParseBoolean(reader);
+            settings.PasswordNeverExpires = ScoredItem<bool>.ParseBoolean(reader);
+            settings.AccountDisabled = ScoredItem<bool>.ParseBoolean(reader);
+            settings.AccountLockedOut = ScoredItem<bool>.ParseBoolean(reader);
+
+            return settings;
         }
     }
 }
