@@ -29,9 +29,10 @@ namespace Configuration_Tool.Controls
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
 
-            if (commandLineArgs.Length != 0)
+            if (commandLineArgs.Length > 1)
             {
-                startupParameter = commandLineArgs[0];
+                // Skip first command line argument, as it is the current directory
+                startupParameter = commandLineArgs[1];
             }
 
             ConfigurationManager.Startup(startupParameter);
