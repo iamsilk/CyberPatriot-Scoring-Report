@@ -93,7 +93,7 @@ namespace Configuration_Tool.Configuration
                 }
 
                 // If main window wasn't found
-                if (mainWindow != null)
+                if (mainWindow == null)
                 {
                     // Don't know what happened here :/
                     throw new Exception("Couldn't find main window while loading configuration.");
