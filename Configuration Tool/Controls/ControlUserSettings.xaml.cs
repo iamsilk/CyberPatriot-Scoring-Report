@@ -26,8 +26,10 @@ namespace Configuration_Tool.Controls
 
         public UserSettings Settings { get; } = new UserSettings();
 
-        public ControlUserSettings()
+        public ControlUserSettings(UserSettings settings = null)
         {
+            if (settings != null) Settings = settings;
+
             InitializeComponent();
         }
 
