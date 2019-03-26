@@ -195,8 +195,11 @@ namespace Configuration_Tool.Configuration
                 // Parse user settings instance from binary reader
                 UserSettings settings = UserSettings.Parse(reader);
 
+                // Create control from settings
+                ControlUserSettings control = new ControlUserSettings(settings);
+
                 // Add user settings to user settings items control
-                mainWindow.listUserConfigs.Items.Add(settings);
+                mainWindow.listUserConfigs.Items.Add(control);
             }
         }
 
