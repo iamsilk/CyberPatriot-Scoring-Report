@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Configuration_Tool.Configuration.Groups
 {
-    public class MemberUsername : IIdentification, INotifyPropertyChanged
+    public class MemberUsername : IMember, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
