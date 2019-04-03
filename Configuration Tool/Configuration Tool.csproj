@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
