@@ -2,3 +2,4 @@
 Configuration Tool/bin/*
 Configuration Tool/obj/*
 .vs/*
+Configuration Tool/Configuration Tool.csproj.user
