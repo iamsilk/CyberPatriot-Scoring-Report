@@ -1,5 +1,7 @@
-
 Configuration Tool/bin/*
 Configuration Tool/obj/*
 .vs/*
 Configuration Tool/Configuration Tool.csproj.user
+Scoring Report/bin/*
+Scoring Report/obj/*
+Scoring Report/Scoring Report.csproj.user
