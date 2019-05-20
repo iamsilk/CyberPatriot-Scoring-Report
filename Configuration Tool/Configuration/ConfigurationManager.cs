@@ -210,10 +210,8 @@ namespace Configuration_Tool.Configuration
 
         private static void saveUserSettings(BinaryWriter writer, MainWindow mainWindow)
         {
-            // Get number of user settings instances
+            // Get number of user settings instances and write
             int count = mainWindow.listUserConfigs.Items.Count;
-
-            // Write number of user settings instances
             writer.Write(count);
 
             // For each user settings control
