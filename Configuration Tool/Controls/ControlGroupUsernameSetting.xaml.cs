@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Configuration_Tool.Configuration.Groups;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,35 +20,15 @@ namespace Configuration_Tool.Controls
     /// <summary>
     /// Interaction logic for ControlGroupUsernameSetting.xaml
     /// </summary>
-    public partial class ControlGroupUsernameSetting : UserControl, INotifyPropertyChanged
+    public partial class ControlGroupUsernameSetting : UserControl
     {
-        public ControlGroupUsernameSetting(string _username = "")
+        public MemberUsername Member { get; } = new MemberUsername();
+
+        public ControlGroupUsernameSetting(MemberUsername member = null)
         {
             InitializeComponent();
 
-            Username = _username;
-            DataContext = this;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnChange(string variable)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(variable));
-        }
-
-        private string username;
-        public string Username
-        {
-            get { return username; }
-            set
-            {
-                if (username != value)
-                {
-                    username = value;
-                    OnChange("Username");
-                }
-            }
+            if (member != null) Member = member;
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
