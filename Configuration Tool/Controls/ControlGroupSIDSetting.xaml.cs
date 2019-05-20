@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Configuration_Tool.Configuration.Groups;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,35 +20,15 @@ namespace Configuration_Tool.Controls
     /// <summary>
     /// Interaction logic for ControlGroupSIDSetting.xaml
     /// </summary>
-    public partial class ControlGroupSIDSetting : UserControl, INotifyPropertyChanged
+    public partial class ControlGroupSIDSetting : UserControl
     {
-        public ControlGroupSIDSetting(string _securityid = "")
+        public MemberSID Member { get; } = new MemberSID();
+
+        public ControlGroupSIDSetting(MemberSID member = null)
         {
             InitializeComponent();
 
-            securityid = _securityid;
-            DataContext = this;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnChange(string variable)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(variable));
-        }
-
-        private string securityid;
-        public string SecurityID
-        {
-            get { return securityid; }
-            set
-            {
-                if (securityid != value)
-                {
-                    securityid = value;
-                    OnChange("SecurityID");
-                }
-            }
+            if (member != null) Member = member;
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
