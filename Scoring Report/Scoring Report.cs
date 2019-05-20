@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Scoring_Report.Configuration;
+using Scoring_Report.Scoring;
 
 namespace Scoring_Report
 {
@@ -39,6 +40,9 @@ namespace Scoring_Report
             }
 
             ConfigurationManager.Startup(startupParameter);
+
+            // Setup scoring manager
+            ScoringManager.Setup();
 
             // Create thread with loop function
             LoopThread = new Thread(Loop);
