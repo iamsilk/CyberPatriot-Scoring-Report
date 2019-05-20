@@ -8,6 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Scoring_Report.Configuration;
 
 namespace Scoring_Report
 {
@@ -28,6 +29,19 @@ namespace Scoring_Report
 
         protected override void OnStart(string[] args)
         {
+            // Load configuration
+            string startupParameter = "";
+
+            string[] commandLineArgs = Environment.GetCommandLineArgs();
+
+            if (commandLineArgs.Length > 1)
+            {
+                // Skip first command line argument, as it is the current directory
+                startupParameter = commandLineArgs[1];
+            }
+
+            ConfigurationManager.Startup(startupParameter);
+
             // Create thread with loop function
             LoopThread = new Thread(Loop);
 

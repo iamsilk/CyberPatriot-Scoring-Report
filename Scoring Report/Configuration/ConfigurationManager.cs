@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
-using Configuration_Tool.Configuration.Groups;
+using Scoring_Report.Configuration.Groups;
 
-namespace Configuration_Tool.Configuration
+namespace Scoring_Report.Configuration
 {
     public static class ConfigurationManager
     {
