@@ -69,8 +69,17 @@ namespace Configuration_Tool.Controls
             // Create containing grid
             Grid grid = new Grid();
 
+            // Create member
+            MemberSID member = new MemberSID();
+
+            // Add member to group setting's list
+            Settings.Members.Add(member);
+
             // Create SID setting element
-            grid.Children.Add(new ControlGroupSIDSetting());
+            ControlGroupSIDSetting control = new ControlGroupSIDSetting(member);
+
+            // Add element to grid (to apply default style)
+            grid.Children.Add(control);
 
             // Add element to user config items control
             listUserConfigs.Items.Add(grid);
@@ -81,8 +90,17 @@ namespace Configuration_Tool.Controls
             // Create containing grid
             Grid grid = new Grid();
 
+            // Create member
+            MemberUsername member = new MemberUsername();
+
+            // Add member to group setting's list
+            Settings.Members.Add(member);
+
             // Create Username setting element
-            grid.Children.Add(new ControlGroupUsernameSetting());
+            ControlGroupUsernameSetting control = new ControlGroupUsernameSetting(member);
+
+            // Add element to grid (to apply default style)
+            grid.Children.Add(control);
 
             // Add element to user config items control
             listUserConfigs.Items.Add(grid);
