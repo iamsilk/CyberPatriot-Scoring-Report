@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Configuration_Tool.Configuration.Groups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,47 @@ namespace Configuration_Tool.Controls
     /// </summary>
     public partial class ControlGroupSettings : UserControl
     {
-        public ControlGroupSettings()
+        public GroupSettings Settings { get; } = new GroupSettings();
+
+        public ControlGroupSettings(GroupSettings settings = null)
         {
             InitializeComponent();
+
+            if (settings != null)
+            {
+                Settings = settings;
+
+                // for each member in settings
+                foreach (IMember member in Settings.Members)
+                {
+                    UserControl control;
+
+                    // Get control based on member's id type
+                    if (member is MemberSID)
+                    {
+                        control = new ControlGroupSIDSetting(member as MemberSID);
+                    }
+                    else if (member is MemberUsername)
+                    {
+                        control = new ControlGroupUsernameSetting(member as MemberUsername);
+                    }
+                    else
+                    {
+                        // How'd we get here...
+                        throw new Exception(string.Format("Unknown member identifier type ({0}) for member ({1}) in group ({2})",
+                            member.IDType, member.Identifier, settings.GroupName));
+                    }
+
+                    // Create container before adding to items control to apply default style
+                    Grid container = new Grid();
+
+                    // Add control to grid
+                    container.Children.Add(control);
+
+                    // Add grid to items control
+                    listUserConfigs.Items.Add(container);
+                }
+            }
         }
 
         private void btnAddSID_Click(object sender, RoutedEventArgs e)

@@ -16,20 +16,23 @@
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,1,0,0"
                     TextWrapping="Wrap" Text="Group Name:" Height="16" Width="71"/>
                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="76,0,2,0" Height="23"
-                    TextWrapping="Wrap" Text=""/>
+                    TextWrapping="Wrap" Text="{Binding Path=Settings.GroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
                 <Button Grid.Column="1" Margin="2,0,0,0" Content="Remove Config" Click="btnRemoveConfig_Click"/>
             </Grid>
             <Grid Margin="0,29,0,0" Height="20" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="Users:"/>
-                <Button Grid.Column="1" Margin="0,0,2,0" Content="Add SID" Click="btnAddSID_Click"/>
-                <Button Grid.Column="2" Margin="2,0,0,0" Content="Add Username" Click="btnAddUsername_Click"/>
+                <CheckBox Grid.Column="1" Margin="0,3,2,0" HorizontalAlignment="Right"  Content="Is Scored" 
+                          IsChecked="{Binding Path=Settings.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                <Button Grid.Column="2" Margin="2,0,2,0" Content="Add SID" Click="btnAddSID_Click"/>
+                <Button Grid.Column="3" Margin="2,0,0,0" Content="Add Username" Click="btnAddUsername_Click"/>
             </Grid>
-            
+
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,54,0,0">
                 <ItemsControl x:Name="listUserConfigs" HorizontalContentAlignment="Stretch">
                     <ItemsControl.ItemContainerStyle>
