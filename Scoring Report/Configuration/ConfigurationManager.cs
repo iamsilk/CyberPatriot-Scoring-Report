@@ -25,9 +25,9 @@ namespace Scoring_Report.Configuration
 
         public static FileStream ConfigFileStream { get; private set; } = null;
 
-        public static List<UserSettings> Users { get; private set; }
+        public static List<UserSettings> Users { get; } = new List<UserSettings>();
 
-        public static List<GroupSettings> Groups { get; private set; }
+        public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
 
         public static void Startup(string startupParameter)
         {
