@@ -32,12 +32,10 @@ namespace Scoring_Report
             // Load configuration
             string startupParameter = "";
 
-            string[] commandLineArgs = Environment.GetCommandLineArgs();
-
-            if (commandLineArgs.Length > 1)
+            if (args.Length > 1)
             {
                 // Skip first command line argument, as it is the current directory
-                startupParameter = commandLineArgs[1];
+                startupParameter = args[1];
             }
 
             ConfigurationManager.Startup(startupParameter);
