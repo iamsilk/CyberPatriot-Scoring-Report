@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Configuration_Tool.Controls;
 using System.Windows;
+using Configuration_Tool.Configuration.Groups;
 
 namespace Configuration_Tool.Configuration
 {
@@ -103,6 +104,8 @@ namespace Configuration_Tool.Configuration
                 using (BinaryReader reader = new BinaryReader(ConfigFileStream))
                 {
                     loadUserSettings(reader, mainWindow);
+
+                    loadGroupSettings(reader, mainWindow);
                 }
             }
         }
@@ -158,6 +161,8 @@ namespace Configuration_Tool.Configuration
                 using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
                 {
                     saveUserSettings(writer, mainWindow);
+
+                    saveGroupSettings(writer, mainWindow);
                 }
             }
         }
@@ -218,6 +223,45 @@ namespace Configuration_Tool.Configuration
                 UserSettings settings = control.Settings;
 
                 // Write user settings to stream
+                settings.Write(writer);
+            }
+        }
+
+        private static void loadGroupSettings(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Clear current list of group settings
+            mainWindow.listGroupConfigs.Items.Clear();
+
+            // Get number of group settings instances
+            int count = reader.ReadInt32();
+
+            // Enumerate every instance of group settings
+            for (int i = 0; i < count; i++)
+            {
+                // Get instance of group settings
+                GroupSettings settings = GroupSettings.Parse(reader);
+
+                // Create control from settings
+                ControlGroupSettings control = new ControlGroupSettings(settings);
+                
+                // Add instance to group settings items control
+                mainWindow.listGroupConfigs.Items.Add(control);
+            }
+        }
+
+        private static void saveGroupSettings(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get number of group settings instances and write
+            int count = mainWindow.listGroupConfigs.Items.Count;
+            writer.Write(count);
+
+            // For each group settings control
+            foreach (ControlGroupSettings control in mainWindow.listGroupConfigs.Items)
+            {
+                // Get group settings instance and write
+                GroupSettings settings = control.Settings;
+
+                // Write group settings to stream
                 settings.Write(writer);
             }
         }
