@@ -61,6 +61,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionUsers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
