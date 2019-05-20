@@ -43,6 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\Groups\GroupSettings.cs" />
+    <Compile Include="Configuration\Groups\IMember.cs" />
+    <Compile Include="Configuration\Groups\MemberSID.cs" />
+    <Compile Include="Configuration\Groups\MemberUsername.cs" />
+    <Compile Include="Configuration\ScoredItem.cs" />
+    <Compile Include="Configuration\UserSettings.cs" />
     <Compile Include="Scoring Report.cs">
       <SubType>Component</SubType>
     </Compile>
