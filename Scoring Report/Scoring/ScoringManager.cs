@@ -10,6 +10,7 @@ namespace Scoring_Report.Scoring
     {
         public static List<ISection> ScoringSections { get; } = new List<ISection>();
 
+        public static List<SectionDetails> RecentDetails = new List<SectionDetails>();
         
         public static void Setup()
         {
