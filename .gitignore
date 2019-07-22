@@ -5,3 +5,6 @@ Configuration Tool/Configuration Tool.csproj.user
 Scoring Report/bin/*
 Scoring Report/obj/*
 Scoring Report/Scoring Report.csproj.user
+Installer/Debug/*
+Installer/Release/*
+Output/*

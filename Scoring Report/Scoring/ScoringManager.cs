@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
+using Scoring_Report.Configuration;
+using System.Security.Permissions;
+using System.Security;
+using Scoring_Report.Scoring.Output;
+using Scoring_Report.Policies;
 
 namespace Scoring_Report.Scoring
 {
@@ -13,13 +18,18 @@ namespace Scoring_Report.Scoring
         public static List<ISection> ScoringSections { get; } = new List<ISection>();
 
         public static List<SectionDetails> RecentDetails = new List<SectionDetails>();
-        
+
+        public static int MaxScore = 0;
+
         public static void Setup()
         {
             ScoringSections.Clear();
 
             // Get all types in the executing assembly (Scoring Report)
             Type[] allTypes = Assembly.GetExecutingAssembly().GetTypes();
+
+            // Used to gain sum of all sections' max scores
+            int maxScore = 0;
             
             foreach (Type type in allTypes)
             {
@@ -37,6 +47,51 @@ namespace Scoring_Report.Scoring
                     }
                 }
             }
+
+            GetMaxScore();
+        }
+
+        public static void GetMaxScore()
+        {
+            MaxScore = 0;
+
+            foreach (ISection section in ScoringSections)
+            {
+                MaxScore += section.MaxScore();
+            }
+        }
+
+        public static void CheckAndOutput()
+        {
+            // Get score details
+            List<SectionDetails> details = CheckScores();
+
+            // Output score details
+            OutputManager.OutputToAll(details);
+            
+        }
+
+        public static List<SectionDetails> CheckScores()
+        {
+            List<SectionDetails> details = new List<SectionDetails>();
+
+            // Get information we use from secedit for use in sections
+            SecurityPolicyManager.GetSeceditInfo();
+
+            // Enumerate all scoring sections
+            foreach (ISection section in ScoringSections)
+            {
+                // Optimization: Check if anything is scored, skip if not
+                if (section.MaxScore() == 0) continue;
+
+                // Get scoring details for specific section
+                SectionDetails sectionScore = section.GetScore();
+
+                // Add details to list
+                details.Add(sectionScore);
+            }
+
+            return details;
         }
     }
 }

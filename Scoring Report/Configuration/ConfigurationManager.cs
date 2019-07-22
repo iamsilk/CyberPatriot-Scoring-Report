@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using Scoring_Report.Configuration.Groups;
+using Scoring_Report.Configuration.SecOptions;
+using Scoring_Report.Configuration.UserRights;
+using Scoring_Report.Scoring;
 
 namespace Scoring_Report.Configuration
 {
     public static class ConfigurationManager
     {
-        public const string DefaultConfigDirectory = @"C:\CyberPatriot Scoring Report";
+        public static string DefaultConfigDirectory { get; private set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         public const string DefaultConfigFile = "Configuration.dat";
 
@@ -25,9 +28,36 @@ namespace Scoring_Report.Configuration
 
         public static FileStream ConfigFileStream { get; private set; } = null;
 
+        public static DateTime LastUpdated { get; private set; } = DateTime.MinValue;
+
+        /* Reason for multiple output files support is in case
+         * any users want to setup their own scripts/programs
+         * for uploading/checking scoring without needing to
+         * negotiate handles between possible competitors.
+         * Most often, this is not necessary and another script
+         * could just get read access alongside the viewer;
+         * however, this is a worst case scenario implementation */
+
+        public const string DefaultOutputFile = "Scoring Report.html";
+
+        public static List<string> OutputFiles { get; } = new List<string>()
+        {
+            Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
+        };
+
         public static List<UserSettings> Users { get; } = new List<UserSettings>();
 
         public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
+
+        public static PasswordPolicy PasswordPolicy { get; set; } = new PasswordPolicy();
+
+        public static LockoutPolicy LockoutPolicy { get; set; } = new LockoutPolicy();
+
+        public static AuditPolicy AuditPolicy { get; set; } = new AuditPolicy();
+
+        public static List<UserRightsDefinition> UserRightsDefinitions { get; } = new List<UserRightsDefinition>();
+
+        public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 
         public static void Startup(string startupParameter)
         {
@@ -47,7 +77,21 @@ namespace Scoring_Report.Configuration
             }
 
             loadConfig();
+        }
 
+        public static void Loop()
+        {
+            // Get latest creation time of config file
+            DateTime latestWriteTime = File.GetLastWriteTime(CurrentConfigPath);
+
+            // If latest was after the last time we updated, load new config
+            if (latestWriteTime > LastUpdated)
+            {
+                loadConfig();
+
+                // Get new max score as new config might have introduced more/less points available
+                ScoringManager.GetMaxScore();
+            }
         }
 
         public static void LoadConfig(string configPath)
@@ -81,47 +125,34 @@ namespace Scoring_Report.Configuration
              * until it is time to save */
             using (ConfigFileStream = File.Open(CurrentConfigPath, FileMode.Open, FileAccess.Read))
             {
-                // Binary reader for parsing of data
-                using (BinaryReader reader = new BinaryReader(ConfigFileStream))
-                {
-                    loadUserSettings(reader);
+                LastUpdated = File.GetCreationTime(CurrentConfigPath);
 
-                    loadGroupSettings(reader);
+                try
+                {
+                    // Binary reader for parsing of data
+                    using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                    {
+                        loadOutputFiles(reader);
+
+                        loadUserSettings(reader);
+
+                        loadGroupSettings(reader);
+
+                        loadPasswordPolicy(reader);
+
+                        loadLockoutPolicy(reader);
+
+                        loadAuditPolicy(reader);
+
+                        loadUserRights(reader);
+
+                        loadSecurityOptions(reader);
+                    }
                 }
-            }
-        }
-
-        public static void Save(string configPath = "")
-        {
-            // If path is specified
-            if (!string.IsNullOrWhiteSpace(configPath))
-            {
-                // Set current config path
-                CurrentConfigPath = configPath;
-
-                // Set current config directory
-                CurrentConfigDirectory = Path.GetDirectoryName(configPath);
-            }
-
-            saveConfig();
-        }
-
-        private static void saveConfig()
-        {
-            // If config directory doesn't exist
-            if (!Directory.Exists(CurrentConfigDirectory))
-            {
-                Directory.CreateDirectory(CurrentConfigDirectory);
-            }
-
-            // Get stream
-            using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
-            {
-                using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
+                catch
                 {
-                    saveUserSettings(writer);
-
-                    saveGroupSettings(writer);
+                    // Likely outdated configuration file with updated program. No action is likely needed.
+                    // TODO, add version checking to allow outdated configuration files
                 }
             }
         }
@@ -145,6 +176,25 @@ namespace Scoring_Report.Configuration
             return true;
         }
 
+        private static void loadOutputFiles(BinaryReader reader)
+        {
+            // Clear current list of output files
+            OutputFiles.Clear();
+
+            // Get number of output files
+            int count = reader.ReadInt32();
+
+            // For each output file
+            for (int i = 0; i < count; i++)
+            {
+                // Get output file
+                string file = reader.ReadString();
+
+                // Add output file to list
+                OutputFiles.Add(file);
+            }
+        }
+
         private static void loadUserSettings(BinaryReader reader)
         {
             // Clear current list of user settings
@@ -161,20 +211,6 @@ namespace Scoring_Report.Configuration
 
                 // Add user settings to main list
                 Users.Add(settings);
-            }
-        }
-
-        private static void saveUserSettings(BinaryWriter writer)
-        {
-            // Get number of user settings instances and write
-            int count = Users.Count;
-            writer.Write(count);
-
-            // For each user settings instance
-            foreach (UserSettings settings in Users)
-            {
-                // Write user settings to stream
-                settings.Write(writer);
             }
         }
 
@@ -197,17 +233,135 @@ namespace Scoring_Report.Configuration
             }
         }
 
-        private static void saveGroupSettings(BinaryWriter writer)
+        private static void loadPasswordPolicy(BinaryReader reader)
         {
-            // Get number of group settings instances and write
-            int count = Groups.Count;
-            writer.Write(count);
+            // Get stored policy
+            PasswordPolicy policy = PasswordPolicy.Parse(reader);
 
-            // For each group settings control
-            foreach (GroupSettings settings in Groups)
+            // Store policy in global variable
+            PasswordPolicy = policy;
+        }
+
+        private static void loadLockoutPolicy(BinaryReader reader)
+        {
+            // Get stored policy
+            LockoutPolicy policy = LockoutPolicy.Parse(reader);
+
+            // Store policy in global variable
+            LockoutPolicy = policy;
+        }
+
+        private static void loadAuditPolicy(BinaryReader reader)
+        {
+            // Get stored policy
+            AuditPolicy policy = AuditPolicy.Parse(reader);
+
+            // Store policy in global variable
+            AuditPolicy = policy;
+        }
+
+        private static void loadUserRights(BinaryReader reader)
+        {
+            // Clear current user rights definitions
+            UserRightsDefinitions.Clear();
+
+            // Get count of user rights definitions
+            int count = reader.ReadInt32();
+
+            // For number of user rights definitions
+            for (int i = 0; i < count; i++)
             {
-                // Write group settings to stream
-                settings.Write(writer);
+                // Get constant name
+                string constantName = reader.ReadString();
+
+                // Get setting
+                string setting = reader.ReadString();
+
+                // Get and set scoring status
+                bool isScored = reader.ReadBoolean();
+
+                // Create instance of definition object
+                UserRightsDefinition userRights = new UserRightsDefinition(constantName, setting);
+
+                // Get number of identifiers
+                int identifiersCount = reader.ReadInt32();
+
+                // For number of identifiers
+                for (int j = 0; j < identifiersCount; j++)
+                {
+                    // Get identifier type and identifier
+                    EUserRightsIdentifierType type = (EUserRightsIdentifierType)reader.ReadInt32();
+                    string strIdentifier = reader.ReadString();
+
+                    // Initialize storage for identifier
+                    UserRightsIdentifier identifier = new UserRightsIdentifier();
+                    identifier.Type = type;
+                    identifier.Identifier = strIdentifier;
+
+                    // Add identifier to list
+                    userRights.Identifiers.Add(identifier);
+                }
+
+                // Optimization, only add scored items
+                if (isScored)
+                {
+                    UserRightsDefinitions.Add(userRights);
+                }
+            }
+        }
+
+        private static void loadSecurityOptions(BinaryReader reader)
+        {
+            // Clear current storage
+            SecurityOptions.Clear();
+
+            // Get number of security option settings
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get type of sec option
+                ESecurityOptionType type = (ESecurityOptionType)reader.ReadInt32();
+
+                ISecurityOption secOption = null;
+
+                // Initialize secOption based on type
+                switch (type)
+                {
+                    case ESecurityOptionType.RegistryComboBox:
+                        secOption = new RegistryComboBox();
+                        break;
+                    case ESecurityOptionType.RegistryTextRegex:
+                        secOption = new RegistryTextRegex();
+                        break;
+                    case ESecurityOptionType.RegistryRange:
+                        secOption = new RegistryRange();
+                        break;
+                    case ESecurityOptionType.RegistryMultiLine:
+                        secOption = new RegistryMultiLine();
+                        break;
+                    case ESecurityOptionType.SeceditComboBox:
+                        secOption = new SeceditComboBox();
+                        break;
+                    case ESecurityOptionType.SeceditTextRegex:
+                        secOption = new SeceditTextRegex();
+                        break;
+                }
+
+                if (secOption == null)
+                {
+                    // Uh oh.. corrupted file?
+                    throw new Exception("Unknown security option type. Possible configuration file corruption.");
+                }
+
+                // Parse information based on type
+                secOption.Parse(reader);
+
+                // Only store scored options
+                if (secOption.IsScored)
+                {
+                    SecurityOptions.Add(secOption);
+                }
             }
         }
     }

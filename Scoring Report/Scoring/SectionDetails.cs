@@ -10,12 +10,15 @@ namespace Scoring_Report.Scoring
     {
         public int Points = 0;
 
-        public string Output = "";
+        public List<string> Output = new List<string>();
 
-        public SectionDetails(int points, string output)
+        public ISection Section = null;
+
+        public SectionDetails(int points, List<string> output, ISection section)
         {
             Points = points;
             Output = output;
+            Section = section;
         }
     }
 }

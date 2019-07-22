@@ -41,6 +41,16 @@ namespace Configuration_Tool.Controls
 
             // Removes self
             itemsContainer.Items.Remove(container);
+
+            // Parent of ItemsControl > ScrollViewer
+            // Parent of ScrollViewer > Grid2
+            // Parent of Grid2 > Grid1
+            // Parent of Grid1 > ControlGroupSettings
+            ControlGroupSettings control =
+                (ControlGroupSettings)((Grid)((Grid)((ScrollViewer)itemsContainer.Parent).Parent).Parent).Parent;
+
+            // Remove self from configuration
+            control.Settings.Members.Remove(Member);
         }
     }
 }

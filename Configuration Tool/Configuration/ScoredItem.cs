@@ -202,9 +202,30 @@ namespace Configuration_Tool.Configuration
             return scoredItem;
         }
 
+        public static ScoredItem<Range> ParseRange(BinaryReader reader)
+        {
+            int min = reader.ReadInt32();
+            int max = reader.ReadInt32();
+
+            bool isScored = reader.ReadBoolean();
+
+            ScoredItem<Range> scoredItem = new ScoredItem<Range>(new Range(min, max), isScored);
+            return scoredItem;
+        }
+
+        public static ScoredItem<EAuditSettings> ParseAuditSettings(BinaryReader reader)
+        {
+            EAuditSettings value = (EAuditSettings)reader.ReadInt32();
+            bool isScored = reader.ReadBoolean();
+
+            ScoredItem<EAuditSettings> scoredItem = new ScoredItem<EAuditSettings>(value, isScored);
+            return scoredItem;
+        }
+
         public void Write(BinaryWriter writer)
         {
-            switch (Type.GetTypeCode(Value.GetType()))
+            TypeCode code = Type.GetTypeCode(Value.GetType());
+            switch (code)
             {
                 case TypeCode.Boolean:
                     writer.Write(Convert.ToBoolean(Value));
@@ -262,6 +283,12 @@ namespace Configuration_Tool.Configuration
                         case "Char[]":
                             writer.Write(Value as char[]);
                             break;
+                        case "Range":
+                            Range range = Value as Range;
+                            writer.Write(range.Min);
+                            writer.Write(range.Max);
+                            break;
+
                     }
                     break;
             }

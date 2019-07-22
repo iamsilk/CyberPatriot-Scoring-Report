@@ -7,6 +7,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration Tool", "Confi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoring Report", "Scoring Report\Scoring Report.csproj", "{18104C95-B028-4D17-93AF-0FB1CA0E7114}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{05036ED1-7213-4512-BC70-3D53523C7684}"
+	ProjectSection(SolutionItems) = preProject
+		Todo List.txt = Todo List.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output Dependent Files", "Output Dependent Files", "{7C8EDEA5-20EE-436B-86F9-1884C26068EC}"
+	ProjectSection(SolutionItems) = preProject
+		Output Dependent Files\Scoring Report.html = Output Dependent Files\Scoring Report.html
+		Output Dependent Files\style.css = Output Dependent Files\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scoring Report.html_format", "Scoring Report.html_format", "{52C08E03-D9AE-4717-811B-7A0F55FF7CD9}"
+	ProjectSection(SolutionItems) = preProject
+		Output Dependent Files\Scoring Report.html_format\format.txt = Output Dependent Files\Scoring Report.html_format\format.txt
+		Output Dependent Files\Scoring Report.html_format\section_nothing.txt = Output Dependent Files\Scoring Report.html_format\section_nothing.txt
+		Output Dependent Files\Scoring Report.html_format\sectionhead_prefix.txt = Output Dependent Files\Scoring Report.html_format\sectionhead_prefix.txt
+		Output Dependent Files\Scoring Report.html_format\sectionhead_suffix.txt = Output Dependent Files\Scoring Report.html_format\sectionhead_suffix.txt
+		Output Dependent Files\Scoring Report.html_format\sectiontext_newline.txt = Output Dependent Files\Scoring Report.html_format\sectiontext_newline.txt
+		Output Dependent Files\Scoring Report.html_format\sectiontext_prefix.txt = Output Dependent Files\Scoring Report.html_format\sectiontext_prefix.txt
+		Output Dependent Files\Scoring Report.html_format\sectiontext_suffix.txt = Output Dependent Files\Scoring Report.html_format\sectiontext_suffix.txt
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{26081A63-1995-47D8-9609-CE60E4A59102}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +45,15 @@ Global
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|Any CPU.ActiveCfg = Debug
+		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C8EDEA5-20EE-436B-86F9-1884C26068EC} = {05036ED1-7213-4512-BC70-3D53523C7684}
+		{52C08E03-D9AE-4717-811B-7A0F55FF7CD9} = {7C8EDEA5-20EE-436B-86F9-1884C26068EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55710265-AF28-4FCF-A407-09FFD4A922B8}

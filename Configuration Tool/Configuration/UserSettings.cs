@@ -31,7 +31,7 @@ namespace Configuration_Tool.Configuration
             }
         }
 
-        private string securityID;
+        private string securityID = "";
         public string SecurityID
         {
             get { return securityID; }

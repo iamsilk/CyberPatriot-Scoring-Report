@@ -19,23 +19,30 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Output\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Output\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,13 +61,58 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\EAuditSettings.cs" />
+    <Compile Include="Configuration\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
     <Compile Include="Configuration\Groups\MemberUsername.cs" />
+    <Compile Include="Configuration\IUserRightsIdentifier.cs">
+      <Generator>MSBuild:Compile</Generator>
+    </Compile>
+    <Compile Include="Configuration\LockoutPolicy.cs" />
+    <Compile Include="Configuration\PasswordPolicy.cs" />
+    <Compile Include="Configuration\Range.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
+    <Page Include="Controls\SecOptions\ControlNotImplemented.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlRegistryMultiLine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlRegistryRange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlSeceditComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlSeceditTextRegex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlRegistryTextRegex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SecOptions\ControlRegistryComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlSettingUserRightsSID.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ControlSettingUserRightsName.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ControlGroupSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,18 +125,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ControlSettingAudit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlSettingComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ControlSettingNumeric.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlSettingRange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlSettingUserRights.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ControlUserSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NumericBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Controls\SecOptions\ControlNotImplemented.xaml.cs">
+      <DependentUpon>ControlNotImplemented.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlRegistryMultiLine.xaml.cs">
+      <DependentUpon>ControlRegistryMultiLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlRegistryRange.xaml.cs">
+      <DependentUpon>ControlRegistryRange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlSeceditComboBox.xaml.cs">
+      <DependentUpon>ControlSeceditComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlSeceditTextRegex.xaml.cs">
+      <DependentUpon>ControlSeceditTextRegex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlRegistryTextRegex.xaml.cs">
+      <DependentUpon>ControlRegistryTextRegex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SecOptions\ControlRegistryComboBox.xaml.cs">
+      <DependentUpon>ControlRegistryComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingUserRightsSID.xaml.cs">
+      <DependentUpon>ControlSettingUserRightsSID.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingUserRightsName.xaml.cs">
+      <DependentUpon>ControlSettingUserRightsName.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\BindingUpdater.cs" />
     <Compile Include="Controls\ControlGroupSettings.xaml.cs">
       <DependentUpon>ControlGroupSettings.xaml</DependentUpon>
     </Compile>
@@ -94,8 +198,26 @@
     <Compile Include="Controls\ControlGroupUsernameSetting.xaml.cs">
       <DependentUpon>ControlGroupUsernameSetting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlSettingAudit.xaml.cs">
+      <DependentUpon>ControlSettingAudit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingComboBox.xaml.cs">
+      <DependentUpon>ControlSettingComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingNumeric.xaml.cs">
+      <DependentUpon>ControlSettingNumeric.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingRange.xaml.cs">
+      <DependentUpon>ControlSettingRange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlSettingUserRights.xaml.cs">
+      <DependentUpon>ControlSettingUserRights.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlUserSettings.xaml.cs">
       <DependentUpon>ControlUserSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NumericBox.xaml.cs">
+      <DependentUpon>NumericBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -103,6 +225,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\SecOptions\ESecurityOptionType.cs" />
+    <Compile Include="Controls\SecOptions\ISecurityOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,13 +244,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Controls\App.config" />
+    <Resource Include="Images\arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow_up.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

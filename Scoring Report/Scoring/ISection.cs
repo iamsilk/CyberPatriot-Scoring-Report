@@ -9,6 +9,7 @@ namespace Scoring_Report.Scoring
     public interface ISection
     {
         string Header { get; }
+        int MaxScore();
         SectionDetails GetScore();
     }
 }

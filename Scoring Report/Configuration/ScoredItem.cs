@@ -171,71 +171,24 @@ namespace Scoring_Report.Configuration
             return scoredItem;
         }
 
-        public void Write(BinaryWriter writer)
+        public static ScoredItem<Range> ParseRange(BinaryReader reader)
         {
-            switch (Type.GetTypeCode(Value.GetType()))
-            {
-                case TypeCode.Boolean:
-                    writer.Write(Convert.ToBoolean(Value));
-                    break;
-                case TypeCode.Char:
-                    writer.Write(Convert.ToChar(Value));
-                    break;
-                case TypeCode.SByte:
-                    writer.Write(Convert.ToSByte(Value));
-                    break;
-                case TypeCode.Byte:
-                    writer.Write(Convert.ToByte(Value));
-                    break;
-                case TypeCode.Int16:
-                    writer.Write(Convert.ToInt16(Value));
-                    break;
-                case TypeCode.UInt16:
-                    writer.Write(Convert.ToUInt16(Value));
-                    break;
-                case TypeCode.Int32:
-                    writer.Write(Convert.ToInt32(Value));
-                    break;
-                case TypeCode.UInt32:
-                    writer.Write(Convert.ToUInt32(Value));
-                    break;
-                case TypeCode.Int64:
-                    writer.Write(Convert.ToInt64(Value));
-                    break;
-                case TypeCode.UInt64:
-                    writer.Write(Convert.ToUInt64(Value));
-                    break;
-                case TypeCode.Single:
-                    writer.Write(Convert.ToSingle(Value));
-                    break;
-                case TypeCode.Double:
-                    writer.Write(Convert.ToDouble(Value));
-                    break;
-                case TypeCode.Decimal:
-                    writer.Write(Convert.ToDecimal(Value));
-                    break;
-                case TypeCode.String:
-                    writer.Write(Convert.ToString(Value));
-                    break;
-                case TypeCode.Object:
-                    /* If type code of an object is returned, 
-                     * value may be an array. In which case 
-                     * we must use a different method of 
-                     * determining the type
-                     */
-                    switch(Value.GetType().Name)
-                    {
-                        case "Byte[]":
-                            writer.Write(Value as byte[]);
-                            break;
-                        case "Char[]":
-                            writer.Write(Value as char[]);
-                            break;
-                    }
-                    break;
-            }
+            int min = reader.ReadInt32();
+            int max = reader.ReadInt32();
 
-            writer.Write(IsScored);
+            bool isScored = reader.ReadBoolean();
+
+            ScoredItem<Range> scoredItem = new ScoredItem<Range>(new Range(min, max), isScored);
+            return scoredItem;
+        }
+
+        public static ScoredItem<EAuditSettings> ParseAuditSettings(BinaryReader reader)
+        {
+            EAuditSettings value = (EAuditSettings)reader.ReadInt32();
+            bool isScored = reader.ReadBoolean();
+
+            ScoredItem<EAuditSettings> scoredItem = new ScoredItem<EAuditSettings>(value, isScored);
+            return scoredItem;
         }
     }
 }

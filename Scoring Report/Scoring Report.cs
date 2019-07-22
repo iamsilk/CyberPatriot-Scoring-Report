@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
+﻿using System.ServiceProcess;
 using System.Threading;
-using System.Threading.Tasks;
 using Scoring_Report.Configuration;
 using Scoring_Report.Scoring;
+using Scoring_Report.Scoring.Output;
 
 namespace Scoring_Report
 {
@@ -18,7 +11,7 @@ namespace Scoring_Report
         public bool IsRunning = false;
         private Thread LoopThread;
 
-        private int LoopDelay = 10000;
+        private int LoopDelay = 1000;
 
         // Auto reset events thanks to: https://stackoverflow.com/a/2033431
         private AutoResetEvent StopRequest = new AutoResetEvent(false);
@@ -28,12 +21,17 @@ namespace Scoring_Report
             InitializeComponent();
         }
 
+        public void OnDebug()
+        {
+            OnStart(null);
+        }
+
         protected override void OnStart(string[] args)
         {
             // Load configuration
             string startupParameter = "";
 
-            if (args.Length > 1)
+            if (args != null && args.Length > 1)
             {
                 // Skip first command line argument, as it is the current directory
                 startupParameter = args[1];
@@ -43,6 +41,9 @@ namespace Scoring_Report
 
             // Setup scoring manager
             ScoringManager.Setup();
+
+            // Setup output manager
+            OutputManager.Setup();
 
             // Create thread with loop function
             LoopThread = new Thread(Loop);
@@ -64,6 +65,12 @@ namespace Scoring_Report
             // Loop until stopped
             while (IsRunning)
             {
+                // Check and output scores
+                ScoringManager.CheckAndOutput();
+
+                // Allow configuration to check for any config updates
+                ConfigurationManager.Loop();
+
                 // Delay by loop delay length of milliseconds
                 // If StopRequest.Set is called during delay, will return true
                 if (StopRequest.WaitOne(LoopDelay))
@@ -71,8 +78,6 @@ namespace Scoring_Report
                     IsRunning = false;
                     break;
                 }
-
-
             }
         }
     }

@@ -7,12 +7,15 @@ using System.IO;
 using Configuration_Tool.Controls;
 using System.Windows;
 using Configuration_Tool.Configuration.Groups;
+using System.Windows.Input;
+using System.ComponentModel;
+using Configuration_Tool.Controls.SecOptions;
 
 namespace Configuration_Tool.Configuration
 {
     public static class ConfigurationManager
     {
-        public const string DefaultConfigDirectory = @"C:\CyberPatriot Scoring Report";
+        public static string DefaultConfigDirectory { get; private set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         public const string DefaultConfigFile = "Configuration.dat";
 
@@ -25,6 +28,21 @@ namespace Configuration_Tool.Configuration
         public static bool LoadedConfigFromFile { get; private set; } = false;
 
         public static FileStream ConfigFileStream { get; private set; } = null;
+
+        /* Reason for multiple output files support is in case
+         * any users want to setup their own scripts/programs
+         * for uploading/checking scoring without needing to
+         * negotiate handles between possible competitors.
+         * Most often, this is not necessary and another script
+         * could just get read access alongside the viewer;
+         * however, this is a worst case scenario implementation */
+
+        public const string DefaultOutputFile = "Scoring Report.html";
+
+        public static BindingList<string> OutputFiles { get; } = new BindingList<string>()
+        {
+            Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
+        };
 
         public static void Startup(string startupParameter)
         {
@@ -99,14 +117,35 @@ namespace Configuration_Tool.Configuration
                     // Don't know what happened here :/
                     throw new Exception("Couldn't find main window while loading configuration.");
                 }
-
-                // Binary reader for parsing of data
-                using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                
+                //try
                 {
-                    loadUserSettings(reader, mainWindow);
+                    // Binary reader for parsing of data
+                    using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                    {
+                        loadOutputFiles(reader);
 
-                    loadGroupSettings(reader, mainWindow);
+                        loadUserSettings(reader, mainWindow);
+
+                        loadGroupSettings(reader, mainWindow);
+
+                        loadPasswordPolicy(reader, mainWindow);
+
+                        loadLockoutPolicy(reader, mainWindow);
+
+                        loadAuditPolicy(reader, mainWindow);
+
+                        loadUserRights(reader, mainWindow);
+
+                        loadSecurityOptions(reader, mainWindow);
+                    }
                 }
+                //catch
+                //{
+                //    MessageBox.Show("There was an error loading the configuration. Information that could be recovered has been loaded." +
+                //        Environment.NewLine + "You may be using an outdated configuration file." +
+                //        Environment.NewLine + "Please resave the configuration with the recovered information.");
+                //}
             }
         }
 
@@ -155,14 +194,29 @@ namespace Configuration_Tool.Configuration
                 throw new Exception("Couldn't find main window while loading configuration.");
             }
 
+            // Update all bindings
+            mainWindow.UpdateBindingSources();
+
             // Get stream
             using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
                 {
+                    saveOutputFiles(writer);
+
                     saveUserSettings(writer, mainWindow);
 
                     saveGroupSettings(writer, mainWindow);
+
+                    savePasswordPolicy(writer, mainWindow);
+
+                    saveLockoutPolicy(writer, mainWindow);
+
+                    saveAuditPolicy(writer, mainWindow);
+
+                    saveUserRights(writer, mainWindow);
+
+                    saveSecurityOptions(writer, mainWindow);
                 }
             }
         }
@@ -184,6 +238,38 @@ namespace Configuration_Tool.Configuration
             }
 
             return true;
+        }
+
+        private static void loadOutputFiles(BinaryReader reader)
+        {
+            // Clear current list of output files
+            OutputFiles.Clear();
+
+            // Get number of output files
+            int count = reader.ReadInt32();
+
+            // For each output file
+            for (int i = 0; i < count; i++)
+            {
+                // Get output file
+                string file = reader.ReadString();
+
+                // Add output file to list
+                OutputFiles.Add(file);
+            }
+        }
+
+        private static void saveOutputFiles(BinaryWriter writer)
+        {
+            // Write number of output files
+            int count = OutputFiles.Count;
+            writer.Write(count);
+
+            // Write each output file
+            foreach (string file in OutputFiles)
+            {
+                writer.Write(file);
+            }
         }
 
         private static void loadUserSettings(BinaryReader reader, MainWindow mainWindow)
@@ -261,6 +347,256 @@ namespace Configuration_Tool.Configuration
 
                 // Write group settings to stream
                 settings.Write(writer);
+            }
+        }
+
+        private static void loadPasswordPolicy(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get stored policy
+            PasswordPolicy policy = PasswordPolicy.Parse(reader);
+
+            // Write policy settings to window
+            policy.WriteToWindow(mainWindow);
+        }
+
+        private static void savePasswordPolicy(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get policy from main window
+            PasswordPolicy policy = PasswordPolicy.GetFromWindow(mainWindow);
+
+            // Write policy settings to stream
+            policy.Write(writer);
+        }
+
+        private static void loadLockoutPolicy(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get stored policy
+            LockoutPolicy policy = LockoutPolicy.Parse(reader);
+
+            // Write policy settings to window
+            policy.WriteToWindow(mainWindow);
+        }
+
+        private static void saveLockoutPolicy(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get policy from main window
+            LockoutPolicy policy = LockoutPolicy.GetFromWindow(mainWindow);
+
+            // Write policy settings to stream
+            policy.Write(writer);
+        }
+
+        private static void loadAuditPolicy(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get stored policy
+            AuditPolicy policy = AuditPolicy.Parse(reader);
+
+            // Write policy settings to window
+            policy.WriteToWindow(mainWindow);
+        }
+
+        private static void saveAuditPolicy(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get policy from main window
+            AuditPolicy policy = AuditPolicy.GetFromWindow(mainWindow);
+
+            // Write policy settings to stream
+            policy.Write(writer);
+        }
+
+        private static void loadUserRights(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get count of user rights definitions
+            int count = reader.ReadInt32();
+
+            // For number of user rights definitions
+            for (int i = 0; i < count; i++)
+            {
+                // Get constant name
+                string constantName = reader.ReadString();
+
+                // Get setting name, only used within scoring report
+                string setting = reader.ReadString();
+
+                // Try to find control corresponding to constant name
+
+                // Check first if index of config corresponds to index of item control (so we don't have to loop)
+                // This is implemented to allow easier fixations if user rights definitions on windows change in the future
+                ControlSettingUserRights control = (ControlSettingUserRights)mainWindow.itemsUserRightsSettings.Items[i];
+
+                bool found = true;
+
+                if (control.UserRightsConstantName != constantName)
+                {
+                    // Config and index do not correspond, loop items control to try to find correct control
+                    found = false;
+
+                    foreach (ControlSettingUserRights check in mainWindow.itemsUserRightsSettings.Items)
+                    {
+                        if (check.UserRightsConstantName == constantName)
+                        {
+                            control = check;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                // If control wasn't found, create new one to still allow usability of program
+                if (!found)
+                {
+                    control = new ControlSettingUserRights(constantName);
+                    control.UserRightsConstantName = constantName;
+
+                    // Add control to items control
+                    mainWindow.itemsUserRightsSettings.Items.Add(control);
+                }
+
+                // Get and set scoring status
+                bool isScored = reader.ReadBoolean();
+                control.IsScored = isScored;
+
+                // Get number of identifiers
+                int identifiersCount = reader.ReadInt32();
+
+                // For number of identifiers
+                for (int j = 0; j < identifiersCount; j++)
+                {
+                    // Get identifier type and identifier
+                    EUserRightsIdentifierType type = (EUserRightsIdentifierType)reader.ReadInt32();
+                    string identifier = reader.ReadString();
+
+                    object identifierControl = null;
+
+                    // Create proper control based on type
+                    switch (type)
+                    {
+                        case EUserRightsIdentifierType.Name:
+                            identifierControl = new ControlSettingUserRightsName(identifier);
+                            break;
+                        case EUserRightsIdentifierType.SecurityID:
+                            identifierControl = new ControlSettingUserRightsSID(identifier);
+                            break;
+                    }
+
+                    // Add control to items control
+                    control.itemsIdentifiers.Items.Add(identifierControl);
+                }
+            }
+        }
+
+        private static void saveUserRights(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get and write count of user rights definitions
+            int count = mainWindow.itemsUserRightsSettings.Items.Count;
+            writer.Write(count);
+
+            // For each user rights setting control in items control
+            foreach (ControlSettingUserRights control in mainWindow.itemsUserRightsSettings.Items)
+            {
+                // Get/write constant name
+                string constantName = control.UserRightsConstantName;
+                writer.Write(constantName);
+
+                // Get/write setting (displayed title)
+                string setting = control.Setting;
+                writer.Write(setting);
+
+                // Get/write boolean specifying scoring status
+                bool isScored = control.IsScored;
+                writer.Write(isScored);
+
+                // Get identifications for each member of user rights definition
+                // We don't bother converting to a list as it's unnecessary and unoptimized
+                IEnumerable<IUserRightsIdentifier> identifiers = control.itemsIdentifiers.Items.Cast<IUserRightsIdentifier>();
+
+                // Write number of identifiers
+                writer.Write(identifiers.Count());
+
+                // For each identifier in list, write identifier type and identifier
+                foreach (IUserRightsIdentifier identifier in identifiers)
+                {
+                    writer.Write((Int32)identifier.Type);
+                    writer.Write(identifier.Identifier);
+                }
+            }
+        }
+
+        private static void loadSecurityOptions(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get number of security option settings
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get type of sec option
+                ESecurityOptionType type = (ESecurityOptionType)reader.ReadInt32();
+
+                ISecurityOption secOption = null;
+
+                // Initialize secOption based on type
+                switch (type)
+                {
+                    case ESecurityOptionType.RegistryComboBox:
+                        secOption = new ControlRegistryComboBox();
+                        break;
+                    case ESecurityOptionType.RegistryTextRegex:
+                        secOption = new ControlRegistryTextRegex();
+                        break;
+                    case ESecurityOptionType.RegistryRange:
+                        secOption = new ControlRegistryRange();
+                        break;
+                    case ESecurityOptionType.RegistryMultiLine:
+                        secOption = new ControlRegistryMultiLine();
+                        break;
+                    case ESecurityOptionType.SeceditComboBox:
+                        secOption = new ControlSeceditComboBox();
+                        break;
+                    case ESecurityOptionType.SeceditTextRegex:
+                        secOption = new ControlSeceditTextRegex();
+                        break;
+                }
+
+                if (secOption == null)
+                {
+                    // Uh oh.. corrupted file?
+                    throw new Exception("Unknown security option type. Possible configuration file corruption.");
+                }
+
+                // Parse information based on type
+                secOption.Parse(reader);
+
+                string identifier = secOption.Identifier();
+
+                // Search for matching control to copy information to
+                foreach (ISecurityOption control in mainWindow.itemsSecurityOptions.Items.OfType<ISecurityOption>())
+                {
+                    // Check if control is a match
+                    if (type == control.Type && identifier == control.Identifier())
+                    {
+                        // Copy information to displayed control
+                        secOption.CopyTo(control);
+
+                        // Found match, stop searching
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static void saveSecurityOptions(BinaryWriter writer, MainWindow mainWindow)
+        {
+            IEnumerable<ISecurityOption> items = mainWindow.itemsSecurityOptions.Items.OfType<ISecurityOption>();
+
+            // Write number of security option settings
+            writer.Write(items.Count());
+
+            // Loop over every element of items control and save
+            foreach (ISecurityOption secOption in items)
+            {
+                // Write type and interface
+                writer.Write((Int32)secOption.Type);
+                secOption.Write(writer);
             }
         }
     }

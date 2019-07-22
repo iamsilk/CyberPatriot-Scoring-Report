@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Configuration_Tool.Controls.SecOptions.ControlSeceditComboBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Configuration_Tool.Controls.SecOptions"
+             mc:Ignorable="d"
+             Height="20" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="txtHeader"/>
+        <CheckBox x:Name="checkBoxScored" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,5,0" Content="Scored"/>
+        <ComboBox x:Name="comboBox" Grid.Column="2"/>
+    </Grid>
+</UserControl>
