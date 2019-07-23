@@ -85,3 +85,6 @@ The parameters for this function are as follows in proper, incremental order:
 - `{2:0.00}` - Percentage value of awarded score divided by total available. The addition of `:0.00` within the text forces two decimal places on the formatting. Details on formatting can be found within Microsoft's [documentation for the string.format function](https://docs.microsoft.com/en-us/dotnet/api/system.string.format)
 - `{3}` - Date and time when the output file was generated based on score. Time is given in the system's time zone.
 - `{4}` - String where all the sections are placed. The "meat" of the output. Takes into account the other formatting file specified earlier.
+
+##Development
+To mess with the source code, for the C# aspects, you're only going to need a compiler. However, to change stuff with the installer, you're going to need [Microsoft Visual Studio Installer Projects Extensions](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects).
