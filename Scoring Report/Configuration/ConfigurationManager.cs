@@ -59,6 +59,8 @@ namespace Scoring_Report.Configuration
 
         public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 
+        public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
+
         public static void Startup(string startupParameter)
         {
             CurrentConfigPath = startupParameter;
@@ -149,6 +151,8 @@ namespace Scoring_Report.Configuration
                         loadUserRights(reader);
 
                         loadSecurityOptions(reader);
+
+                        loadInstalledPrograms(reader);
                     }
                 }
                 catch
@@ -364,6 +368,22 @@ namespace Scoring_Report.Configuration
                 {
                     SecurityOptions.Add(secOption);
                 }
+            }
+        }
+        private static void loadInstalledPrograms(BinaryReader reader)
+        {
+            InstalledPrograms.Clear();
+
+            // Get count of program configs
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get info of program config
+                string header = reader.ReadString();
+                bool installed = reader.ReadBoolean();
+
+                InstalledPrograms.Add(header, installed);
             }
         }
     }

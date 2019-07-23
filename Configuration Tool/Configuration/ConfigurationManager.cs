@@ -138,6 +138,8 @@ namespace Configuration_Tool.Configuration
                         loadUserRights(reader, mainWindow);
 
                         loadSecurityOptions(reader, mainWindow);
+
+                        loadInstalledPrograms(reader, mainWindow);
                     }
                 }
                 catch
@@ -217,6 +219,8 @@ namespace Configuration_Tool.Configuration
                     saveUserRights(writer, mainWindow);
 
                     saveSecurityOptions(writer, mainWindow);
+
+                    saveInstalledPrograms(writer, mainWindow);
                 }
             }
         }
@@ -597,6 +601,62 @@ namespace Configuration_Tool.Configuration
                 // Write type and interface
                 writer.Write((Int32)secOption.Type);
                 secOption.Write(writer);
+            }
+        }
+
+        private static void saveInstalledPrograms(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get list of controls and filter off unscored
+            IEnumerable<ControlSettingProgram> programs = mainWindow.listPrograms.Items.Cast<ControlSettingProgram>()
+                .Where(x => x.IsScored);
+
+            // Write number of programs
+            writer.Write(programs.Count());
+
+            // Loop over and write each programs details
+            foreach (ControlSettingProgram program in programs)
+            {
+                writer.Write(program.Header);
+                writer.Write(program.Installed);
+            }
+        }
+
+        private static void loadInstalledPrograms(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Get count of program configs
+            int count = reader.ReadInt32();
+            
+            for (int i = 0; i < count; i++)
+            {
+                // Get info of program config
+                string header = reader.ReadString();
+                bool installed = reader.ReadBoolean();
+
+                // Search for control with header matching config
+                ControlSettingProgram control = mainWindow.listPrograms.Items.Cast<ControlSettingProgram>()
+                    .FirstOrDefault(x => x.Header == header);
+
+                // If no control was found
+                if (control == null)
+                {
+                    // Create new instance of program
+                    control = new ControlSettingProgram();
+
+                    // Set properties
+                    control.Header = header;
+                    control.Installed = installed;
+
+                    // All written programs are scored
+                    control.IsScored = true;
+
+                    mainWindow.listPrograms.Items.Add(control);
+                }
+                else
+                {
+                    // Set other configs
+                    control.IsScored = true;
+                    control.Installed = installed;
+                }
             }
         }
     }
