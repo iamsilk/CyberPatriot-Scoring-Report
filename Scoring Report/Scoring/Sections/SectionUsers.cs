@@ -97,8 +97,6 @@ namespace Scoring_Report.Scoring.Sections
 
                             if (!isUser) continue;
 
-                            DirectoryEntry entry = (DirectoryEntry)user.GetUnderlyingObject();
-
                             // Check if password is scored/valid
                             if (settings.Password.IsScored)
                             {
