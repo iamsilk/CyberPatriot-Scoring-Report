@@ -11,10 +11,10 @@ If you have any suggestions, open a ticket tagged as suggestion and it will be a
 
 If anything is unclear and needs better explanation, feel free to ask. I hope the documentation here will be enough to explain. I have worked to comment nearly all the code to help explain aspects of this project to those just learning of this project.
 
-![Example Image of Scoring Report](https://github.com/Stephen3495/CyberPatriot-Scoring-Report/blob/master/Screenshot_2019-07-22%20Practice%20Scoring%20Report.png)
+![Example Image of Scoring Report](/Scoring%20Report%20Example%20Image.png)
 
 ## Installation:
-To install this Scoring Report, download and run the installer. You will also need .NET Framework 4.6.1 or later.
+To install this Scoring Report, download and run the latest installer from the [Releases tab](/releases). You will also need .NET Framework 4.6.1 or later.
 
 In the installation, two executables will be unpacked, the Configuration Tool and the Scoring Report. Both of these tools will be explained in their own sections.
 
@@ -85,3 +85,6 @@ The parameters for this function are as follows in proper, incremental order:
 - `{2:0.00}` - Percentage value of awarded score divided by total available. The addition of `:0.00` within the text forces two decimal places on the formatting. Details on formatting can be found within Microsoft's [documentation for the string.format function](https://docs.microsoft.com/en-us/dotnet/api/system.string.format)
 - `{3}` - Date and time when the output file was generated based on score. Time is given in the system's time zone.
 - `{4}` - String where all the sections are placed. The "meat" of the output. Takes into account the other formatting file specified earlier.
+
+## Development
+To mess with the source code, for the C# aspects, you're only going to need a compiler. However, to change stuff with the installer, you're going to need [Microsoft Visual Studio Installer Projects Extensions](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects).
