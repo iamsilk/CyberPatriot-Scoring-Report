@@ -23,8 +23,6 @@ Configuration Tool:
 	Clear configuration button
 
 Scoring Report:
-	Fix issue where checking password locks account out if password is incorrect
-
 	For competitors who do not know what an SID is, it may be intimidating and confusing
 
 	Optimization: Unload configurations which are not scored (not implemented prior to user rights)
