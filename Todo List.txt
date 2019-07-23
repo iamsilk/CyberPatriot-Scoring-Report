@@ -6,7 +6,6 @@ Total Project:
 	Remove/sort unnecessary usings
 
 	Add Scored Sections:
-	-Installed Programs
 	-Startup
 	-Shares
 	-Firewall
