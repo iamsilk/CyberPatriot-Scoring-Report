@@ -105,6 +105,9 @@ namespace Configuration_Tool.Controls
                                     // If name is invalid/unidentifiable
                                     if (string.IsNullOrWhiteSpace(name)) continue;
 
+                                    // Check if program is already listed, if so, continue
+                                    if (programs.Contains(name)) continue;
+
                                     // Add user-friendly name to programs list
                                     programs.Add(name);
                                 }
@@ -141,6 +144,9 @@ namespace Configuration_Tool.Controls
 
                                     // If name is invalid/unidentifiable
                                     if (string.IsNullOrWhiteSpace(name)) continue;
+
+                                    // Check if program is already listed, if so, continue
+                                    if (programs.Contains(name)) continue;
 
                                     // Add user-friendly name to programs list
                                     programs.Add(name);
