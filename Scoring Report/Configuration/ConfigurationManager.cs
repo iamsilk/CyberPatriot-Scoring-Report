@@ -87,6 +87,8 @@ namespace Scoring_Report.Configuration
             // If latest was after the last time we updated, load new config
             if (latestWriteTime > LastUpdated)
             {
+                LastUpdated = latestWriteTime;
+
                 loadConfig();
 
                 // Get new max score as new config might have introduced more/less points available
