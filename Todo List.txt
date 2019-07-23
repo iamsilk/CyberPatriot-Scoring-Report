@@ -17,7 +17,7 @@ Total Project:
 	-Windows Features
 	-Custom registry checks
 	-Forensics Questions
-	-Removal of unauthed users
+	-User exists checks
 
 Configuration Tool:
 	Add save on exit
