@@ -118,38 +118,46 @@ namespace Configuration_Tool.Controls
 
                 using (RegistryKey users = RegistryKey.OpenBaseKey(RegistryHive.Users, view))
                 {
-                    // Dictionary containing the parent key of programs and the name of the value containing the user-friendly name
-                    Dictionary<string, string> localMachineRegs = new Dictionary<string, string>
+                    // Loop over users subkeys
+                    foreach (string strUserKey in users.GetSubKeyNames())
                     {
-                        { @"Software\Microsoft\Windows\CurrentVersion\Uninstall", "DisplayName" },
-                        { @"Software\Classes\Installer\Products", "ProductName" }
-                    };
-
-                    // Loop over all users registries
-                    foreach (KeyValuePair<string, string> registry in localMachineRegs)
-                    {
-                        // Get containing key of programs
-                        using (RegistryKey key = users.OpenSubKey(registry.Key))
+                        // Get user's registry key
+                        using (RegistryKey userKey = users.OpenSubKey(strUserKey))
                         {
-                            // If key doesn't exist
-                            if (key == null) continue;
-
-                            // Loop over registry keys defining programs
-                            foreach (string strSubKey in key.GetSubKeyNames())
+                            // Dictionary containing the parent key of programs and the name of the value containing the user-friendly name
+                            Dictionary<string, string> localMachineRegs = new Dictionary<string, string>
                             {
-                                // Get handle to sub key
-                                using (RegistryKey subKey = key.OpenSubKey(strSubKey))
+                                { @"Software\Microsoft\Windows\CurrentVersion\Uninstall", "DisplayName" },
+                                { @"Software\Classes\Installer\Products", "ProductName" }
+                            };
+
+                            // Loop over all the user's registries
+                            foreach (KeyValuePair<string, string> registry in localMachineRegs)
+                            {
+                                // Get containing key of programs
+                                using (RegistryKey key = userKey.OpenSubKey(registry.Key))
                                 {
-                                    string name = subKey.GetValue(registry.Value) as string;
+                                    // If key doesn't exist
+                                    if (key == null) continue;
 
-                                    // If name is invalid/unidentifiable
-                                    if (string.IsNullOrWhiteSpace(name)) continue;
+                                    // Loop over registry keys defining programs
+                                    foreach (string strSubKey in key.GetSubKeyNames())
+                                    {
+                                        // Get handle to sub key
+                                        using (RegistryKey subKey = key.OpenSubKey(strSubKey))
+                                        {
+                                            string name = subKey.GetValue(registry.Value) as string;
 
-                                    // Check if program is already listed, if so, continue
-                                    if (programs.Contains(name)) continue;
+                                            // If name is invalid/unidentifiable
+                                            if (string.IsNullOrWhiteSpace(name)) continue;
 
-                                    // Add user-friendly name to programs list
-                                    programs.Add(name);
+                                            // Check if program is already listed, if so, continue
+                                            if (programs.Contains(name)) continue;
+
+                                            // Add user-friendly name to programs list
+                                            programs.Add(name);
+                                        }
+                                    }
                                 }
                             }
                         }
