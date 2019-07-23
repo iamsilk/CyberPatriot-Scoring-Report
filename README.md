@@ -1,7 +1,7 @@
 # CyberPatriot Scoring Report
 An unofficial practice scoring report for CyberPatriot competition practice.
 
-Developed in C#, and WPF, the idea of this project is to provide the CyberPatriot community with an open source scoring program. Being open source, additions can be easily added and worked on by the community.
+Developed in C# and WPF, the idea of this project is to provide the CyberPatriot community with an open source scoring program. Being open source, additions can be easily added and worked on by the community.
 
 I, Stephen White, am also a competitor in CyberPatriot and CyberTitan. This is my first public project so any feedback is greatly appreciated.
 
