@@ -118,7 +118,7 @@ namespace Configuration_Tool.Configuration
                     throw new Exception("Couldn't find main window while loading configuration.");
                 }
                 
-                //try
+                try
                 {
                     // Binary reader for parsing of data
                     using (BinaryReader reader = new BinaryReader(ConfigFileStream))
@@ -140,12 +140,12 @@ namespace Configuration_Tool.Configuration
                         loadSecurityOptions(reader, mainWindow);
                     }
                 }
-                //catch
-                //{
-                //    MessageBox.Show("There was an error loading the configuration. Information that could be recovered has been loaded." +
-                //        Environment.NewLine + "You may be using an outdated configuration file." +
-                //        Environment.NewLine + "Please resave the configuration with the recovered information.");
-                //}
+                catch
+                {
+                    MessageBox.Show("There was an error loading the configuration. Information that could be recovered has been loaded." +
+                        Environment.NewLine + "You may be using an outdated configuration file." +
+                        Environment.NewLine + "Please resave the configuration with the recovered information.");
+                }
             }
         }
 
