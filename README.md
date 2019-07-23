@@ -11,7 +11,7 @@ If you have any suggestions, open a ticket tagged as suggestion and it will be a
 
 If anything is unclear and needs better explanation, feel free to ask. I hope the documentation here will be enough to explain. I have worked to comment nearly all the code to help explain aspects of this project to those just learning of this project.
 
-![Example Image of Scoring Report](https://github.com/Stephen3495/CyberPatriot-Scoring-Report/blob/master/Screenshot_2019-07-22%20Practice%20Scoring%20Report.png)
+![Example Image of Scoring Report](/Scoring%20Report%20Example%20Image.png)
 
 ## Installation:
 To install this Scoring Report, download and run the installer. You will also need .NET Framework 4.6.1 or later.
