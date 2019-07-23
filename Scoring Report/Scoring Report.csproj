@@ -117,6 +117,7 @@
     <Compile Include="Scoring\ScoringManager.cs" />
     <Compile Include="Scoring\Sections\SectionAuditPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionGroups.cs" />
+    <Compile Include="Scoring\Sections\SectionInstalledPrograms.cs" />
     <Compile Include="Scoring\Sections\SectionLockoutPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionPasswordPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionSecurityOptions.cs" />
