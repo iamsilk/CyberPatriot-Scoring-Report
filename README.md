@@ -42,6 +42,10 @@ All configurations can be saved by clicking the menu item File -> Save or Save A
 
 Multiple output files can be specified within the Advanced tab. More details are provided within the **Scoring Report** section.
 
+To prepare the system for practicing, you can remove the Configuration Tool by clicking the menu item `File -> Remove Configuration Tool`. This will remove the Configuration Tool.exe and shortcut for all on the system. Nothing else is affected by this removal. 
+
+The Configuration file can still be copied to a system with the Configuration Tool or a copy of the Configuration Tool executable can be placed on the machine to read/modify the configuration again. Countermeasures for doing this so simply may be placed in the future to restrict such easy accessibility to answers on a system.
+
 ## Scoring Report
 The Scoring Report is a Windows Service which scores the users progress based on comparing the configuration within the Configuration.dat file in the installation directory with the systems settings.
 
