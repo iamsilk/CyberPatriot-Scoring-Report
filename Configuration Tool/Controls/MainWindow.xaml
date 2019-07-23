@@ -475,6 +475,19 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Installed Programs">
+                    <Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
+                            <ItemsControl x:Name="listPrograms" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="local:ControlSettingProgram">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <Grid>
 
