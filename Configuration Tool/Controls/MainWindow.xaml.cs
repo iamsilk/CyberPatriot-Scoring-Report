@@ -47,6 +47,8 @@ namespace Configuration_Tool.Controls
                 startupParameter = commandLineArgs[1];
             }
 
+            PopulateProgramsList();
+
             ConfigurationManager.Startup(startupParameter);
 
             #if !DEBUG
@@ -266,6 +268,21 @@ namespace Configuration_Tool.Controls
             {
                 // Remove from list box
                 ConfigurationManager.OutputFiles.Remove(file);
+            }
+        }
+
+        private void PopulateProgramsList()
+        {
+            // Get list of programs
+            List<string> programs = ControlSettingProgram.GetPrograms();
+
+            // Loop over list of programs
+            foreach (string program in programs)
+            {
+                ControlSettingProgram control = new ControlSettingProgram();
+                control.Header = program;
+
+                listPrograms.Items.Add(control);
             }
         }
     }
