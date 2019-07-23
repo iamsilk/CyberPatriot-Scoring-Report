@@ -71,6 +71,10 @@ namespace Scoring_Report.Configuration
 
         public ScoredItem<string> Password { get; private set; } = new ScoredItem<string>("", false);
 
+        public DateTime PasswordLastChecked { get; set; } = DateTime.MinValue;
+
+        public bool PasswordLastStatus { get; set; } = true;
+
         public ScoredItem<bool> PasswordExpired { get; private set; } = new ScoredItem<bool>(false, false);
 
         public ScoredItem<bool> PasswordChangeDisabled { get; private set; } = new ScoredItem<bool>(false, false);

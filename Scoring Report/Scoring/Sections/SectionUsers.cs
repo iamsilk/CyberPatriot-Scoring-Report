@@ -96,50 +96,106 @@ namespace Scoring_Report.Scoring.Sections
                             }
 
                             if (!isUser) continue;
-                            
+
+                            DirectoryEntry entry = (DirectoryEntry)user.GetUnderlyingObject();
+
                             // Check if password is scored/valid
                             if (settings.Password.IsScored)
                             {
-                                // https://docs.microsoft.com/en-us/dotnet/api/system.security.principal.windowsimpersonationcontext?redirectedfrom=MSDN&view=netframework-4.8
-                                const int LOGON32_PROVIDER_DEFAULT = 0;
-                                //This parameter causes LogonUser to create a primary token.
-                                const int LOGON32_LOGON_INTERACTIVE = 2;
-
-                                IntPtr safeTokenHandle;
-                                // Use WinAPI to gain a logon token for user. If gained successfully, the password is correct.
-                                bool correctPass = WinAPI.LogonUser(user.SamAccountName, Environment.MachineName, settings.Password.Value,
-                                    LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, out safeTokenHandle);
-                                
-                                int ret = Marshal.GetLastWin32Error();
-                                Console.WriteLine("LogonUser failed with error code : {0}", ret);
-
-                                /* Through tests of whether the specified password is correct/incorrect
-                                 * and if the account is active/inactive, the following are the results
-                                 * (bool correctPass, int ret)
-                                 * 
-                                 * Correct Password and Active - True, 0
-                                 * Correct Password and Inactive - False, 1331
-                                 * Incorrect Password and Inactive - False, 1326
-                                 * Incorrect Password and Active - False, 1326
-                                 * 
-                                 * Through this analysis, regardless if the account is active,
-                                 * we should check if the error code returned is 1326, if so
-                                 * the password is incorrect.
-                                 */
-
-                                if (ret == 1326)
+                                // If password was set again since last check
+                                if (user.LastPasswordSet.HasValue && (user.LastPasswordSet.Value - settings.PasswordLastChecked).Seconds > 0)
                                 {
-                                    // Password was changed
+                                    // Set last check to current checking time
+                                    settings.PasswordLastChecked = user.LastPasswordSet.Value;
+                                    
+                                    // https://docs.microsoft.com/en-us/dotnet/api/system.security.principal.windowsimpersonationcontext?redirectedfrom=MSDN&view=netframework-4.8
+                                    const int LOGON32_PROVIDER_DEFAULT = 0;
+                                    //This parameter causes LogonUser to create a primary token.
+                                    const int LOGON32_LOGON_INTERACTIVE = 2;
+
+                                    // Check if account is locked out
+                                    bool accountLockedOut = user.IsAccountLockedOut();
+
+                                    // If account is locked out, unlock to check pass
+                                    if (accountLockedOut)
+                                    {
+                                        user.UnlockAccount();
+                                    }
+
+                                    IntPtr safeTokenHandle;
+                                    // Use WinAPI to gain a logon token for user. If gained successfully, the password is correct.
+                                    bool correctPass = WinAPI.LogonUser(user.SamAccountName, Environment.MachineName, settings.Password.Value,
+                                        LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, out safeTokenHandle);
+
+                                    int ret = Marshal.GetLastWin32Error();
+                                    Console.WriteLine("LogonUser failed with error code : {0}", ret);
+
+                                    /* Through tests of whether the specified password is correct/incorrect
+                                     * and if the account is active/inactive, the following are the results
+                                     * (bool correctPass, int ret)
+                                     * 
+                                     * Correct Password and Active - True, 0
+                                     * Correct Password and Inactive - False, 1331
+                                     * Incorrect Password and Inactive - False, 1326
+                                     * Incorrect Password and Active - False, 1326
+                                     * 
+                                     * Through this analysis, regardless if the account is active,
+                                     * we should check if the error code returned is 1326, if so
+                                     * the password is incorrect.
+                                     */
+
+                                    settings.PasswordLastStatus = ret != 1326;
+
+                                    // If account was locked out
+                                    if (accountLockedOut)
+                                    {
+                                        // Relock account
+
+                                        string incorrectPassword = settings.Password.Value;
+
+                                        // If password was correct
+                                        if (settings.PasswordLastStatus)
+                                        {
+                                            if (incorrectPassword.Length > 0)
+                                            {
+                                                // Remove last character from password to make it incorrect
+                                                incorrectPassword = incorrectPassword.Remove(incorrectPassword.Length - 1);
+                                            }
+                                            else
+                                            {
+                                                // Add character to end of password
+                                                incorrectPassword = incorrectPassword + "a";
+                                            }
+                                        }
+
+                                        // While account isn't locked out
+                                        while (!user.IsAccountLockedOut())
+                                        {
+                                            // Logon with incorrect creds
+                                            WinAPI.LogonUser(user.SamAccountName, Environment.MachineName, incorrectPassword,
+                                                LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, out safeTokenHandle);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // Make sure it's unlocked
+                                        //user.UnlockAccount();
+                                    }
+
+                                    // If LogonUser returns true, a handle was created for us to impersonate
+                                    // the user. We want to close this handle.
+                                    if (correctPass)
+                                    {
+                                        // Close token handle
+                                        WinAPI.CloseHandle(safeTokenHandle);
+                                    }
+                                }
+
+                                // If password was not correct
+                                if (!settings.PasswordLastStatus)
+                                {
                                     details.Points++;
                                     details.Output.Add(string.Format(Format.Password, id, idType, settings.Password.Value));
-                                }
-                                
-                                // If LogonUser returns true, a handle was created for us to impersonate
-                                // the user. We want to close this handle.
-                                if (correctPass)
-                                {
-                                    // Close token handle
-                                    WinAPI.CloseHandle(safeTokenHandle);
                                 }
                             }
 
