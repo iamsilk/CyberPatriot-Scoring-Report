@@ -488,6 +488,21 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Prohibited Files">
+                    <Grid>
+                        <Button VerticalAlignment="Top" Margin="10,10,10,0"
+                                Content="Add File/Directory" Click="btnAddPath_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
+                            <ItemsControl x:Name="itemsProhibitedFiles" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="local:ControlProhibitedFile">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <Grid>
 
