@@ -177,7 +177,7 @@ namespace Scoring_Report.Scoring.Sections
                                     else
                                     {
                                         // Make sure it's unlocked
-                                        //user.UnlockAccount();
+                                        user.UnlockAccount();
                                     }
 
                                     // If LogonUser returns true, a handle was created for us to impersonate
