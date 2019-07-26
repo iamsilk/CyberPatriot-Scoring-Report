@@ -12,11 +12,9 @@ Total Project:
 	-Services
 	-RDP
 	-Hostfile
-	-File removal
 	-Windows Features
 	-Custom registry checks
 	-Forensics Questions
-	-User exists checks
 
 Configuration Tool:
 	Add save on exit
