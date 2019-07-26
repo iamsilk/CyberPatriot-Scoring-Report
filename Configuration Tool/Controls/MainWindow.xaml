@@ -447,7 +447,7 @@
                 </TabItem>
                 <TabItem Header="Local Users">
                     <Grid>
-                        <Button VerticalAlignment="Bottom" Margin="10,0,10,415" 
+                        <Button VerticalAlignment="Top" Margin="10,10,10,5" 
                                 Content="Add User Configuration Row" Click="btnAddUserConfig_Click"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
                             <ItemsControl x:Name="listUserConfigs" HorizontalContentAlignment="Stretch">

@@ -76,13 +76,13 @@ namespace Scoring_Report.Scoring.Sections
 
                         if (settings.IdentifiedBySID)
                         {
-                                id = settings.SecurityID;
-                                idType = "SID";
+                            id = settings.SecurityID;
+                            idType = "SID";
                         }
                         else
                         {
-                                id = settings.Username;
-                                idType = "Username";
+                            id = settings.Username;
+                            idType = "Username";
                         }
 
                         // For each user on the machine
@@ -233,6 +233,7 @@ namespace Scoring_Report.Scoring.Sections
                                 details.Output.Add(string.Format(Format.AccountLockedOut, id, idType, settings.AccountLockedOut.Value));
                             }
                         }
+
                         if (settings.Exists.IsScored && settings.Exists.Value == userexists)
                         {
                             details.Points++;
