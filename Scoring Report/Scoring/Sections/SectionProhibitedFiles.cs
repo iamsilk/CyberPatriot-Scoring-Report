@@ -22,10 +22,12 @@ namespace Scoring_Report.Scoring.Sections
         {
             return ConfigurationManager.ProhibitedFiles.Count;
         }
+
         public SectionDetails GetScore()
         {
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
+            // Loop over all prohibited files
             foreach (string filelocation in ConfigurationManager.ProhibitedFiles)
             {
                 // Get attributes of files, if -1 is returned, no file/directory/ADS was found
@@ -35,6 +37,7 @@ namespace Scoring_Report.Scoring.Sections
                     details.Output.Add(string.Format(Format, filelocation));
                 }
             }
+
             return details;
         }
     }

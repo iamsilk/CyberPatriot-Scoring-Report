@@ -387,6 +387,7 @@ namespace Scoring_Report.Configuration
                 InstalledPrograms.Add(header, installed);
             }
         }
+
         private static void loadProhibitedFiles(BinaryReader reader)
         {
             ProhibitedFiles.Clear();
