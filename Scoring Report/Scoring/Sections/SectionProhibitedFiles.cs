@@ -28,21 +28,8 @@ namespace Scoring_Report.Scoring.Sections
 
             foreach (string filelocation in ConfigurationManager.ProhibitedFiles)
             {
-                bool fileExists = false;
-
-                if(WinAPI.GetFileAttributes(filelocation) != -1)
-                {
-                    fileExists = true;
-                }
-                if(filelocation.ToUpper().Contains("C:\\Windows\\System32".ToUpper()))
-                {
-                    string sysnativeFile = filelocation.ToUpper().Replace("C:\\WINDOWS\\SYSTEM32", "C:\\WINDOWS\\SYSNATIVE");
-                    if (WinAPI.GetFileAttributes(sysnativeFile) != -1)
-                    {
-                        fileExists = true;
-                    }
-                }
-                if(!fileExists)
+                // Get attributes of files, if -1 is returned, no file/directory/ADS was found
+                if(WinAPI.GetFileAttributes(filelocation) == -1)
                 {
                     details.Points++;
                     details.Output.Add(string.Format(Format, filelocation));
