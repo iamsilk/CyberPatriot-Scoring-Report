@@ -20,6 +20,7 @@ namespace Scoring_Report.Scoring.Sections
             // {1} - Identifier type
             // {2} - Scored value
 
+            public const string Exists = "User {0} ({1}) - Exists on local machine ({2})";
             public const string Password = "User {0} ({1}) - Password changed from default\r\n";
             public const string PasswordExpired = "User {0} ({1}) - Password must be changed at next logon set to {2}\r\n";
             public const string PasswordChangeDisabled = "User {0} ({1}) - Password change disabled set to {2}\r\n";
@@ -38,6 +39,7 @@ namespace Scoring_Report.Scoring.Sections
             {
                 // Check all scorable parameters and increment
                 // max by one for each scored parameter
+                if (settings.Exists.IsScored) max++;
                 if (settings.Password.IsScored) max++;
                 if (settings.PasswordExpired.IsScored) max++;
                 if (settings.PasswordChangeDisabled.IsScored) max++;
@@ -62,41 +64,46 @@ namespace Scoring_Report.Scoring.Sections
                 // Create searcher for active directory
                 using (PrincipalSearcher searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
-                    // For each user on the machine
-                    foreach (UserPrincipal user in searcher.FindAll())
+                    // For each user in configuration
+                    foreach (UserSettings settings in ConfigurationManager.Users)
                     {
-                        // For each user in configuration
-                        foreach (UserSettings settings in ConfigurationManager.Users)
-                        {
-                            // Store identifier and type temporarily for output
-                            string id = "";
-                            string idType = "";
+                        // Keep a boolean value for detecting if the user exists
+                        bool userexists = false;
 
+                        // Store identifier and type temporarily for output
+                        string id = "";
+                        string idType = "";
+
+                        if (settings.IdentifiedBySID)
+                        {
+                            id = settings.SecurityID;
+                            idType = "SID";
+                        }
+                        else
+                        {
+                            id = settings.Username;
+                            idType = "Username";
+                        }
+
+                        // For each user on the machine
+                        foreach (UserPrincipal user in searcher.FindAll())
+                        {
                             // Check if users are the same
                             bool isUser = false;
                             if (settings.IdentifiedBySID)
                             {
                                 if (settings.SecurityID == user.Sid.Value)
-                                {
                                     isUser = true;
-
-                                    id = settings.SecurityID;
-                                    idType = "SID";
-                                }
                             }
                             else
                             {
                                 if (settings.Username == user.SamAccountName)
-                                {
                                     isUser = true;
-                                    
-                                    id = settings.Username;
-                                    idType = "Username";
-                                }
                             }
 
                             if (!isUser) continue;
 
+                            userexists = true;
                             // Check if password is scored/valid
                             if (settings.Password.IsScored)
                             {
@@ -105,7 +112,7 @@ namespace Scoring_Report.Scoring.Sections
                                 {
                                     // Set last check to current checking time
                                     settings.PasswordLastChecked = user.LastPasswordSet.Value;
-                                    
+
                                     // https://docs.microsoft.com/en-us/dotnet/api/system.security.principal.windowsimpersonationcontext?redirectedfrom=MSDN&view=netframework-4.8
                                     const int LOGON32_PROVIDER_DEFAULT = 0;
                                     //This parameter causes LogonUser to create a primary token.
@@ -225,6 +232,12 @@ namespace Scoring_Report.Scoring.Sections
                                 details.Points++;
                                 details.Output.Add(string.Format(Format.AccountLockedOut, id, idType, settings.AccountLockedOut.Value));
                             }
+                        }
+
+                        if (settings.Exists.IsScored && settings.Exists.Value == userexists)
+                        {
+                            details.Points++;
+                            details.Output.Add(string.Format(Format.Exists, id, idType, settings.Exists.Value));
                         }
                     }
                 }

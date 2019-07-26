@@ -69,6 +69,8 @@ namespace Configuration_Tool.Configuration
             }
         }
 
+        public ScoredItem<bool> Exists { get; private set; } = new ScoredItem<bool>(false, false);
+
         public ScoredItem<string> Password { get; private set; } = new ScoredItem<string>("", false);
 
         public ScoredItem<bool> PasswordExpired { get; private set; } = new ScoredItem<bool>(false, false);
@@ -98,6 +100,7 @@ namespace Configuration_Tool.Configuration
             settings.SecurityID = reader.ReadString();
 
             // Get other settings
+            settings.Exists = ScoredItem<bool>.ParseBoolean(reader);
             settings.Password = ScoredItem<string>.ParseString(reader);
             settings.PasswordExpired = ScoredItem<bool>.ParseBoolean(reader);
             settings.PasswordChangeDisabled = ScoredItem<bool>.ParseBoolean(reader);
@@ -120,6 +123,7 @@ namespace Configuration_Tool.Configuration
             writer.Write(SecurityID);
 
             // Write other settings
+            Exists.Write(writer);
             Password.Write(writer);
             PasswordExpired.Write(writer);
             PasswordChangeDisabled.Write(writer);
