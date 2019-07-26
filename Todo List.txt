@@ -12,7 +12,6 @@ Total Project:
 	-Services
 	-RDP
 	-Hostfile
-	-File removal
 	-Windows Features
 	-Custom registry checks
 	-Forensics Questions
