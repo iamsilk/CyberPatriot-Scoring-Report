@@ -35,5 +35,7 @@ namespace Scoring_Report
 
         [DllImport("advapi32")]
         public static extern uint LsaClose(IntPtr PolicyHandle);
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern int GetFileAttributes(string fileName);
     }
 }

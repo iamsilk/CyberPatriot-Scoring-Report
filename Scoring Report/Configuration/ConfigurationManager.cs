@@ -60,6 +60,7 @@ namespace Scoring_Report.Configuration
         public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 
         public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
+        public static List<string> ProhibitedFiles { get; } = new List<string>();
 
         public static void Startup(string startupParameter)
         {
@@ -151,6 +152,8 @@ namespace Scoring_Report.Configuration
                         loadSecurityOptions(reader);
 
                         loadInstalledPrograms(reader);
+
+                        loadProhibitedFiles(reader);
                     }
                 }
                 catch
@@ -382,6 +385,22 @@ namespace Scoring_Report.Configuration
                 bool installed = reader.ReadBoolean();
 
                 InstalledPrograms.Add(header, installed);
+            }
+        }
+
+        private static void loadProhibitedFiles(BinaryReader reader)
+        {
+            ProhibitedFiles.Clear();
+
+            // Get count of prohibited files
+            int filecount = reader.ReadInt32();
+
+            for (int i = 0; i < filecount; i++)
+            {
+                // Get File Location
+                string fileLocation = reader.ReadString();
+
+                ProhibitedFiles.Add(fileLocation);
             }
         }
     }
