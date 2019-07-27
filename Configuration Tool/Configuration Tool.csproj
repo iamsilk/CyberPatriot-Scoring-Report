@@ -77,6 +77,10 @@
     <Compile Include="Configuration\Range.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
+    <Page Include="Controls\ControlProhibitedFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ControlSettingProgram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +165,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Controls\ControlProhibitedFile.xaml.cs">
+      <DependentUpon>ControlProhibitedFile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlSettingProgram.xaml.cs">
       <DependentUpon>ControlSettingProgram.xaml</DependentUpon>
     </Compile>

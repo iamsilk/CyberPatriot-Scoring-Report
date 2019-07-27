@@ -285,5 +285,12 @@ namespace Configuration_Tool.Controls
                 listPrograms.Items.Add(control);
             }
         }
+
+        private void btnAddPath_Click(object sender, RoutedEventArgs e)
+        {
+            ControlProhibitedFile control = new ControlProhibitedFile();
+
+            itemsProhibitedFiles.Items.Add(control);
+        }
     }
 }

@@ -140,6 +140,8 @@ namespace Configuration_Tool.Configuration
                         loadSecurityOptions(reader, mainWindow);
 
                         loadInstalledPrograms(reader, mainWindow);
+
+                        loadProhibitedFiles(reader, mainWindow);
                     }
                 }
                 catch
@@ -221,6 +223,8 @@ namespace Configuration_Tool.Configuration
                     saveSecurityOptions(writer, mainWindow);
 
                     saveInstalledPrograms(writer, mainWindow);
+
+                    saveProhibitedFiles(writer, mainWindow);
                 }
             }
         }
@@ -657,6 +661,41 @@ namespace Configuration_Tool.Configuration
                     control.IsScored = true;
                     control.Installed = installed;
                 }
+            }
+        }
+
+        private static void loadProhibitedFiles(BinaryReader reader, MainWindow mainWindow)
+        {
+            mainWindow.itemsProhibitedFiles.Items.Clear();
+
+            // Get count of prohibited files
+            int filecount = reader.ReadInt32();
+
+            for (int i = 0; i < filecount; i++)
+            {
+                // Get File Location
+                string fileLocation = reader.ReadString();
+
+                // Create control
+                ControlProhibitedFile control = new ControlProhibitedFile();
+                control.Path = fileLocation;
+
+                // Add control to items control
+                mainWindow.itemsProhibitedFiles.Items.Add(control);
+            }
+        }
+
+        private static void saveProhibitedFiles(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Get/write number of prohibited files
+            int count = mainWindow.itemsProhibitedFiles.Items.Count;
+            writer.Write(count);
+
+            // Loop over each prohibited file
+            foreach (ControlProhibitedFile control in mainWindow.itemsProhibitedFiles.Items)
+            {
+                // Write paths
+                writer.Write(control.Path);
             }
         }
     }
