@@ -64,11 +64,13 @@
     <Compile Include="Configuration\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\EAuditSettings.cs" />
+    <Compile Include="Configuration\EConfigType.cs" />
     <Compile Include="Configuration\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
     <Compile Include="Configuration\Groups\MemberUsername.cs" />
+    <Compile Include="Configuration\IConfig.cs" />
     <Compile Include="Configuration\IUserRightsIdentifier.cs">
       <Generator>MSBuild:Compile</Generator>
     </Compile>
@@ -76,6 +78,16 @@
     <Compile Include="Configuration\PasswordPolicy.cs" />
     <Compile Include="Configuration\Range.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
+    <Compile Include="Configuration\Sections\ConfigAuditPolicy.cs" />
+    <Compile Include="Configuration\Sections\ConfigGroups.cs" />
+    <Compile Include="Configuration\Sections\ConfigInstalledPrograms.cs" />
+    <Compile Include="Configuration\Sections\ConfigLockoutPolicy.cs" />
+    <Compile Include="Configuration\Sections\ConfigOther.cs" />
+    <Compile Include="Configuration\Sections\ConfigPasswordPolicy.cs" />
+    <Compile Include="Configuration\Sections\ConfigProhibitedFiles.cs" />
+    <Compile Include="Configuration\Sections\ConfigSecurityOptions.cs" />
+    <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
+    <Compile Include="Configuration\Sections\ConfigUsers.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
     <Page Include="Controls\ControlProhibitedFile.xaml">
       <SubType>Designer</SubType>
