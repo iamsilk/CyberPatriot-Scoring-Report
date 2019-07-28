@@ -142,6 +142,8 @@ namespace Configuration_Tool.Configuration
                         loadInstalledPrograms(reader, mainWindow);
 
                         loadProhibitedFiles(reader, mainWindow);
+
+                        loadOther(reader, mainWindow);
                     }
                 }
                 catch
@@ -225,6 +227,8 @@ namespace Configuration_Tool.Configuration
                     saveInstalledPrograms(writer, mainWindow);
 
                     saveProhibitedFiles(writer, mainWindow);
+
+                    saveOther(writer, mainWindow);
                 }
             }
         }
@@ -697,6 +701,18 @@ namespace Configuration_Tool.Configuration
                 // Write paths
                 writer.Write(control.Path);
             }
+        }
+
+        private static void loadOther(BinaryReader reader, MainWindow mainWindow)
+        {
+            // Load remote desktop info
+            mainWindow.rdpRegistry.Parse(reader);
+        }
+
+        private static void saveOther(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Save remote desktop info
+            mainWindow.rdpRegistry.Write(writer);
         }
     }
 }

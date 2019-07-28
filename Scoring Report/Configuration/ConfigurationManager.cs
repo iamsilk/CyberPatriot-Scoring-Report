@@ -60,7 +60,10 @@ namespace Scoring_Report.Configuration
         public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 
         public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
+
         public static List<string> ProhibitedFiles { get; } = new List<string>();
+
+        public static RegistryComboBox RemoteDesktopStatus = null;
 
         public static void Startup(string startupParameter)
         {
@@ -154,6 +157,8 @@ namespace Scoring_Report.Configuration
                         loadInstalledPrograms(reader);
 
                         loadProhibitedFiles(reader);
+
+                        loadOther(reader);
                     }
                 }
                 catch
@@ -402,6 +407,13 @@ namespace Scoring_Report.Configuration
 
                 ProhibitedFiles.Add(fileLocation);
             }
+        }
+        
+        private static void loadOther(BinaryReader reader)
+        {
+            // Load remote desktop info
+            RemoteDesktopStatus = new RegistryComboBox();
+            RemoteDesktopStatus.Parse(reader);
         }
     }
 }

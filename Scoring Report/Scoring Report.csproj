@@ -119,6 +119,7 @@
     <Compile Include="Scoring\Sections\SectionGroups.cs" />
     <Compile Include="Scoring\Sections\SectionInstalledPrograms.cs" />
     <Compile Include="Scoring\Sections\SectionLockoutPolicy.cs" />
+    <Compile Include="Scoring\Sections\SectionOther.cs" />
     <Compile Include="Scoring\Sections\SectionPasswordPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionProhibitedFiles.cs" />
     <Compile Include="Scoring\Sections\SectionSecurityOptions.cs" />
