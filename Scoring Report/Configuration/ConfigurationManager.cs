@@ -94,9 +94,6 @@ namespace Scoring_Report.Configuration
             if (latestWriteTime > LastUpdated)
             {
                 loadConfig();
-
-                // Get new max score as new config might have introduced more/less points available
-                ScoringManager.GetMaxScore();
             }
         }
 

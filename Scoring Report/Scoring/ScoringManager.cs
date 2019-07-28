@@ -44,18 +44,6 @@ namespace Scoring_Report.Scoring
                     }
                 }
             }
-
-            GetMaxScore();
-        }
-
-        public static void GetMaxScore()
-        {
-            MaxScore = 0;
-
-            foreach (ISection section in ScoringSections)
-            {
-                MaxScore += section.MaxScore();
-            }
         }
 
         public static void CheckAndOutput()
@@ -75,11 +63,20 @@ namespace Scoring_Report.Scoring
             // Get information we use from secedit for use in sections
             SecurityPolicyManager.GetSeceditInfo();
 
+            // Reset max score
+            MaxScore = 0;
+
             // Enumerate all scoring sections
             foreach (ISection section in ScoringSections)
             {
+                // Get max score
+                int maxScore = section.MaxScore();
+
                 // Optimization: Check if anything is scored, skip if not
-                if (section.MaxScore() == 0) continue;
+                if (maxScore == 0) continue;
+
+                // Increment total max score by section's
+                MaxScore += maxScore;
 
                 // Get scoring details for specific section
                 SectionDetails sectionScore = section.GetScore();
