@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using Configuration_Tool.Controls.SecOptions;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Configuration_Tool.Configuration
 {
@@ -28,11 +29,11 @@ namespace Configuration_Tool.Configuration
 
         public static bool LoadedConfigFromFile { get; private set; } = false;
 
-        public static FileStream ConfigFileStream { get; private set; } = null;
-
         public static List<IConfig> ConfigSections { get; } = new List<IConfig>();
 
         public static byte[] DefaultConfiguration { get; set; } = null;
+
+        public static byte[] CurrentConfiguration { get; set; } = null;
 
         /* Reason for multiple output files support is in case
          * any users want to setup their own scripts/programs
@@ -139,12 +140,11 @@ namespace Configuration_Tool.Configuration
                 return;
             }
 
-            /* Open file with only read permissions.
-             * We don't need write permissions as we want
-             * as little file permission errors to occur
-             * as possible. We do not need write permissions
-             * until it is time to save */
-            using (ConfigFileStream = File.Open(CurrentConfigPath, FileMode.Open, FileAccess.Read))
+            // Get all bytes from config file
+            CurrentConfiguration = File.ReadAllBytes(CurrentConfigPath);
+
+            // Create stream to go over file's data
+            using (MemoryStream bufferStream = new MemoryStream(CurrentConfiguration))
             {
                 // Get main window
                 MainWindow mainWindow = FindMainWindow();
@@ -156,7 +156,7 @@ namespace Configuration_Tool.Configuration
                     throw new Exception("Couldn't find main window while loading configuration.");
                 }
 
-                bool error = LoadFromStream(ConfigFileStream, mainWindow);
+                bool error = LoadFromStream(bufferStream, mainWindow);
 
                 // An error occured during loading, alert user and continue
                 if (error)
@@ -215,8 +215,7 @@ namespace Configuration_Tool.Configuration
                 {
                     // Set main window
                     config.MainWindow = mainWindow;
-
-
+                    
                     try
                     {
                         // Load config
@@ -265,20 +264,32 @@ namespace Configuration_Tool.Configuration
             // Update all bindings
             mainWindow.UpdateBindingSources();
 
-            // Get stream
-            using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
+            // Setup memory stream to save buffer for later comparisons on exiting/loading
+            using (MemoryStream bufferStream = new MemoryStream())
             {
-                SaveToStream(ConfigFileStream, mainWindow);
+                // Save to buffer stream
+                int length = SaveToStream(bufferStream, mainWindow);
+
+                // Get and resize buffer to true length
+                byte[] buffer = bufferStream.GetBuffer();
+                Array.Resize(ref buffer, length);
+
+                // Store buffer in global variable
+                CurrentConfiguration = buffer;
             }
+
+            File.WriteAllBytes(CurrentConfigPath, CurrentConfiguration);
         }
 
-        public static void SaveToStream(Stream stream, MainWindow mainWindow)
+        public static int SaveToStream(Stream stream, MainWindow mainWindow)
         {
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 saveOutputFiles(writer);
 
                 saveSections(writer, mainWindow);
+
+                return (int)stream.Length;
             }
         }
 
@@ -349,10 +360,14 @@ namespace Configuration_Tool.Configuration
             using (MemoryStream bufferStream = new MemoryStream())
             {
                 // Save to buffer stream
-                SaveToStream(bufferStream, mainWindow);
+                int length = SaveToStream(bufferStream, mainWindow);
 
-                // Cache the buffer of the default config
-                DefaultConfiguration = bufferStream.GetBuffer();
+                // Get buffer and resize to true length
+                byte[] buffer = bufferStream.GetBuffer();
+                Array.Resize(ref buffer, length);
+
+                // Store buffer in global variable
+                DefaultConfiguration = buffer;
             }
         }
 
@@ -374,6 +389,44 @@ namespace Configuration_Tool.Configuration
                 // Load from default buffer stream
                 LoadFromStream(bufferStream, mainWindow);
             }
+        }
+
+        // Used for efficient byte array comparison
+        [DllImport("msvcrt.dll", CallingConvention = CallingConvention.Cdecl)]
+        static extern int memcmp(byte[] b1, byte[] b2, long count);
+
+        // Returns true if action is cancelled
+        public static bool CheckSavingChanges(MainWindow mainWindow)
+        {
+            MessageBoxResult save = MessageBoxResult.No;
+
+            using (MemoryStream bufferStream = new MemoryStream())
+            {
+                int length = ConfigurationManager.SaveToStream(bufferStream, mainWindow);
+
+                // Get and resize buffer to true length
+                byte[] buffer = bufferStream.GetBuffer();
+                Array.Resize(ref buffer, length);
+
+                // If cached configuration and current configuration are inequal, they have unsaved changes
+                if (length != CurrentConfiguration.Length ||
+                    memcmp(ConfigurationManager.CurrentConfiguration, buffer, CurrentConfiguration.Length) != 0)
+                {
+                    save = MessageBox.Show("Would you like to save changes?",
+                        "Save Configuration",
+                        MessageBoxButton.YesNoCancel);
+
+                    if (save == MessageBoxResult.Yes)
+                    {
+                        // Save changes
+                        File.WriteAllBytes(CurrentConfigPath, buffer);
+                    }
+
+                    return save == MessageBoxResult.Cancel;
+                }
+            }
+
+            return false;
         }
 
         private static void loadOutputFiles(BinaryReader reader)

@@ -112,6 +112,9 @@ namespace Configuration_Tool.Controls
             // Get chosen file path
             string filePath = fileDialog.FileName;
 
+            // Check if changes have been saved. If user clicks cancel, return
+            if (ConfigurationManager.CheckSavingChanges(this)) return;
+
             // Attempt to load chosen file
             ConfigurationManager.LoadConfig(filePath);
         }
@@ -309,12 +312,9 @@ namespace Configuration_Tool.Controls
 
         private void SaveonExit(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBoxResult saveonExit = MessageBox.Show("Would you like to save the current configuration?",
-                "Save Configuration",
-                MessageBoxButton.YesNo);
-            if (saveonExit == MessageBoxResult.Yes)
+            if (ConfigurationManager.CheckSavingChanges(this))
             {
-                ConfigurationManager.Save();
+                e.Cancel = true;
             }
         }
 
