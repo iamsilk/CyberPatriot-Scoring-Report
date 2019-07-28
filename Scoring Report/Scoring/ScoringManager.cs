@@ -27,9 +27,6 @@ namespace Scoring_Report.Scoring
 
             // Get all types in the executing assembly (Scoring Report)
             Type[] allTypes = Assembly.GetExecutingAssembly().GetTypes();
-
-            // Used to gain sum of all sections' max scores
-            int maxScore = 0;
             
             foreach (Type type in allTypes)
             {
