@@ -32,6 +32,8 @@ namespace Configuration_Tool.Configuration
 
         public static List<IConfig> ConfigSections { get; } = new List<IConfig>();
 
+        public static byte[] DefaultConfiguration { get; set; } = null;
+
         /* Reason for multiple output files support is in case
          * any users want to setup their own scripts/programs
          * for uploading/checking scoring without needing to
@@ -90,7 +92,27 @@ namespace Configuration_Tool.Configuration
             // Sort in order of integer value of enumerator 'Type'
             ConfigSections.Sort((x, y) => (x.Type.CompareTo(y.Type)));
 
+            // Cache default configuration
+            CacheDefaults();
+
+            // Load configuration
             loadConfig();
+        }
+
+        public static MainWindow FindMainWindow()
+        {
+            // For each window in current application
+            foreach (Window window in Application.Current.Windows)
+            {
+                // If window is main window (should only be one)
+                if (window is MainWindow)
+                {
+                    // Return found window
+                    return (MainWindow)window;
+                }
+            }
+
+            return null;
         }
 
         public static void LoadConfig(string configPath)
@@ -124,20 +146,8 @@ namespace Configuration_Tool.Configuration
              * until it is time to save */
             using (ConfigFileStream = File.Open(CurrentConfigPath, FileMode.Open, FileAccess.Read))
             {
-                MainWindow mainWindow = null;
-
-                // For each window in current application
-                foreach (Window window in Application.Current.Windows)
-                {
-                    // If window is main window (should only be one)
-                    if (window is MainWindow)
-                    {
-                        // Set instance of main window to 
-                        // current iteration and exit loop
-                        mainWindow = window as MainWindow;
-                        break;
-                    }
-                }
+                // Get main window
+                MainWindow mainWindow = FindMainWindow();
 
                 // If main window wasn't found
                 if (mainWindow == null)
@@ -146,51 +156,7 @@ namespace Configuration_Tool.Configuration
                     throw new Exception("Couldn't find main window while loading configuration.");
                 }
 
-                bool error = false;
-
-                // Binary reader for parsing of data
-                using (BinaryReader reader = new BinaryReader(ConfigFileStream))
-                {
-                    loadOutputFiles(reader);
-
-                    // Get number of config sections
-                    int count = reader.ReadInt32();
-
-                    // For every config section
-                    for (int i = 0; i < count; i++)
-                    {
-                        // Get config section type
-                        EConfigType type = (EConfigType)reader.ReadInt32();
-
-                        // Get length of data for specific section
-                        int bufferLength = reader.ReadInt32();
-
-                        // Read buffer for section to isolate from others
-                        byte[] buffer = reader.ReadBytes(bufferLength);
-
-                        // Find section for loading
-                        IConfig config = ConfigSections.FirstOrDefault(x => x.Type == type);
-
-                        // Possibly removed section, skip it
-                        if (config == null) continue;
-
-                        // Create isolated binary reader for section loading
-                        using (MemoryStream bufferStream = new MemoryStream(buffer))
-                        using (BinaryReader sectionReader = new BinaryReader(bufferStream))
-                        {
-                            // Set main window
-                            config.MainWindow = mainWindow;
-
-
-                            try
-                            {
-                                // Load config
-                                config.Load(sectionReader);
-                            }
-                            catch { error = true; }
-                        }
-                    }
-                }
+                bool error = LoadFromStream(ConfigFileStream, mainWindow);
 
                 // An error occured during loading, alert user and continue
                 if (error)
@@ -200,6 +166,67 @@ namespace Configuration_Tool.Configuration
                         Environment.NewLine + "Please resave the configuration with the recovered information.");
                 }
             }
+        }
+
+        public static bool LoadFromStream(Stream stream, MainWindow mainWindow)
+        {
+            bool error = false;
+
+            // Binary reader for parsing of data
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                loadOutputFiles(reader);
+
+                if (loadSections(reader, mainWindow)) error = true;
+            }
+
+            return error;
+        }
+
+        // Returns true if an error occured
+        private static bool loadSections(BinaryReader reader, MainWindow mainWindow)
+        {
+            bool error = false;
+
+            // Get number of config sections
+            int count = reader.ReadInt32();
+
+            // For every config section
+            for (int i = 0; i < count; i++)
+            {
+                // Get config section type
+                EConfigType type = (EConfigType)reader.ReadInt32();
+
+                // Get length of data for specific section
+                int bufferLength = reader.ReadInt32();
+
+                // Read buffer for section to isolate from others
+                byte[] buffer = reader.ReadBytes(bufferLength);
+
+                // Find section for loading
+                IConfig config = ConfigSections.FirstOrDefault(x => x.Type == type);
+
+                // Possibly removed section, skip it
+                if (config == null) continue;
+
+                // Create isolated binary reader for section loading
+                using (MemoryStream bufferStream = new MemoryStream(buffer))
+                using (BinaryReader sectionReader = new BinaryReader(bufferStream))
+                {
+                    // Set main window
+                    config.MainWindow = mainWindow;
+
+
+                    try
+                    {
+                        // Load config
+                        config.Load(sectionReader);
+                    }
+                    catch { error = true; }
+                }
+            }
+
+            return error;
         }
 
         public static void Save(string configPath = "")
@@ -225,26 +252,14 @@ namespace Configuration_Tool.Configuration
                 Directory.CreateDirectory(CurrentConfigDirectory);
             }
 
-            MainWindow mainWindow = null;
-
-            // For each window in current application
-            foreach (Window window in Application.Current.Windows)
-            {
-                // If window is main window (should only be one)
-                if (window is MainWindow)
-                {
-                    // Set instance of main window to 
-                    // current iteration and exit loop
-                    mainWindow = window as MainWindow;
-                    break;
-                }
-            }
+            // Get main window
+            MainWindow mainWindow = FindMainWindow();
 
             // If main window wasn't found
             if (mainWindow == null)
             {
                 // Don't know what happened here :/
-                throw new Exception("Couldn't find main window while loading configuration.");
+                throw new Exception("Couldn't find main window while saving configuration.");
             }
 
             // Update all bindings
@@ -252,38 +267,50 @@ namespace Configuration_Tool.Configuration
 
             // Get stream
             using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
-            using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
+            {
+                SaveToStream(ConfigFileStream, mainWindow);
+            }
+        }
+
+        public static void SaveToStream(Stream stream, MainWindow mainWindow)
+        {
+            using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 saveOutputFiles(writer);
 
-                // Write number of config sections
-                writer.Write(ConfigSections.Count);
+                saveSections(writer, mainWindow);
+            }
+        }
 
-                // For each config section
-                foreach (IConfig config in ConfigSections)
+        private static void saveSections(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Write number of config sections
+            writer.Write(ConfigSections.Count);
+
+            // For each config section
+            foreach (IConfig config in ConfigSections)
+            {
+                // Write config type
+                writer.Write((Int32)config.Type);
+
+                // Create isolated binary writer
+                using (MemoryStream bufferStream = new MemoryStream())
+                using (BinaryWriter sectionWriter = new BinaryWriter(bufferStream))
                 {
-                    // Write config type
-                    writer.Write((Int32)config.Type);
+                    // Set main window
+                    config.MainWindow = mainWindow;
 
-                    // Create isolated binary writer
-                    using (MemoryStream bufferStream = new MemoryStream())
-                    using (BinaryWriter sectionWriter = new BinaryWriter(bufferStream))
-                    {
-                        // Set main window
-                        config.MainWindow = mainWindow;
+                    // Save config to section writer
+                    config.Save(sectionWriter);
 
-                        // Save config to section writer
-                        config.Save(sectionWriter);
+                    // Get buffer
+                    int length = Convert.ToInt32(bufferStream.Length);
+                    byte[] buffer = bufferStream.GetBuffer();
+                    Array.Resize(ref buffer, length);
 
-                        // Get buffer
-                        int length = Convert.ToInt32(bufferStream.Length);
-                        byte[] buffer = bufferStream.GetBuffer();
-                        Array.Resize(ref buffer, length);
-
-                        // Write buffer length and buffer
-                        writer.Write(length);
-                        writer.Write(buffer);
-                    }
+                    // Write buffer length and buffer
+                    writer.Write(length);
+                    writer.Write(buffer);
                 }
             }
         }
@@ -305,6 +332,49 @@ namespace Configuration_Tool.Configuration
             }
 
             return true;
+        }
+
+        public static void CacheDefaults()
+        {
+            // Get main window
+            MainWindow mainWindow = FindMainWindow();
+
+            // If main window wasn't found
+            if (mainWindow == null)
+            {
+                // Don't know what happened here :/
+                throw new Exception("Couldn't find main window while caching default configuration.");
+            }
+
+            // Create memory stream to cache final buffer
+            using (MemoryStream bufferStream = new MemoryStream())
+            {
+                // Save to buffer stream
+                SaveToStream(bufferStream, mainWindow);
+
+                // Cache the buffer of the default config
+                DefaultConfiguration = bufferStream.GetBuffer();
+            }
+        }
+
+        public static void LoadDefaults()
+        {
+            // Get main window
+            MainWindow mainWindow = FindMainWindow();
+
+            // If main window wasn't found
+            if (mainWindow == null)
+            {
+                // Don't know what happened here :/
+                throw new Exception("Couldn't find main window while loading default configuration.");
+            }
+
+            // Create memory stream of default config buffer
+            using (MemoryStream bufferStream = new MemoryStream(DefaultConfiguration))
+            {
+                // Load from default buffer stream
+                LoadFromStream(bufferStream, mainWindow);
+            }
         }
 
         private static void loadOutputFiles(BinaryReader reader)
