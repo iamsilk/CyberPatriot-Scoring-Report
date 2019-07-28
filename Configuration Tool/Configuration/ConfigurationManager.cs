@@ -306,11 +306,10 @@ namespace Configuration_Tool.Configuration
                     // Get buffer
                     int length = Convert.ToInt32(bufferStream.Length);
                     byte[] buffer = bufferStream.GetBuffer();
-                    Array.Resize(ref buffer, length);
 
                     // Write buffer length and buffer
                     writer.Write(length);
-                    writer.Write(buffer);
+                    writer.Write(buffer, 0, length);
                 }
             }
         }
