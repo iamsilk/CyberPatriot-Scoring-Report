@@ -7,11 +7,12 @@
         xmlns:cfg="clr-namespace:Configuration_Tool.Configuration"
         xmlns:secoptions="clr-namespace:Configuration_Tool.Controls.SecOptions"
         mc:Ignorable="d"
-        Title="Configuration Tool" Height="500" Width="1000">
+        Title="Configuration Tool" Height="500" Width="1000" Closing="SaveonExit">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.FileOpen" Executed="FileOpenCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.FileSave" Executed="FileSaveCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.FileSaveAs" Executed="FileSaveAsCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.ClearConfiguration" Executed="ClearConfigurationCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.RemoveConfigTool" Executed="RemoveConfigToolCommand_Executed" />
     </Window.CommandBindings>
     <Window.InputBindings>
@@ -29,6 +30,7 @@
                     <MenuItem Header="_Open" InputGestureText="Ctrl+O" Command="local:CustomCommands.FileOpen"/>
                     <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="local:CustomCommands.FileSave"/>
                     <MenuItem Header="Save _As..." Command="local:CustomCommands.FileSaveAs"/>
+                    <MenuItem Header="Clear Current Configuration" Command="local:CustomCommands.ClearConfiguration"/>
                     <MenuItem Header="Remove Configuration Tool" Command="local:CustomCommands.RemoveConfigTool"/>
                 </MenuItem>
             </Menu>
