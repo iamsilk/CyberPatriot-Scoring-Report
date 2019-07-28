@@ -39,6 +39,8 @@ The sections which are currently a part of this Scoring Report include:
 - Local Groups
 - Installed Programs
 - Prohibited Files
+- Other
+  - Remote Desktop Protocol
 
 For specifying users, you may specify either a username or security ID. This is a feature because accounts such as the default administrator and guest may be renamed, but you may still need to address details regarding their accounts.
 
