@@ -26,6 +26,7 @@ namespace Configuration_Tool.Controls
         public static readonly RoutedCommand FileSave = new RoutedCommand("FileSave", typeof(CustomCommands));
         public static readonly RoutedCommand FileSaveAs = new RoutedCommand("FileSaveAs", typeof(CustomCommands));
         public static readonly RoutedCommand RemoveConfigTool = new RoutedCommand("RemoveConfigTool", typeof(CustomCommands));
+        public static readonly RoutedCommand ClearConfiguration = new RoutedCommand("ClearConfiguration", typeof(CustomCommands));
     }
 
     /// <summary>
@@ -51,7 +52,7 @@ namespace Configuration_Tool.Controls
 
             ConfigurationManager.Startup(startupParameter);
 
-            #if !DEBUG
+#if !DEBUG
             // Setup Scoring Report process
             using (Process process = new Process())
             {
@@ -73,7 +74,7 @@ namespace Configuration_Tool.Controls
                     }
                 }
             }
-            #endif
+#endif
         }
 
         private void btnAddUserConfig_Click(object sender, RoutedEventArgs e)
@@ -120,7 +121,7 @@ namespace Configuration_Tool.Controls
             // Saves at current/default configuration path
             ConfigurationManager.Save();
         }
-        
+
         private void FileSaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -146,10 +147,114 @@ namespace Configuration_Tool.Controls
             ConfigurationManager.Save(filePath);
         }
 
+        private void ClearConfigurationCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Confirm clearing current configuration
+            MessageBoxResult clearConfigurationOk = MessageBox.Show("Confirm clearing current configuration\nNOTE: This will reset EVERYTHING!",
+                "Clear Current Configuration",
+                MessageBoxButton.OKCancel);
+            // Return if user did not press ok
+            if (clearConfigurationOk != MessageBoxResult.OK) return;
+
+            // Reset the Password and Lockout Policies
+            // Set IsChecked to false and restore default values
+            settingAccountLockoutDuration.IsScored = false;
+            settingAccountLockoutDuration.Maximum = 99999;
+            settingAccountLockoutDuration.Maximum = 99999;
+            settingAccountLockoutThreshold.IsScored = false;
+            settingAccountLockoutThreshold.Maximum = 999;
+            settingAccountLockoutThreshold.Minimum = 0;
+            settingEnforcePasswordHistory.IsScored = false;
+            settingEnforcePasswordHistory.Maximum = 24;
+            settingEnforcePasswordHistory.Minimum = 0;
+            settingMaxPasswordAge.IsScored = false;
+            settingMaxPasswordAge.Maximum = 999;
+            settingMaxPasswordAge.Minimum = 0;
+            settingMinPasswordAge.IsScored = false;
+            settingMinPasswordAge.Maximum = 998;
+            settingMinPasswordAge.Minimum = 0;
+            settingMinPasswordLen.IsScored = false;
+            settingMinPasswordLen.Maximum = 20;
+            settingMinPasswordLen.Minimum = 0;
+            settingPasswordComplexity.IsScored = false;
+            settingPasswordComplexity.comboBox.Text = "Enabled";
+            settingResetLockoutCounterAfter.IsScored = false;
+            settingResetLockoutCounterAfter.Maximum = 99999;
+            settingResetLockoutCounterAfter.Minimum = 0;
+            settingReversibleEncryption.IsScored = false;
+            settingReversibleEncryption.comboBox.Text = "Disabled";
+
+            // Reset Audit Policies
+            // Looping through each audit policy
+            foreach (ControlSettingAudit control in itemsAuditPolicy.Items.Cast<ControlSettingAudit>())
+            {
+                // Set control from blank scored item
+                control.SetFromScoredItem(HeaderSettingPairs[control.Header]);
+            }
+
+            // Reset User Rights Assignment
+            foreach (ControlSettingUserRights control in itemsUserRightsSettings.Items.Cast<ControlSettingUserRights>())
+            {
+                // Set IsScored to false
+                control.IsScored = false;
+                // Clear all set items
+                control.itemsIdentifiers.Items.Clear();
+                // Clear the input box
+                control.comboBoxIdentifier.Text = string.Empty;
+            }
+
+            // Reset Security Options
+            // Loop through each type of options and
+            // Set IsScored to false
+            foreach (var item in itemsSecurityOptions.Items)
+            {
+                string value = item.GetType().ToString();
+                Console.WriteLine(value);
+                value = value.Replace("Configuration_Tool.Controls.SecOptions.", "");
+                if (value == "ControlRegistryComboBox")
+                {
+                    ((SecOptions.ControlRegistryComboBox)item).IsScored = false;
+                }
+                if (value == "ControlRegistryMultiLine")
+                {
+                    ((SecOptions.ControlRegistryMultiLine)item).IsScored = false;
+                }
+                if (value == "ControlRegistryRange")
+                {
+                    ((SecOptions.ControlRegistryRange)item).IsScored = false;
+                }
+                if (value == "ControlRegistryTextRegex")
+                {
+                    ((SecOptions.ControlRegistryTextRegex)item).IsScored = false;
+                }
+                if (value == "ControlSeceditComboBox")
+                {
+                    ((SecOptions.ControlSeceditComboBox)item).IsScored = false;
+                }
+                if (value == "ControlSeceditTextRegex")
+                {
+                    ((SecOptions.ControlSeceditTextRegex)item).IsScored = false;
+                }
+            }
+
+            // Clear user configurations
+            listUserConfigs.Items.Clear();
+
+            // Clear group configurations
+            listGroupConfigs.Items.Clear();
+
+            // Clear and repopulate programs list
+            listPrograms.Items.Clear();
+            PopulateProgramsList();
+
+            // Clear prohibited files configurations
+            itemsProhibitedFiles.Items.Clear();
+        }
+
         private void RemoveConfigToolCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // Confirm wanting to remove configuration tool
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to prepare this system for competitors and remove the configuration tool?", 
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to prepare this system for competitors and remove the configuration tool?",
                 "Confirmation Required", MessageBoxButton.YesNo);
 
             // If "Yes" wasn't pressed, return
@@ -292,5 +397,29 @@ namespace Configuration_Tool.Controls
 
             itemsProhibitedFiles.Items.Add(control);
         }
+
+        private void SaveonExit(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult saveonExit = MessageBox.Show("Would you like to save the current configuration?",
+                "Save Configuration",
+                MessageBoxButton.YesNo);
+            if (saveonExit == MessageBoxResult.Yes)
+            {
+                ConfigurationManager.Save();
+            }
+        }
+
+        public Dictionary<string, ScoredItem<EAuditSettings>> HeaderSettingPairs = new Dictionary<string, ScoredItem<EAuditSettings>>()
+        {
+            { "Audit account logon events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit account management", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit directory service access", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit logon events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit object access", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit policy change", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit privilege use", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit process tracking", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
+            { "Audit system events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) }
+        };
     }
 }

@@ -16,8 +16,6 @@ Total Project:
 	-Forensics Questions
 
 Configuration Tool:
-	Add save on exit
-	Clear configuration button
 
 Scoring Report:
 	Allow displaying of username instead of SID
