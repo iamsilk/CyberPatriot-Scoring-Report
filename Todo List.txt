@@ -10,7 +10,6 @@ Total Project:
 	-Shares
 	-Firewall
 	-Services
-	-RDP
 	-Hostfile
 	-Windows Features
 	-Custom registry checks
