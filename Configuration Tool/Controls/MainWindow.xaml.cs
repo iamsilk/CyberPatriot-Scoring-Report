@@ -158,30 +158,30 @@ namespace Configuration_Tool.Controls
 
             // Reset the Password and Lockout Policies
             // Set IsChecked to false and restore default values
-            settingAccountLockoutDuration.checkBoxScored.IsChecked = false;
-            settingAccountLockoutDuration.numericMax.txtNumber.Text = "99999";
-            settingAccountLockoutDuration.numericMin.txtNumber.Text = "0";
-            settingAccountLockoutThreshold.checkBoxScored.IsChecked = false;
-            settingAccountLockoutThreshold.numericMax.txtNumber.Text = "999";
-            settingAccountLockoutThreshold.numericMin.txtNumber.Text = "0";
-            settingEnforcePasswordHistory.checkBoxScored.IsChecked = false;
-            settingEnforcePasswordHistory.numericMax.txtNumber.Text = "24";
-            settingEnforcePasswordHistory.numericMin.txtNumber.Text = "0";
-            settingMaxPasswordAge.checkBoxScored.IsChecked = false;
-            settingMaxPasswordAge.numericMax.txtNumber.Text = "999";
-            settingMaxPasswordAge.numericMin.txtNumber.Text = "0";
-            settingMinPasswordAge.checkBoxScored.IsChecked = false;
-            settingMinPasswordAge.numericMax.txtNumber.Text = "998";
-            settingMinPasswordAge.numericMin.txtNumber.Text = "0";
-            settingMinPasswordLen.checkBoxScored.IsChecked = false;
-            settingMinPasswordLen.numericMax.txtNumber.Text = "20";
-            settingMinPasswordLen.numericMin.txtNumber.Text = "0";
-            settingPasswordComplexity.checkBoxScored.IsChecked = false;
+            settingAccountLockoutDuration.IsScored = false;
+            settingAccountLockoutDuration.Maximum = 99999;
+            settingAccountLockoutDuration.Maximum = 99999;
+            settingAccountLockoutThreshold.IsScored = false;
+            settingAccountLockoutThreshold.Maximum = 999;
+            settingAccountLockoutThreshold.Minimum = 0;
+            settingEnforcePasswordHistory.IsScored = false;
+            settingEnforcePasswordHistory.Maximum = 24;
+            settingEnforcePasswordHistory.Minimum = 0;
+            settingMaxPasswordAge.IsScored = false;
+            settingMaxPasswordAge.Maximum = 999;
+            settingMaxPasswordAge.Minimum = 0;
+            settingMinPasswordAge.IsScored = false;
+            settingMinPasswordAge.Maximum = 998;
+            settingMinPasswordAge.Minimum = 0;
+            settingMinPasswordLen.IsScored = false;
+            settingMinPasswordLen.Maximum = 20;
+            settingMinPasswordLen.Minimum = 0;
+            settingPasswordComplexity.IsScored = false;
             settingPasswordComplexity.comboBox.Text = "Enabled";
-            settingResetLockoutCounterAfter.checkBoxScored.IsChecked = false;
-            settingResetLockoutCounterAfter.numericMax.txtNumber.Text = "99999";
-            settingResetLockoutCounterAfter.numericMin.txtNumber.Text = "0";
-            settingReversibleEncryption.checkBoxScored.IsChecked = false;
+            settingResetLockoutCounterAfter.IsScored = false;
+            settingResetLockoutCounterAfter.Maximum = 99999;
+            settingResetLockoutCounterAfter.Minimum = 0;
+            settingReversibleEncryption.IsScored = false;
             settingReversibleEncryption.comboBox.Text = "Disabled";
 
             // Reset Audit Policies
