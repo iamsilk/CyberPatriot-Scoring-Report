@@ -1,5 +1,6 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Configuration.UserRights;
+using Scoring_Report.Scoring.Sections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,7 +168,7 @@ namespace Scoring_Report.Policies
             if (WinAPI.LsaOpenPolicy(ref name, ref objAttrib, POLICY_LOOKUP_NAMES | POLICY_VIEW_LOCAL_INFORMATION, out handle) != 0) return; //987135
 
             // For each scored definition, retrieve details for them
-            foreach (UserRightsDefinition definition in ConfigurationManager.UserRightsDefinitions)
+            foreach (UserRightsDefinition definition in SectionUserRights.UserRightsDefinitions)
             {
                 // Get unicode string from constant name
                 LSA_UNICODE_STRING privileges = new LSA_UNICODE_STRING(definition.ConstantName);

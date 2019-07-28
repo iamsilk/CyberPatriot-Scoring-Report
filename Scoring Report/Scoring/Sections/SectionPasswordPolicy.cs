@@ -5,14 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scoring_Report.Policies;
+using System.IO;
 
 namespace Scoring_Report.Scoring.Sections
 {
     public class SectionPasswordPolicy : ISection
     {
+        public ESectionType Type => ESectionType.PasswordPolicy;
+
         public string Header => "Password Policy:";
 
-        public static Configuration.PasswordPolicy ConfigPolicy => ConfigurationManager.PasswordPolicy;
+        public static Configuration.PasswordPolicy ConfigPolicy { get; set; }
 
         public static Policies.PasswordPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.PasswordPolicy;
 
@@ -86,6 +89,15 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Get stored policy
+            Configuration.PasswordPolicy policy = Configuration.PasswordPolicy.Parse(reader);
+
+            // Store policy in global variable
+            ConfigPolicy = policy;
         }
     }
 }

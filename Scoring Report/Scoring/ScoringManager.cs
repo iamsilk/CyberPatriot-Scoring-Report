@@ -44,6 +44,9 @@ namespace Scoring_Report.Scoring
                     }
                 }
             }
+
+            // Sort in order of integer value of enumerator 'Type'
+            ScoringSections.Sort((x, y) => (x.Type.CompareTo(y.Type)));
         }
 
         public static void CheckAndOutput()

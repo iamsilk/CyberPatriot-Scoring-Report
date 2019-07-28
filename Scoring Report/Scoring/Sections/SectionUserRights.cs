@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -12,9 +13,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionUserRights : ISection
     {
+        public ESectionType Type => ESectionType.UserRights;
+
         public string Header => "User Rights Assignment:";
 
-        public static List<UserRightsDefinition> ConfigPolicy => ConfigurationManager.UserRightsDefinitions;
+        public static List<UserRightsDefinition> UserRightsDefinitions { get; } = new List<UserRightsDefinition>();
 
         public static UserRightsAssignment SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.UserRightsAssignment;
 
@@ -23,7 +26,7 @@ namespace Scoring_Report.Scoring.Sections
         public int MaxScore()
         {
             // Return number of scored user rights definitions
-            return ConfigurationManager.UserRightsDefinitions.Count;
+            return UserRightsDefinitions.Count;
         }
 
         public string GetNameFromSID(SecurityIdentifier identifier)
@@ -45,7 +48,7 @@ namespace Scoring_Report.Scoring.Sections
             SecurityPolicyManager.GetUserRightsAssignment();
 
             // For each config definition
-            foreach (UserRightsDefinition definition in ConfigPolicy)
+            foreach (UserRightsDefinition definition in UserRightsDefinitions)
             {
                 // Create copy of dictionary. Uses more memory but optimizes
                 // checking as we can remove user rights after checking them
@@ -156,6 +159,56 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Clear current user rights definitions
+            UserRightsDefinitions.Clear();
+
+            // Get count of user rights definitions
+            int count = reader.ReadInt32();
+
+            // For number of user rights definitions
+            for (int i = 0; i < count; i++)
+            {
+                // Get constant name
+                string constantName = reader.ReadString();
+
+                // Get setting
+                string setting = reader.ReadString();
+
+                // Get and set scoring status
+                bool isScored = reader.ReadBoolean();
+
+                // Create instance of definition object
+                UserRightsDefinition userRights = new UserRightsDefinition(constantName, setting);
+
+                // Get number of identifiers
+                int identifiersCount = reader.ReadInt32();
+
+                // For number of identifiers
+                for (int j = 0; j < identifiersCount; j++)
+                {
+                    // Get identifier type and identifier
+                    EUserRightsIdentifierType type = (EUserRightsIdentifierType)reader.ReadInt32();
+                    string strIdentifier = reader.ReadString();
+
+                    // Initialize storage for identifier
+                    UserRightsIdentifier identifier = new UserRightsIdentifier();
+                    identifier.Type = type;
+                    identifier.Identifier = strIdentifier;
+
+                    // Add identifier to list
+                    userRights.Identifiers.Add(identifier);
+                }
+
+                // Optimization, only add scored items
+                if (isScored)
+                {
+                    UserRightsDefinitions.Add(userRights);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.SecOptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionOther : ISection
     {
+        public ESectionType Type => ESectionType.Other;
+
         public string Header => "Other";
+
+        public static RegistryComboBox RemoteDesktopStatus = null;
 
         public static class Format
         {
@@ -20,7 +26,7 @@ namespace Scoring_Report.Scoring.Sections
         {
             int max = 0;
 
-            if (ConfigurationManager.RemoteDesktopStatus.IsScored) max++;
+            if (RemoteDesktopStatus.IsScored) max++;
 
             return max;
         }
@@ -29,22 +35,29 @@ namespace Scoring_Report.Scoring.Sections
         {
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
-            if (ConfigurationManager.RemoteDesktopStatus.IsScored)
+            if (RemoteDesktopStatus.IsScored)
             {
-                object sectionValue = RegistryManager.GetValue(ConfigurationManager.RemoteDesktopStatus.Key, ConfigurationManager.RemoteDesktopStatus.ValueName);
+                object sectionValue = RegistryManager.GetValue(RemoteDesktopStatus.Key, RemoteDesktopStatus.ValueName);
                 if (sectionValue != null)
                 {
                     int value = (int)sectionValue;
 
-                    if (value == ConfigurationManager.RemoteDesktopStatus.SelectedIndex)
+                    if (value == RemoteDesktopStatus.SelectedIndex)
                     {
                         details.Points++;
-                        details.Output.Add(string.Format(Format.RemoteDesktop, ConfigurationManager.RemoteDesktopStatus.SelectedItem));
+                        details.Output.Add(string.Format(Format.RemoteDesktop, RemoteDesktopStatus.SelectedItem));
                     }
                 }
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Load remote desktop info
+            RemoteDesktopStatus = new RegistryComboBox();
+            RemoteDesktopStatus.Parse(reader);
         }
     }
 }

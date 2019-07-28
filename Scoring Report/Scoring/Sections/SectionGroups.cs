@@ -3,6 +3,7 @@ using Scoring_Report.Configuration.Groups;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionGroups : ISection
     {
+        public ESectionType Type => ESectionType.Groups;
+
         public string Header => "Groups:";
+
+        public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
 
         public const string GroupFormat = "Group \"{0}\" correctly configured - {1}";
 
@@ -21,7 +26,7 @@ namespace Scoring_Report.Scoring.Sections
             int max = 0;
 
             // For each group settings in list
-            foreach (GroupSettings group in ConfigurationManager.Groups)
+            foreach (GroupSettings group in Groups)
             {
                 // If group is scored, increment max
                 if (group.IsScored) max++;
@@ -35,7 +40,7 @@ namespace Scoring_Report.Scoring.Sections
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
             // If no configuration for this section, return empty details
-            if (ConfigurationManager.Groups.Count == 0) return details;
+            if (Groups.Count == 0) return details;
 
             // Create instance for communicating with active directory
             using (PrincipalContext context = new PrincipalContext(ContextType.Machine))
@@ -47,7 +52,7 @@ namespace Scoring_Report.Scoring.Sections
                     foreach (GroupPrincipal group in searcher.FindAll())
                     {
                         // For each group config
-                        foreach (GroupSettings settings in ConfigurationManager.Groups)
+                        foreach (GroupSettings settings in Groups)
                         {
                             // If enumerated settings is not for specified group, skip
                             if (group.Name != settings.GroupName)
@@ -123,6 +128,25 @@ namespace Scoring_Report.Scoring.Sections
                 }
             }
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Clear current list of group settings
+            Groups.Clear();
+
+            // Get number of group settings instances
+            int count = reader.ReadInt32();
+
+            // Enumerate every instance of group settings
+            for (int i = 0; i < count; i++)
+            {
+                // Get instance of group settings
+                GroupSettings settings = GroupSettings.Parse(reader);
+
+                // Add group settings to list
+                Groups.Add(settings);
+            }
         }
     }
 }

@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scoring\ESectionType.cs" />
     <Compile Include="Scoring\Output\OutputInstance.cs" />
     <Compile Include="Scoring\Output\OutputManager.cs" />
     <Compile Include="Scoring\SectionDetails.cs" />
