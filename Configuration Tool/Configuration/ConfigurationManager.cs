@@ -86,7 +86,7 @@ namespace Configuration_Tool.Configuration
                     }
                 }
             }
-            
+
             // Sort in order of integer value of enumerator 'Type'
             ConfigSections.Sort((x, y) => (x.Type.CompareTo(y.Type)));
 
@@ -145,26 +145,55 @@ namespace Configuration_Tool.Configuration
                     // Don't know what happened here :/
                     throw new Exception("Couldn't find main window while loading configuration.");
                 }
-                
-                try
-                {
-                    // Binary reader for parsing of data
-                    using (BinaryReader reader = new BinaryReader(ConfigFileStream))
-                    {
-                        loadOutputFiles(reader);
 
-                        // For each config section
-                        foreach (IConfig config in ConfigSections)
+                bool error = false;
+
+                // Binary reader for parsing of data
+                using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                {
+                    loadOutputFiles(reader);
+
+                    // Get number of config sections
+                    int count = reader.ReadInt32();
+
+                    // For every config section
+                    for (int i = 0; i < count; i++)
+                    {
+                        // Get config section type
+                        EConfigType type = (EConfigType)reader.ReadInt32();
+
+                        // Get length of data for specific section
+                        int bufferLength = reader.ReadInt32();
+
+                        // Read buffer for section to isolate from others
+                        byte[] buffer = reader.ReadBytes(bufferLength);
+
+                        // Find section for loading
+                        IConfig config = ConfigSections.FirstOrDefault(x => x.Type == type);
+
+                        // Possibly removed section, skip it
+                        if (config == null) continue;
+
+                        // Create isolated binary reader for section loading
+                        using (MemoryStream bufferStream = new MemoryStream(buffer))
+                        using (BinaryReader sectionReader = new BinaryReader(bufferStream))
                         {
                             // Set main window
                             config.MainWindow = mainWindow;
 
-                            // Load config
-                            config.Load(reader);
+
+                            try
+                            {
+                                // Load config
+                                config.Load(sectionReader);
+                            }
+                            catch { error = true; }
                         }
                     }
                 }
-                catch
+
+                // An error occured during loading, alert user and continue
+                if (error)
                 {
                     MessageBox.Show("There was an error loading the configuration. Information that could be recovered has been loaded." +
                         Environment.NewLine + "You may be using an outdated configuration file." +
@@ -223,19 +252,37 @@ namespace Configuration_Tool.Configuration
 
             // Get stream
             using (ConfigFileStream = new FileStream(CurrentConfigPath, FileMode.OpenOrCreate, FileAccess.Write))
+            using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
             {
-                using (BinaryWriter writer = new BinaryWriter(ConfigFileStream))
-                {
-                    saveOutputFiles(writer);
+                saveOutputFiles(writer);
 
-                    // For each config section
-                    foreach (IConfig config in ConfigSections)
+                // Write number of config sections
+                writer.Write(ConfigSections.Count);
+
+                // For each config section
+                foreach (IConfig config in ConfigSections)
+                {
+                    // Write config type
+                    writer.Write((Int32)config.Type);
+
+                    // Create isolated binary writer
+                    using (MemoryStream bufferStream = new MemoryStream())
+                    using (BinaryWriter sectionWriter = new BinaryWriter(bufferStream))
                     {
                         // Set main window
                         config.MainWindow = mainWindow;
 
-                        // Load config
-                        config.Save(writer);
+                        // Save config to section writer
+                        config.Save(sectionWriter);
+
+                        // Get buffer
+                        int length = Convert.ToInt32(bufferStream.Length);
+                        byte[] buffer = bufferStream.GetBuffer();
+                        Array.Resize(ref buffer, length);
+
+                        // Write buffer length and buffer
+                        writer.Write(length);
+                        writer.Write(buffer);
                     }
                 }
             }

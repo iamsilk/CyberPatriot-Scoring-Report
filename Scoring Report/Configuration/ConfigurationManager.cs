@@ -73,7 +73,7 @@ namespace Scoring_Report.Configuration
             // If latest was after the last time we updated, load new config
             if (latestWriteTime > LastUpdated)
             {
-                loadConfig();
+                loadConfig(true);
             }
         }
 
@@ -92,13 +92,23 @@ namespace Scoring_Report.Configuration
             loadConfig();
         }
 
-        private static void loadConfig()
+        private static void loadConfig(bool loadedPrev = false)
         {
             // If file/directory doesn't exist
             if (!checkFiles())
             {
                 // Stop loading configuration
                 return;
+            }
+
+            // If config has been loaded already
+            if (loadedPrev)
+            {
+                // Resetup the scoring manager to clear current configs,
+                // We need to clear current configs incase the newly loaded config file has had a section removed
+                // If this is the case, unless we clear current configs, the section that was removed will persist
+                // through the new loading
+                ScoringManager.Setup();
             }
 
             /* Open file with only read permissions.
@@ -117,10 +127,42 @@ namespace Scoring_Report.Configuration
                     {
                         loadOutputFiles(reader);
 
-                        // For each scoring section, load its config
-                        foreach (ISection section in ScoringManager.ScoringSections)
+                        // Get number of sections
+                        int count = reader.ReadInt32();
+
+                        // For each config section, load it
+                        for (int i = 0; i < count; i++)
                         {
-                            section.Load(reader);
+                            // Get config section type
+                            ESectionType type = (ESectionType)reader.ReadInt32();
+
+                            // Get length of data for specific section
+                            int bufferLength = reader.ReadInt32();
+
+                            // Read buffer for section to isolate from others
+                            byte[] buffer = reader.ReadBytes(bufferLength);
+
+                            // Find section for loading
+                            ISection config = ScoringManager.ScoringSections.FirstOrDefault(x => x.Type == type);
+
+                            // Possibly removed section, skip it
+                            if (config == null) continue;
+
+                            // Create isolated binary reader for section loading
+                            using (MemoryStream bufferStream = new MemoryStream(buffer))
+                            using (BinaryReader sectionReader = new BinaryReader(bufferStream))
+                            {
+                                try
+                                {
+                                    // Load config
+                                    config.Load(sectionReader);
+                                }
+                                catch
+                                {
+                                    // Issue with specific section, likely something was added to section
+                                    // But it's an outdated config file
+                                }
+                            }
                         }
                     }
                 }
