@@ -177,7 +177,7 @@ namespace Configuration_Tool.Configuration
             {
                 loadOutputFiles(reader);
 
-                if (loadSections(reader, mainWindow)) error = true;
+                error = loadSections(reader, mainWindow);
             }
 
             return error;
