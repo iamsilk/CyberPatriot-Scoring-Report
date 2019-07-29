@@ -45,23 +45,6 @@ namespace Scoring_Report.Configuration
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
 
-        public static List<UserSettings> Users { get; } = new List<UserSettings>();
-
-        public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
-
-        public static PasswordPolicy PasswordPolicy { get; set; } = new PasswordPolicy();
-
-        public static LockoutPolicy LockoutPolicy { get; set; } = new LockoutPolicy();
-
-        public static AuditPolicy AuditPolicy { get; set; } = new AuditPolicy();
-
-        public static List<UserRightsDefinition> UserRightsDefinitions { get; } = new List<UserRightsDefinition>();
-
-        public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
-
-        public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
-        public static List<string> ProhibitedFiles { get; } = new List<string>();
-
         public static void Startup(string startupParameter)
         {
             CurrentConfigPath = startupParameter;
@@ -90,10 +73,7 @@ namespace Scoring_Report.Configuration
             // If latest was after the last time we updated, load new config
             if (latestWriteTime > LastUpdated)
             {
-                loadConfig();
-
-                // Get new max score as new config might have introduced more/less points available
-                ScoringManager.GetMaxScore();
+                loadConfig(true);
             }
         }
 
@@ -112,13 +92,23 @@ namespace Scoring_Report.Configuration
             loadConfig();
         }
 
-        private static void loadConfig()
+        private static void loadConfig(bool loadedPrev = false)
         {
             // If file/directory doesn't exist
             if (!checkFiles())
             {
                 // Stop loading configuration
                 return;
+            }
+
+            // If config has been loaded already
+            if (loadedPrev)
+            {
+                // Resetup the scoring manager to clear current configs,
+                // We need to clear current configs incase the newly loaded config file has had a section removed
+                // If this is the case, unless we clear current configs, the section that was removed will persist
+                // through the new loading
+                ScoringManager.Setup();
             }
 
             /* Open file with only read permissions.
@@ -137,23 +127,43 @@ namespace Scoring_Report.Configuration
                     {
                         loadOutputFiles(reader);
 
-                        loadUserSettings(reader);
+                        // Get number of sections
+                        int count = reader.ReadInt32();
 
-                        loadGroupSettings(reader);
+                        // For each config section, load it
+                        for (int i = 0; i < count; i++)
+                        {
+                            // Get config section type
+                            ESectionType type = (ESectionType)reader.ReadInt32();
 
-                        loadPasswordPolicy(reader);
+                            // Get length of data for specific section
+                            int bufferLength = reader.ReadInt32();
 
-                        loadLockoutPolicy(reader);
+                            // Read buffer for section to isolate from others
+                            byte[] buffer = reader.ReadBytes(bufferLength);
 
-                        loadAuditPolicy(reader);
+                            // Find section for loading
+                            ISection config = ScoringManager.ScoringSections.FirstOrDefault(x => x.Type == type);
 
-                        loadUserRights(reader);
+                            // Possibly removed section, skip it
+                            if (config == null) continue;
 
-                        loadSecurityOptions(reader);
-
-                        loadInstalledPrograms(reader);
-
-                        loadProhibitedFiles(reader);
+                            // Create isolated binary reader for section loading
+                            using (MemoryStream bufferStream = new MemoryStream(buffer))
+                            using (BinaryReader sectionReader = new BinaryReader(bufferStream))
+                            {
+                                try
+                                {
+                                    // Load config
+                                    config.Load(sectionReader);
+                                }
+                                catch
+                                {
+                                    // Issue with specific section, likely something was added to section
+                                    // But it's an outdated config file
+                                }
+                            }
+                        }
                     }
                 }
                 catch
@@ -199,208 +209,6 @@ namespace Scoring_Report.Configuration
 
                 // Add output file to list
                 OutputFiles.Add(file);
-            }
-        }
-
-        private static void loadUserSettings(BinaryReader reader)
-        {
-            // Clear current list of user settings
-            Users.Clear();
-
-            // Number of user settings instances
-            int count = reader.ReadInt32();
-
-            // For each user settings instance
-            for (int i = 0; i < count; i++)
-            {
-                // Parse user settings instance from binary reader
-                UserSettings settings = UserSettings.Parse(reader);
-
-                // Add user settings to main list
-                Users.Add(settings);
-            }
-        }
-
-        private static void loadGroupSettings(BinaryReader reader)
-        {
-            // Clear current list of group settings
-            Groups.Clear();
-
-            // Get number of group settings instances
-            int count = reader.ReadInt32();
-
-            // Enumerate every instance of group settings
-            for (int i = 0; i < count; i++)
-            {
-                // Get instance of group settings
-                GroupSettings settings = GroupSettings.Parse(reader);
-
-                // Add group settings to list
-                Groups.Add(settings);
-            }
-        }
-
-        private static void loadPasswordPolicy(BinaryReader reader)
-        {
-            // Get stored policy
-            PasswordPolicy policy = PasswordPolicy.Parse(reader);
-
-            // Store policy in global variable
-            PasswordPolicy = policy;
-        }
-
-        private static void loadLockoutPolicy(BinaryReader reader)
-        {
-            // Get stored policy
-            LockoutPolicy policy = LockoutPolicy.Parse(reader);
-
-            // Store policy in global variable
-            LockoutPolicy = policy;
-        }
-
-        private static void loadAuditPolicy(BinaryReader reader)
-        {
-            // Get stored policy
-            AuditPolicy policy = AuditPolicy.Parse(reader);
-
-            // Store policy in global variable
-            AuditPolicy = policy;
-        }
-
-        private static void loadUserRights(BinaryReader reader)
-        {
-            // Clear current user rights definitions
-            UserRightsDefinitions.Clear();
-
-            // Get count of user rights definitions
-            int count = reader.ReadInt32();
-
-            // For number of user rights definitions
-            for (int i = 0; i < count; i++)
-            {
-                // Get constant name
-                string constantName = reader.ReadString();
-
-                // Get setting
-                string setting = reader.ReadString();
-
-                // Get and set scoring status
-                bool isScored = reader.ReadBoolean();
-
-                // Create instance of definition object
-                UserRightsDefinition userRights = new UserRightsDefinition(constantName, setting);
-
-                // Get number of identifiers
-                int identifiersCount = reader.ReadInt32();
-
-                // For number of identifiers
-                for (int j = 0; j < identifiersCount; j++)
-                {
-                    // Get identifier type and identifier
-                    EUserRightsIdentifierType type = (EUserRightsIdentifierType)reader.ReadInt32();
-                    string strIdentifier = reader.ReadString();
-
-                    // Initialize storage for identifier
-                    UserRightsIdentifier identifier = new UserRightsIdentifier();
-                    identifier.Type = type;
-                    identifier.Identifier = strIdentifier;
-
-                    // Add identifier to list
-                    userRights.Identifiers.Add(identifier);
-                }
-
-                // Optimization, only add scored items
-                if (isScored)
-                {
-                    UserRightsDefinitions.Add(userRights);
-                }
-            }
-        }
-
-        private static void loadSecurityOptions(BinaryReader reader)
-        {
-            // Clear current storage
-            SecurityOptions.Clear();
-
-            // Get number of security option settings
-            int count = reader.ReadInt32();
-
-            for (int i = 0; i < count; i++)
-            {
-                // Get type of sec option
-                ESecurityOptionType type = (ESecurityOptionType)reader.ReadInt32();
-
-                ISecurityOption secOption = null;
-
-                // Initialize secOption based on type
-                switch (type)
-                {
-                    case ESecurityOptionType.RegistryComboBox:
-                        secOption = new RegistryComboBox();
-                        break;
-                    case ESecurityOptionType.RegistryTextRegex:
-                        secOption = new RegistryTextRegex();
-                        break;
-                    case ESecurityOptionType.RegistryRange:
-                        secOption = new RegistryRange();
-                        break;
-                    case ESecurityOptionType.RegistryMultiLine:
-                        secOption = new RegistryMultiLine();
-                        break;
-                    case ESecurityOptionType.SeceditComboBox:
-                        secOption = new SeceditComboBox();
-                        break;
-                    case ESecurityOptionType.SeceditTextRegex:
-                        secOption = new SeceditTextRegex();
-                        break;
-                }
-
-                if (secOption == null)
-                {
-                    // Uh oh.. corrupted file?
-                    throw new Exception("Unknown security option type. Possible configuration file corruption.");
-                }
-
-                // Parse information based on type
-                secOption.Parse(reader);
-
-                // Only store scored options
-                if (secOption.IsScored)
-                {
-                    SecurityOptions.Add(secOption);
-                }
-            }
-        }
-        private static void loadInstalledPrograms(BinaryReader reader)
-        {
-            InstalledPrograms.Clear();
-
-            // Get count of program configs
-            int count = reader.ReadInt32();
-
-            for (int i = 0; i < count; i++)
-            {
-                // Get info of program config
-                string header = reader.ReadString();
-                bool installed = reader.ReadBoolean();
-
-                InstalledPrograms.Add(header, installed);
-            }
-        }
-
-        private static void loadProhibitedFiles(BinaryReader reader)
-        {
-            ProhibitedFiles.Clear();
-
-            // Get count of prohibited files
-            int filecount = reader.ReadInt32();
-
-            for (int i = 0; i < filecount; i++)
-            {
-                // Get File Location
-                string fileLocation = reader.ReadString();
-
-                ProhibitedFiles.Add(fileLocation);
             }
         }
     }

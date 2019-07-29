@@ -7,18 +7,23 @@ using System.Threading.Tasks;
 using Scoring_Report.Configuration.SecOptions;
 using System.Text.RegularExpressions;
 using Scoring_Report.Policies;
+using System.IO;
 
 namespace Scoring_Report.Scoring.Sections
 {
     public class SectionSecurityOptions : ISection
     {
+        public ESectionType Type => ESectionType.SecurityOptions;
+
         public string Header => "Security Options:";
+
+        public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 
         public const string Format = "'{0}' set correctly - {1}";
 
         public int MaxScore()
         {
-            return ConfigurationManager.SecurityOptions.Count;
+            return SecurityOptions.Count;
         }
 
         public SectionDetails GetScore()
@@ -26,7 +31,7 @@ namespace Scoring_Report.Scoring.Sections
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
             // Loop over every security option configured
-            foreach (ISecurityOption secOption in ConfigurationManager.SecurityOptions)
+            foreach (ISecurityOption secOption in SecurityOptions)
             {
                 switch (secOption.Type)
                 {
@@ -210,6 +215,61 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Clear current storage
+            SecurityOptions.Clear();
+
+            // Get number of security option settings
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get type of sec option
+                ESecurityOptionType type = (ESecurityOptionType)reader.ReadInt32();
+
+                ISecurityOption secOption = null;
+
+                // Initialize secOption based on type
+                switch (type)
+                {
+                    case ESecurityOptionType.RegistryComboBox:
+                        secOption = new RegistryComboBox();
+                        break;
+                    case ESecurityOptionType.RegistryTextRegex:
+                        secOption = new RegistryTextRegex();
+                        break;
+                    case ESecurityOptionType.RegistryRange:
+                        secOption = new RegistryRange();
+                        break;
+                    case ESecurityOptionType.RegistryMultiLine:
+                        secOption = new RegistryMultiLine();
+                        break;
+                    case ESecurityOptionType.SeceditComboBox:
+                        secOption = new SeceditComboBox();
+                        break;
+                    case ESecurityOptionType.SeceditTextRegex:
+                        secOption = new SeceditTextRegex();
+                        break;
+                }
+
+                if (secOption == null)
+                {
+                    // Uh oh.. corrupted file?
+                    throw new Exception("Unknown security option type. Possible configuration file corruption.");
+                }
+
+                // Parse information based on type
+                secOption.Parse(reader);
+
+                // Only store scored options
+                if (secOption.IsScored)
+                {
+                    SecurityOptions.Add(secOption);
+                }
+            }
         }
     }
 }

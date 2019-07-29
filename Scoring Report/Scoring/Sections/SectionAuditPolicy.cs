@@ -2,6 +2,7 @@
 using Scoring_Report.Policies;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionAuditPolicy : ISection
     {
+        public ESectionType Type => ESectionType.AuditPolicy;
+
         public string Header => "Audit Policy:";
 
-        public static Configuration.AuditPolicy ConfigPolicy => ConfigurationManager.AuditPolicy;
+        public static Configuration.AuditPolicy ConfigPolicy { get; set; }
 
         public static Policies.AuditPolicy SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.AuditPolicy;
 
@@ -70,6 +73,15 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Get stored policy
+            Configuration.AuditPolicy policy = Configuration.AuditPolicy.Parse(reader);
+
+            // Store policy in global variable
+            ConfigPolicy = policy;
         }
     }
 }

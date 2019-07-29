@@ -506,8 +506,11 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Other">
-                    <Grid>
-
+                    <Grid Margin="10">
+                        <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"
+                                                            SelectedItem="Don't allow remote connections to this computer"
+                                                            Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server" ValueName="fDenyTSConnections"
+                                                            VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Advanced">

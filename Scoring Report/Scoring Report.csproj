@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scoring\ESectionType.cs" />
     <Compile Include="Scoring\Output\OutputInstance.cs" />
     <Compile Include="Scoring\Output\OutputManager.cs" />
     <Compile Include="Scoring\SectionDetails.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Scoring\Sections\SectionGroups.cs" />
     <Compile Include="Scoring\Sections\SectionInstalledPrograms.cs" />
     <Compile Include="Scoring\Sections\SectionLockoutPolicy.cs" />
+    <Compile Include="Scoring\Sections\SectionOther.cs" />
     <Compile Include="Scoring\Sections\SectionPasswordPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionProhibitedFiles.cs" />
     <Compile Include="Scoring\Sections\SectionSecurityOptions.cs" />

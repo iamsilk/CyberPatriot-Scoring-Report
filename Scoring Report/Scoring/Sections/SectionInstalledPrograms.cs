@@ -2,6 +2,7 @@
 using Scoring_Report.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,17 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionInstalledPrograms : ISection
     {
+        public ESectionType Type => ESectionType.InstalledPrograms;
+
         public string Header => "Installed Programs:";
+
+        public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
 
         public const string Format = "'{0}' was set correctly - {1}";
 
         public int MaxScore()
         {
-            return ConfigurationManager.InstalledPrograms.Count;
+            return InstalledPrograms.Count;
         }
 
         public static List<string> GetPrograms()
@@ -129,7 +134,7 @@ namespace Scoring_Report.Scoring.Sections
             List<string> programs = GetPrograms();
 
             // Loop over every program config
-            foreach (KeyValuePair<string, bool> programConfig in ConfigurationManager.InstalledPrograms)
+            foreach (KeyValuePair<string, bool> programConfig in InstalledPrograms)
             {
                 bool installed = false;
 
@@ -152,6 +157,22 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+        public void Load(BinaryReader reader)
+        {
+            InstalledPrograms.Clear();
+
+            // Get count of program configs
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get info of program config
+                string header = reader.ReadString();
+                bool installed = reader.ReadBoolean();
+
+                InstalledPrograms.Add(header, installed);
+            }
         }
     }
 }

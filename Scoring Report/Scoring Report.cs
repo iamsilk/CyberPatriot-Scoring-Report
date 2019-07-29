@@ -37,10 +37,11 @@ namespace Scoring_Report
                 startupParameter = args[1];
             }
 
-            ConfigurationManager.Startup(startupParameter);
-
             // Setup scoring manager
             ScoringManager.Setup();
+
+            // Start up configuration
+            ConfigurationManager.Startup(startupParameter);
 
             // Setup output manager
             OutputManager.Setup();

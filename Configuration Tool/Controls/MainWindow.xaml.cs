@@ -112,6 +112,9 @@ namespace Configuration_Tool.Controls
             // Get chosen file path
             string filePath = fileDialog.FileName;
 
+            // Check if changes have been saved. If user clicks cancel, return
+            if (ConfigurationManager.CheckSavingChanges(this)) return;
+
             // Attempt to load chosen file
             ConfigurationManager.LoadConfig(filePath);
         }
@@ -156,99 +159,8 @@ namespace Configuration_Tool.Controls
             // Return if user did not press ok
             if (clearConfigurationOk != MessageBoxResult.OK) return;
 
-            // Reset the Password and Lockout Policies
-            // Set IsChecked to false and restore default values
-            settingAccountLockoutDuration.IsScored = false;
-            settingAccountLockoutDuration.Maximum = 99999;
-            settingAccountLockoutDuration.Maximum = 99999;
-            settingAccountLockoutThreshold.IsScored = false;
-            settingAccountLockoutThreshold.Maximum = 999;
-            settingAccountLockoutThreshold.Minimum = 0;
-            settingEnforcePasswordHistory.IsScored = false;
-            settingEnforcePasswordHistory.Maximum = 24;
-            settingEnforcePasswordHistory.Minimum = 0;
-            settingMaxPasswordAge.IsScored = false;
-            settingMaxPasswordAge.Maximum = 999;
-            settingMaxPasswordAge.Minimum = 0;
-            settingMinPasswordAge.IsScored = false;
-            settingMinPasswordAge.Maximum = 998;
-            settingMinPasswordAge.Minimum = 0;
-            settingMinPasswordLen.IsScored = false;
-            settingMinPasswordLen.Maximum = 20;
-            settingMinPasswordLen.Minimum = 0;
-            settingPasswordComplexity.IsScored = false;
-            settingPasswordComplexity.comboBox.Text = "Enabled";
-            settingResetLockoutCounterAfter.IsScored = false;
-            settingResetLockoutCounterAfter.Maximum = 99999;
-            settingResetLockoutCounterAfter.Minimum = 0;
-            settingReversibleEncryption.IsScored = false;
-            settingReversibleEncryption.comboBox.Text = "Disabled";
-
-            // Reset Audit Policies
-            // Looping through each audit policy
-            foreach (ControlSettingAudit control in itemsAuditPolicy.Items.Cast<ControlSettingAudit>())
-            {
-                // Set control from blank scored item
-                control.SetFromScoredItem(HeaderSettingPairs[control.Header]);
-            }
-
-            // Reset User Rights Assignment
-            foreach (ControlSettingUserRights control in itemsUserRightsSettings.Items.Cast<ControlSettingUserRights>())
-            {
-                // Set IsScored to false
-                control.IsScored = false;
-                // Clear all set items
-                control.itemsIdentifiers.Items.Clear();
-                // Clear the input box
-                control.comboBoxIdentifier.Text = string.Empty;
-            }
-
-            // Reset Security Options
-            // Loop through each type of options and
-            // Set IsScored to false
-            foreach (var item in itemsSecurityOptions.Items)
-            {
-                string value = item.GetType().ToString();
-                Console.WriteLine(value);
-                value = value.Replace("Configuration_Tool.Controls.SecOptions.", "");
-                if (value == "ControlRegistryComboBox")
-                {
-                    ((SecOptions.ControlRegistryComboBox)item).IsScored = false;
-                }
-                if (value == "ControlRegistryMultiLine")
-                {
-                    ((SecOptions.ControlRegistryMultiLine)item).IsScored = false;
-                }
-                if (value == "ControlRegistryRange")
-                {
-                    ((SecOptions.ControlRegistryRange)item).IsScored = false;
-                }
-                if (value == "ControlRegistryTextRegex")
-                {
-                    ((SecOptions.ControlRegistryTextRegex)item).IsScored = false;
-                }
-                if (value == "ControlSeceditComboBox")
-                {
-                    ((SecOptions.ControlSeceditComboBox)item).IsScored = false;
-                }
-                if (value == "ControlSeceditTextRegex")
-                {
-                    ((SecOptions.ControlSeceditTextRegex)item).IsScored = false;
-                }
-            }
-
-            // Clear user configurations
-            listUserConfigs.Items.Clear();
-
-            // Clear group configurations
-            listGroupConfigs.Items.Clear();
-
-            // Clear and repopulate programs list
-            listPrograms.Items.Clear();
-            PopulateProgramsList();
-
-            // Clear prohibited files configurations
-            itemsProhibitedFiles.Items.Clear();
+            // Load default configuration
+            ConfigurationManager.LoadDefaults();
         }
 
         private void RemoveConfigToolCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -400,12 +312,9 @@ namespace Configuration_Tool.Controls
 
         private void SaveonExit(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBoxResult saveonExit = MessageBox.Show("Would you like to save the current configuration?",
-                "Save Configuration",
-                MessageBoxButton.YesNo);
-            if (saveonExit == MessageBoxResult.Yes)
+            if (ConfigurationManager.CheckSavingChanges(this))
             {
-                ConfigurationManager.Save();
+                e.Cancel = true;
             }
         }
 

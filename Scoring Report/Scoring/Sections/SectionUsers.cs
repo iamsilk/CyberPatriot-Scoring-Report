@@ -7,12 +7,17 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices;
 using Scoring_Report.Configuration;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace Scoring_Report.Scoring.Sections
 {
     public class SectionUsers : ISection
     {
+        public ESectionType Type => ESectionType.Users;
+
         public string Header => "Users:";
+
+        public static List<UserSettings> Users { get; } = new List<UserSettings>();
 
         public static class Format
         {
@@ -35,7 +40,7 @@ namespace Scoring_Report.Scoring.Sections
             int max = 0;
 
             // For each user settings loaded in configuration
-            foreach (UserSettings settings in ConfigurationManager.Users)
+            foreach (UserSettings settings in Users)
             {
                 // Check all scorable parameters and increment
                 // max by one for each scored parameter
@@ -56,7 +61,7 @@ namespace Scoring_Report.Scoring.Sections
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
             // If no configuration for this section, return empty details
-            if (ConfigurationManager.Users.Count == 0) return details;
+            if (Users.Count == 0) return details;
 
             // Create instance for communicating with active directory
             using (PrincipalContext context = new PrincipalContext(ContextType.Machine))
@@ -65,7 +70,7 @@ namespace Scoring_Report.Scoring.Sections
                 using (PrincipalSearcher searcher = new PrincipalSearcher(new UserPrincipal(context)))
                 {
                     // For each user in configuration
-                    foreach (UserSettings settings in ConfigurationManager.Users)
+                    foreach (UserSettings settings in Users)
                     {
                         // Keep a boolean value for detecting if the user exists
                         bool userexists = false;
@@ -244,6 +249,25 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Clear current list of user settings
+            Users.Clear();
+
+            // Number of user settings instances
+            int count = reader.ReadInt32();
+
+            // For each user settings instance
+            for (int i = 0; i < count; i++)
+            {
+                // Parse user settings instance from binary reader
+                UserSettings settings = UserSettings.Parse(reader);
+
+                // Add user settings to main list
+                Users.Add(settings);
+            }
         }
     }
 }

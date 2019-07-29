@@ -2,6 +2,7 @@
 using Scoring_Report.Policies;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionLockoutPolicy : ISection
     {
+        public ESectionType Type => ESectionType.LockoutPolicy;
+
         public string Header => "Account Lockout Policy:";
 
-        public static Configuration.LockoutPolicy ConfigPolicy => ConfigurationManager.LockoutPolicy;
+        public static Configuration.LockoutPolicy ConfigPolicy { get; set; }
 
         public static Policies.LockoutPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.LockoutPolicy;
 
@@ -56,6 +59,15 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             return details;
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            // Get stored policy
+            Configuration.LockoutPolicy policy = Configuration.LockoutPolicy.Parse(reader);
+
+            // Store policy in global variable
+            ConfigPolicy = policy;
         }
     }
 }
