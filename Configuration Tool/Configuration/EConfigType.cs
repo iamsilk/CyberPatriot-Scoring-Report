@@ -11,6 +11,7 @@
         SecurityOptions,
         InstalledPrograms,
         ProhibitedFiles,
+        Shares,
         Other,
     }
 }

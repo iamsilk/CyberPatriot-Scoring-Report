@@ -310,6 +310,12 @@ namespace Configuration_Tool.Controls
             itemsProhibitedFiles.Items.Add(control);
         }
 
+        private void btnAddShares_Click(object sender, RoutedEventArgs e)
+        {
+            ControlShares control = new ControlShares();
+            itemsShares.Items.Add(control);
+        }
+
         private void SaveonExit(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ConfigurationManager.CheckSavingChanges(this))
@@ -317,18 +323,5 @@ namespace Configuration_Tool.Controls
                 e.Cancel = true;
             }
         }
-
-        public Dictionary<string, ScoredItem<EAuditSettings>> HeaderSettingPairs = new Dictionary<string, ScoredItem<EAuditSettings>>()
-        {
-            { "Audit account logon events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit account management", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit directory service access", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit logon events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit object access", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit policy change", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit privilege use", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit process tracking", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) },
-            { "Audit system events", new ScoredItem<EAuditSettings>(EAuditSettings.Unchanged, false) }
-        };
     }
 }

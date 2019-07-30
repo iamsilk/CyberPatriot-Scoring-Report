@@ -400,6 +400,9 @@ namespace Configuration_Tool.Configuration
         {
             MessageBoxResult save = MessageBoxResult.No;
 
+            // If the current configuration is blank, return
+            if (CurrentConfiguration == null) return false;
+
             using (MemoryStream bufferStream = new MemoryStream())
             {
                 int length = ConfigurationManager.SaveToStream(bufferStream, mainWindow);
