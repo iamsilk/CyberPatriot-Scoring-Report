@@ -30,7 +30,6 @@ namespace Scoring_Report.Scoring.Sections
             // Loop over all shares
             foreach (KeyValuePair<string, bool> share in LocalShares)
             {
-
                 if (ShareExists(share.Key) == share.Value)
                 {
                     details.Points++;
@@ -53,7 +52,7 @@ namespace Scoring_Report.Scoring.Sections
                 // Get Share Name
                 string sharename = reader.ReadString();
 
-                // Deleted Scored
+                // Score if deleted
                 bool deletedscored = reader.ReadBoolean();
 
                 LocalShares.Add(sharename, deletedscored);
@@ -64,13 +63,17 @@ namespace Scoring_Report.Scoring.Sections
         {
             try
             {
+                // Searching the registry to see if a share under the given name is scored
                 string name = "SYSTEM\\CurrentControlSet\\services\\LanmanServer\\Shares";
                 using (RegistryKey hklm = Registry.LocalMachine.OpenSubKey(name))
                 {
                     if (hklm != null)
                     {
                         if (hklm.GetValue(sharename) != null)
+                        {
+                            // If GetValue is not null, then the share exists
                             return true;
+                        }
                     }
                 }
                 return false;
