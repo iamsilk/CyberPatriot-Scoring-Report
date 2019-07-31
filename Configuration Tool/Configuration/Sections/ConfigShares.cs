@@ -26,13 +26,17 @@ namespace Configuration_Tool.Configuration.Sections
                 // Get Share Name
                 string sharename = reader.ReadString();
 
-                // Deleted Scored
-                bool deletedscored = reader.ReadBoolean();
+                // Get scoring status
+                bool isScored = reader.ReadBoolean();
+
+                // Score if exists
+                bool exists = reader.ReadBoolean();
 
                 ControlShares control = new ControlShares();
 
                 control.Share = sharename;
-                control.Exists = deletedscored;
+                control.IsScored = isScored;
+                control.Exists = exists;
 
                 MainWindow.itemsShares.Items.Add(control);
             }
@@ -48,6 +52,8 @@ namespace Configuration_Tool.Configuration.Sections
             {
                 // Write paths
                 writer.Write(control.Share);
+
+                writer.Write(control.IsScored);
 
                 writer.Write(control.Exists);
             }

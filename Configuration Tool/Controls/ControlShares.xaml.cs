@@ -48,6 +48,19 @@ namespace Configuration_Tool.Controls
             }
         }
 
+        public bool IsScored
+        {
+            get
+            {
+                if (!isScored.IsChecked.HasValue) return false;
+                return isScored.IsChecked.Value;
+            }
+            set
+            {
+                isScored.IsChecked = value;
+            }
+        }
+
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             ItemsControl itemsControl = (ItemsControl)this.Parent;

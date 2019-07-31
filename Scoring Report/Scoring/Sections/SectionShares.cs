@@ -14,7 +14,7 @@ namespace Scoring_Report.Scoring.Sections
 
         //
         // {0} - Sharename
-        // {1} - Needed Value
+        // {1} - Exists/Deleted
         //
         public const string Format = "Share '{0}' has been set properly - {1}";
 
@@ -33,7 +33,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (ShareExists(share.Key) == share.Value)
                 {
                     details.Points++;
-                    details.Output.Add(string.Format(Format, share.Key, share.Value));
+                    details.Output.Add(string.Format(Format, share.Key, share.Value ? "Exists" : "Deleted"));
                 }
             }
 
@@ -52,10 +52,15 @@ namespace Scoring_Report.Scoring.Sections
                 // Get Share Name
                 string sharename = reader.ReadString();
 
-                // Score if deleted
-                bool deletedscored = reader.ReadBoolean();
+                // Scoring status
+                bool isScored = reader.ReadBoolean();
 
-                LocalShares.Add(sharename, deletedscored);
+                // Score if exists
+                bool exists = reader.ReadBoolean();
+
+                if (!isScored) continue;
+
+                LocalShares.Add(sharename, exists);
             }
         }
 
