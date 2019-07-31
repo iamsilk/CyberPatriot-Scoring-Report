@@ -9,6 +9,7 @@ using Scoring_Report.Configuration.Groups;
 using Scoring_Report.Configuration.SecOptions;
 using Scoring_Report.Configuration.UserRights;
 using Scoring_Report.Scoring;
+using System.Security.Cryptography;
 
 namespace Scoring_Report.Configuration
 {
@@ -92,6 +93,9 @@ namespace Scoring_Report.Configuration
             loadConfig();
         }
 
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
+
         private static void loadConfig(bool loadedPrev = false)
         {
             // If file/directory doesn't exist
@@ -122,8 +126,19 @@ namespace Scoring_Report.Configuration
 
                 try
                 {
+                    // Create aes managed class for creating decryptor
+                    AesManaged aesManaged = new AesManaged();
+                    aesManaged.KeySize = 256;
+                    aesManaged.Mode = CipherMode.CBC;
+                    aesManaged.Padding = PaddingMode.PKCS7;
+                    aesManaged.Key = Encoding.ASCII.GetBytes(Key);
+                    aesManaged.IV = Encoding.ASCII.GetBytes(IV);
+                    ICryptoTransform decryptor = aesManaged.CreateDecryptor();
+
+                    // Crypto stream to decrypt config file
+                    using (CryptoStream cryptoStream = new CryptoStream(ConfigFileStream, decryptor, CryptoStreamMode.Read))
                     // Binary reader for parsing of data
-                    using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                    using (BinaryReader reader = new BinaryReader(cryptoStream))
                     {
                         loadOutputFiles(reader);
 

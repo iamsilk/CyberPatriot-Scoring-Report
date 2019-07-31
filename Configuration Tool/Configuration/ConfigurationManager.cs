@@ -12,6 +12,7 @@ using System.ComponentModel;
 using Configuration_Tool.Controls.SecOptions;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace Configuration_Tool.Configuration
 {
@@ -141,7 +142,9 @@ namespace Configuration_Tool.Configuration
             }
 
             // Get all bytes from config file
-            CurrentConfiguration = File.ReadAllBytes(CurrentConfigPath);
+            byte[] fileEncrypted = File.ReadAllBytes(CurrentConfigPath);
+
+            CurrentConfiguration = decryptBuffer(fileEncrypted, Key, IV);
 
             // Create stream to go over file's data
             using (MemoryStream bufferStream = new MemoryStream(CurrentConfiguration))
@@ -215,7 +218,7 @@ namespace Configuration_Tool.Configuration
                 {
                     // Set main window
                     config.MainWindow = mainWindow;
-                    
+
                     try
                     {
                         // Load config
@@ -278,7 +281,7 @@ namespace Configuration_Tool.Configuration
                 CurrentConfiguration = buffer;
             }
 
-            File.WriteAllBytes(CurrentConfigPath, CurrentConfiguration);
+            EncryptToFile(CurrentConfigPath, CurrentConfiguration);
         }
 
         public static int SaveToStream(Stream stream, MainWindow mainWindow)
@@ -408,7 +411,7 @@ namespace Configuration_Tool.Configuration
 
             using (MemoryStream bufferStream = new MemoryStream())
             {
-                int length = ConfigurationManager.SaveToStream(bufferStream, mainWindow);
+                int length = SaveToStream(bufferStream, mainWindow);
 
                 // Get and resize buffer to true length
                 byte[] buffer = bufferStream.GetBuffer();
@@ -425,8 +428,8 @@ namespace Configuration_Tool.Configuration
                     if (save == MessageBoxResult.Yes)
                     {
                         // Save changes
-                        File.WriteAllBytes(CurrentConfigPath, buffer);
                         CurrentConfiguration = buffer;
+                        EncryptToFile(CurrentConfigPath, CurrentConfiguration);
                     }
 
                     return save == MessageBoxResult.Cancel;
@@ -465,6 +468,59 @@ namespace Configuration_Tool.Configuration
             foreach (string file in OutputFiles)
             {
                 writer.Write(file);
+            }
+        }
+
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
+
+        public static bool EncryptToFile(string file, byte[] buffer)
+        {
+            AesManaged aesManaged = new AesManaged();
+            aesManaged.KeySize = 256;
+            aesManaged.Mode = CipherMode.CBC;
+            aesManaged.Padding = PaddingMode.PKCS7;
+            aesManaged.Key = Encoding.ASCII.GetBytes(Key);
+            aesManaged.IV = Encoding.ASCII.GetBytes(IV);
+            ICryptoTransform encryptor = aesManaged.CreateEncryptor();
+
+            using (FileStream fileStream = new FileStream(file, FileMode.Create, FileAccess.Write))
+            using (CryptoStream cryptoStream = new CryptoStream(fileStream, encryptor, CryptoStreamMode.Write))
+            {
+                cryptoStream.Write(buffer, 0, buffer.Length);
+            }
+
+            return true;
+        }
+
+        private static byte[] decryptBuffer(byte[] encrypted, string key, string iv)
+        {
+            byte[] keyBytes = Encoding.ASCII.GetBytes(key);
+            byte[] ivBytes = Encoding.ASCII.GetBytes(iv);
+
+            return decryptBuffer(encrypted, keyBytes, ivBytes);
+        }
+
+        private static byte[] decryptBuffer(byte[] encrypted, byte[] key, byte[] iv)
+        {
+            AesManaged aesManaged = new AesManaged();
+            aesManaged.KeySize = 256;
+            aesManaged.Mode = CipherMode.CBC;
+            aesManaged.Padding = PaddingMode.PKCS7;
+            aesManaged.Key = key;
+            aesManaged.IV = iv;
+            ICryptoTransform decryptor = aesManaged.CreateDecryptor();
+
+            List<byte> bytes = new List<byte>();
+
+            using (MemoryStream bufferStream = new MemoryStream(encrypted))
+            using (CryptoStream cryptoStream = new CryptoStream(bufferStream, decryptor, CryptoStreamMode.Read))
+            {
+                int b;
+                while ((b = cryptoStream.ReadByte()) != -1)
+                    bytes.Add((byte)b);
+
+                return bytes.ToArray();
             }
         }
     }
