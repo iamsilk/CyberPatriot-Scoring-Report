@@ -86,6 +86,7 @@
     <Compile Include="Configuration\Sections\ConfigPasswordPolicy.cs" />
     <Compile Include="Configuration\Sections\ConfigProhibitedFiles.cs" />
     <Compile Include="Configuration\Sections\ConfigSecurityOptions.cs" />
+    <Compile Include="Configuration\Sections\ConfigShares.cs" />
     <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
@@ -94,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ControlSettingProgram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlShares.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +187,9 @@
     </Compile>
     <Compile Include="Controls\ControlSettingProgram.xaml.cs">
       <DependentUpon>ControlSettingProgram.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlShares.xaml.cs">
+      <DependentUpon>ControlShares.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SecOptions\ControlNotImplemented.xaml.cs">
       <DependentUpon>ControlNotImplemented.xaml</DependentUpon>

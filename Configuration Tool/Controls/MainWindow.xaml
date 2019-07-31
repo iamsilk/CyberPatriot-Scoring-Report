@@ -505,6 +505,21 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Shares">
+                    <Grid>
+                        <Button VerticalAlignment="Top" Margin="10,10,10,0"
+                                Content="Add Share" Click="btnAddShares_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
+                            <ItemsControl x:Name="itemsShares" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="local:ControlShares">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <Grid Margin="10">
                         <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"

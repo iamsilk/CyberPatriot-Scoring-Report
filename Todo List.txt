@@ -7,7 +7,6 @@ Total Project:
 
 	Add Scored Sections:
 	-Startup
-	-Shares
 	-Firewall
 	-Services
 	-Hostfile

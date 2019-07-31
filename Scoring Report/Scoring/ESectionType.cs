@@ -17,6 +17,7 @@ namespace Scoring_Report.Scoring
         SecurityOptions,
         InstalledPrograms,
         ProhibitedFiles,
+        Share,
         Other,
     }
 }
