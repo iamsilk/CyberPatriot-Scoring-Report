@@ -398,10 +398,13 @@ namespace Configuration_Tool.Configuration
         // Returns true if action is cancelled
         public static bool CheckSavingChanges(MainWindow mainWindow)
         {
-            MessageBoxResult save = MessageBoxResult.No;
+            if (CurrentConfiguration == null)
+            {
+                // No config was loaded, started as default
+                CurrentConfiguration = DefaultConfiguration;
+            }
 
-            // If the current configuration is blank, return
-            if (CurrentConfiguration == null) return false;
+            MessageBoxResult save = MessageBoxResult.No;
 
             using (MemoryStream bufferStream = new MemoryStream())
             {
@@ -423,6 +426,7 @@ namespace Configuration_Tool.Configuration
                     {
                         // Save changes
                         File.WriteAllBytes(CurrentConfigPath, buffer);
+                        CurrentConfiguration = buffer;
                     }
 
                     return save == MessageBoxResult.Cancel;
