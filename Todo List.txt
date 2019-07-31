@@ -1,7 +1,6 @@
 Total Project:
 	Password Policy Settings, allow checking for range of integers
 	Implement regex checking for Usernames and Security IDs (allowing for different domains with same config)
-	Implement embedded encryption
 	Add configuration version checking for loading old configurations
 	Remove/sort unnecessary usings
 
