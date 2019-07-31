@@ -39,6 +39,7 @@ The sections which are currently a part of this Scoring Report include:
 - Local Groups
 - Installed Programs
 - Prohibited Files
+- Shares
 - Other
   - Remote Desktop Protocol
 
