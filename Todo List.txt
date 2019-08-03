@@ -1,5 +1,4 @@
 Total Project:
-	Password Policy Settings, allow checking for range of integers
 	Implement regex checking for Usernames and Security IDs (allowing for different domains with same config)
 	Add configuration version checking for loading old configurations
 	Remove/sort unnecessary usings
@@ -12,11 +11,10 @@ Total Project:
 	-Windows Features
 	-Custom registry checks
 	-Forensics Questions
+	
+	Document details of translations
 
 Configuration Tool:
 
 Scoring Report:
-	Allow displaying of username instead of SID
-	For competitors who do not know what an SID is, it may be intimidating and confusing
-
 	Optimization: Unload configurations which are not scored (not implemented prior to user rights)
