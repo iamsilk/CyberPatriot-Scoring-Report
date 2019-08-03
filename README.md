@@ -91,5 +91,14 @@ The parameters for this function are as follows in proper, incremental order:
 - `{3}` - Date and time when the output file was generated based on score. Time is given in the system's time zone.
 - `{4}` - String where all the sections are placed. The "meat" of the output. Takes into account the other formatting file specified earlier.
 
+## Translations
+Using the configuration tool, you may change the format in which section details are output.
+
+To do this, start the configuration tool. On the side tab, click Other -> Translations.
+
+You will see a list of every header and format of every loaded translation.
+
+TODO: Write details of all translation parameters.
+
 ## Development
 To mess with the source code, for the C# aspects, you're only going to need a compiler. However, to change stuff with the installer, you're going to need [Microsoft Visual Studio Installer Projects Extensions](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects).
