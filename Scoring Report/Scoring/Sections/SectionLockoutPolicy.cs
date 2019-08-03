@@ -19,8 +19,6 @@ namespace Scoring_Report.Scoring.Sections
 
         public static Policies.LockoutPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.LockoutPolicy;
 
-        public const string DefaultPolicyFormat = "'{0}' set correctly - {1} {2}";
-
         public int MaxScore()
         {
             int max = 0;
@@ -43,19 +41,19 @@ namespace Scoring_Report.Scoring.Sections
                 ConfigPolicy.AccountLockoutDuration.Value.WithinBounds(SystemPolicy.AccountLockoutDuration))
             {
                 details.Points++;
-                details.Output.Add(string.Format(DefaultPolicyFormat, "Account lockout duration", SystemPolicy.AccountLockoutDuration, "minutes"));
+                details.Output.Add(ConfigurationManager.Translate("AccountLockoutDuration", SystemPolicy.AccountLockoutDuration));
             }
             if (ConfigPolicy.AccountLockoutThreshold.IsScored &&
                 ConfigPolicy.AccountLockoutThreshold.Value.WithinBounds(SystemPolicy.AccountLockoutThreshold))
             {
                 details.Points++;
-                details.Output.Add(string.Format(DefaultPolicyFormat, "Account lockout threshold", SystemPolicy.AccountLockoutThreshold, "invalid logon attempts"));
+                details.Output.Add(ConfigurationManager.Translate("AccountLockoutThreshold", SystemPolicy.AccountLockoutThreshold));
             }
             if (ConfigPolicy.ResetLockoutCounterAfter.IsScored &&
                 ConfigPolicy.ResetLockoutCounterAfter.Value.WithinBounds(SystemPolicy.ResetLockoutCounterAfter))
             {
                 details.Points++;
-                details.Output.Add(string.Format(DefaultPolicyFormat, "Reset account lockout counter after", SystemPolicy.ResetLockoutCounterAfter, "minutes"));
+                details.Output.Add(ConfigurationManager.Translate("ResetLockoutCounterAfter", SystemPolicy.ResetLockoutCounterAfter));
             }
 
             return details;

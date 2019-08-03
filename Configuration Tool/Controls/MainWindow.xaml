@@ -529,22 +529,32 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Advanced">
-                    <Grid>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
-                            <Grid>
-                                <TextBlock Text="Output Files:" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtOutputFileInput" VerticalAlignment="Top" Margin="0,21,80,0"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,0,0" Height="18" Width="75"
+                    <TabControl>
+                        <TabItem Header="Output">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
+                                <Grid>
+                                    <TextBlock Text="Output Files:" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="txtOutputFileInput" VerticalAlignment="Top" Margin="0,21,80,0"/>
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,0,0" Height="18" Width="75"
                                         Content="Add" Click="btnOutputFileAdd_Click"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,44,0,0" Height="18" Width="75"
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,44,0,0" Height="18" Width="75"
                                         Content="Browse..." Click="btnOutputFileBrowse_Click"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,67,0,0" Height="18" Width="75"
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,67,0,0" Height="18" Width="75"
                                         Content="Remove" Click="btnOutputFileRemove_Click"/>
-                                <ListBox x:Name="listOutputFiles" VerticalAlignment="Top" Height="150" Margin="0,44,80,0"
+                                    <ListBox x:Name="listOutputFiles" VerticalAlignment="Top" Height="150" Margin="0,44,80,0"
                                         ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.OutputFiles}}"/>
-                            </Grid>
-                        </ScrollViewer>
-                    </Grid>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Translations">
+                            <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Translations}}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Header" Binding="{Binding Header}" Width="*" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Format" Binding="{Binding Format}" Width="2*" IsReadOnly="False"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
             </TabControl>
         </Grid>

@@ -21,8 +21,6 @@ namespace Scoring_Report.Scoring.Sections
 
         public static UserRightsAssignment SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.UserRightsAssignment;
 
-        public const string Format = "'{0}' set correctly - {1}";
-
         public int MaxScore()
         {
             // Return number of scored user rights definitions
@@ -151,7 +149,7 @@ namespace Scoring_Report.Scoring.Sections
                         IEnumerable<string> names = definition.Identifiers.Select(x => x.Name);
 
                         details.Points++;
-                        details.Output.Add(string.Format(Format, definition.Setting, string.Join(", ", names)));
+                        details.Output.Add(ConfigurationManager.Translate("UserRights", definition.Setting, string.Join(", ", names)));
                     }
 
                     tempDict.Remove(foundUserRights);

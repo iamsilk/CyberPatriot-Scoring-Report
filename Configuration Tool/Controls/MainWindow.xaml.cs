@@ -17,6 +17,7 @@ using Configuration_Tool.Configuration;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Configuration_Tool.Controls
 {
@@ -37,6 +38,8 @@ namespace Configuration_Tool.Controls
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
 
             string startupParameter = "";
 

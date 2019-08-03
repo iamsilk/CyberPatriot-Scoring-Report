@@ -19,21 +19,6 @@ namespace Scoring_Report.Scoring.Sections
 
         public static List<UserSettings> Users { get; } = new List<UserSettings>();
 
-        public static class Format
-        {
-            // {0} - Username/SID
-            // {1} - Identifier type
-            // {2} - Scored value
-
-            public const string Exists = "User {0} ({1}) - Exists on local machine ({2})";
-            public const string Password = "User {0} ({1}) - Password changed from default\r\n";
-            public const string PasswordExpired = "User {0} ({1}) - Password must be changed at next logon set to {2}\r\n";
-            public const string PasswordChangeDisabled = "User {0} ({1}) - Password change disabled set to {2}\r\n";
-            public const string PasswordNeverExpires = "User {0} ({1}) - Password never expires set to {2}\r\n";
-            public const string AccountDisabled = "User {0} ({1}) - Account disabled set to {2}\r\n";
-            public const string AccountLockedOut = "User {0} ({1}) - Account locked out set to {2}\r\n";
-        }
-
         public int MaxScore()
         {
             // Set max to 0
@@ -79,6 +64,10 @@ namespace Scoring_Report.Scoring.Sections
                         string id = "";
                         string idType = "";
 
+                        // Used for formatting, set to settings in case user doesn't exist
+                        string username = settings.Username;
+                        string sid = settings.SecurityID;
+
                         if (settings.IdentifiedBySID)
                         {
                             id = settings.SecurityID;
@@ -95,18 +84,27 @@ namespace Scoring_Report.Scoring.Sections
                         {
                             // Check if users are the same
                             bool isUser = false;
+
+                            // Set then compare so we only retrieve once
+                            string tempUsername = user.SamAccountName;
+                            string tempSid = user.Sid.Value;
+
                             if (settings.IdentifiedBySID)
                             {
-                                if (settings.SecurityID == user.Sid.Value)
+                                if (settings.SecurityID == sid)
                                     isUser = true;
                             }
                             else
                             {
-                                if (settings.Username == user.SamAccountName)
+                                if (settings.Username == username)
                                     isUser = true;
                             }
 
                             if (!isUser) continue;
+
+                            // Save username/sid for later formatting
+                            username = tempUsername;
+                            sid = tempSid;
 
                             userexists = true;
                             // Check if password is scored/valid
@@ -205,7 +203,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (!settings.PasswordLastStatus)
                                 {
                                     details.Points++;
-                                    details.Output.Add(string.Format(Format.Password, id, idType, settings.Password.Value));
+                                    details.Output.Add(ConfigurationManager.Translate("PasswordChanged", id, idType, settings.Password.Value, username, sid));
                                 }
                             }
 
@@ -215,34 +213,34 @@ namespace Scoring_Report.Scoring.Sections
                             if (settings.PasswordExpired.IsScored && settings.PasswordExpired.Value == ((int)properties["PasswordExpired"][0] == 1))
                             {
                                 details.Points++;
-                                details.Output.Add(string.Format(Format.PasswordExpired, id, idType, settings.PasswordExpired.Value));
+                                details.Output.Add(ConfigurationManager.Translate("PasswordExpired", id, idType, settings.PasswordExpired.Value, username, sid));
                             }
                             if (settings.PasswordChangeDisabled.IsScored && settings.PasswordChangeDisabled.Value == user.UserCannotChangePassword)
                             {
                                 details.Points++;
-                                details.Output.Add(string.Format(Format.PasswordChangeDisabled, id, idType, settings.PasswordChangeDisabled.Value));
+                                details.Output.Add(ConfigurationManager.Translate("PasswordChangeDisabled", id, idType, settings.PasswordChangeDisabled.Value, username, sid));
                             }
                             if (settings.PasswordNeverExpires.IsScored & settings.PasswordNeverExpires.Value == user.PasswordNeverExpires)
                             {
                                 details.Points++;
-                                details.Output.Add(string.Format(Format.PasswordNeverExpires, id, idType, settings.PasswordNeverExpires.Value));
+                                details.Output.Add(ConfigurationManager.Translate("PasswordNeverExpires", id, idType, settings.PasswordNeverExpires.Value, username, sid));
                             }
                             if (settings.AccountDisabled.IsScored && settings.AccountDisabled.Value == !user.Enabled)
                             {
                                 details.Points++;
-                                details.Output.Add(string.Format(Format.AccountDisabled, id, idType, settings.AccountDisabled.Value));
+                                details.Output.Add(ConfigurationManager.Translate("AccountDisabled", id, idType, settings.AccountDisabled.Value, username, sid));
                             }
                             if (settings.AccountLockedOut.IsScored && settings.AccountLockedOut.Value == user.IsAccountLockedOut())
                             {
                                 details.Points++;
-                                details.Output.Add(string.Format(Format.AccountLockedOut, id, idType, settings.AccountLockedOut.Value));
+                                details.Output.Add(ConfigurationManager.Translate("AccountLockedOut", id, idType, settings.AccountLockedOut.Value, username, sid));
                             }
                         }
 
                         if (settings.Exists.IsScored && settings.Exists.Value == userexists)
                         {
                             details.Points++;
-                            details.Output.Add(string.Format(Format.Exists, id, idType, settings.Exists.Value));
+                            details.Output.Add(ConfigurationManager.Translate("UserExists", id, idType, settings.Exists.Value, username, sid));
                         }
                     }
                 }

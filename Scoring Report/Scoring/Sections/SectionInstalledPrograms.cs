@@ -16,9 +16,7 @@ namespace Scoring_Report.Scoring.Sections
         public string Header => "Installed Programs:";
 
         public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
-
-        public const string Format = "'{0}' was set correctly - {1}";
-
+        
         public int MaxScore()
         {
             return InstalledPrograms.Count;
@@ -152,7 +150,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (installed == programConfig.Value)
                 {
                     details.Points++;
-                    details.Output.Add(string.Format(Format, programConfig.Key, programConfig.Value ? "Installed" : "Uninstalled"));
+                    details.Output.Add(ConfigurationManager.Translate("InstalledPrograms", programConfig.Key, programConfig.Value ? "Installed" : "Uninstalled"));
                 }
             }
 

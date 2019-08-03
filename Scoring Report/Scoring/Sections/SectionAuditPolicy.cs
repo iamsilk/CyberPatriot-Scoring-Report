@@ -19,8 +19,6 @@ namespace Scoring_Report.Scoring.Sections
 
         public static Policies.AuditPolicy SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.AuditPolicy;
 
-        public const string Format = "'{0}' set correctly - {1}";
-
         public readonly Dictionary<EAuditSettings, string> AuditSettingFormat = new Dictionary<EAuditSettings, string>()
         {
             { EAuditSettings.Unchanged, "No auditing" },
@@ -66,7 +64,7 @@ namespace Scoring_Report.Scoring.Sections
                         {
                             // Setting is properly configured
                             details.Points++;
-                            details.Output.Add(string.Format(Format, config.Key, AuditSettingFormat[config.Value.Value]));
+                            details.Output.Add(ConfigurationManager.Translate("AuditPolicy", config.Key, AuditSettingFormat[config.Value.Value]));
                         }
                     }
                 }

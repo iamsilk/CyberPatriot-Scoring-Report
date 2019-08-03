@@ -89,6 +89,7 @@
     <Compile Include="Configuration\Sections\ConfigShares.cs" />
     <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
+    <Compile Include="Configuration\Translation.cs" />
     <Compile Include="Configuration\UserSettings.cs" />
     <Page Include="Controls\ControlProhibitedFile.xaml">
       <SubType>Designer</SubType>

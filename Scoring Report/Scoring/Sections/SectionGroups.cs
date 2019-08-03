@@ -18,8 +18,6 @@ namespace Scoring_Report.Scoring.Sections
 
         public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
 
-        public const string GroupFormat = "Group \"{0}\" correctly configured - {1}";
-
         public int MaxScore()
         {
             // Set max to 0
@@ -121,7 +119,7 @@ namespace Scoring_Report.Scoring.Sections
                                 // Get list of members' names separated by commas
                                 string members = string.Join(", ", group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
 
-                                details.Output.Add(string.Format(GroupFormat, settings.GroupName, members));
+                                details.Output.Add(ConfigurationManager.Translate("Group", settings.GroupName, members));
                             }
                         }
                     }
