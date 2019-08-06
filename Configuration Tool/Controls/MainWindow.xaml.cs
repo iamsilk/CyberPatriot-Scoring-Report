@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using Configuration_Tool.Configuration;
+using Configuration_Tool.Controls.Files;
+using Configuration_Tool.Controls.Groups;
+using Configuration_Tool.Controls.Programs;
+using Configuration_Tool.Controls.Shares;
+using Configuration_Tool.Controls.Users;
 using Microsoft.Win32;
-using Configuration_Tool.Configuration;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Configuration_Tool.Controls
 {

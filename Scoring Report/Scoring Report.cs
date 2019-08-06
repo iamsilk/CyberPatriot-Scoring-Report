@@ -1,8 +1,8 @@
-﻿using System.ServiceProcess;
-using System.Threading;
-using Scoring_Report.Configuration;
+﻿using Scoring_Report.Configuration;
 using Scoring_Report.Scoring;
 using Scoring_Report.Scoring.Output;
+using System.ServiceProcess;
+using System.Threading;
 
 namespace Scoring_Report
 {

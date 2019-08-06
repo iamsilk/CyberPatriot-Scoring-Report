@@ -1,13 +1,10 @@
 ﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.SecOptions;
+using Scoring_Report.Policies;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scoring_Report.Configuration.SecOptions;
-using System.Text.RegularExpressions;
-using Scoring_Report.Policies;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Scoring_Report.Scoring.Sections
 {

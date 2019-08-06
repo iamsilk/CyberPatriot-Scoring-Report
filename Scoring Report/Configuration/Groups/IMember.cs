@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scoring_Report.Configuration.Groups
+﻿namespace Scoring_Report.Configuration.Groups
 {
     public interface IMember
     {

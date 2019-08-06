@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.UserRights;
+using Scoring_Report.Policies;
+using Scoring_Report.Policies.UserRights;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Scoring_Report.Configuration;
-using Scoring_Report.Configuration.UserRights;
-using Scoring_Report.Policies;
 
 namespace Scoring_Report.Scoring.Sections
 {

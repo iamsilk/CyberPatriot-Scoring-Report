@@ -1,11 +1,11 @@
 ﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.Audit;
 using Scoring_Report.Policies;
-using System;
+using Scoring_Report.Policies.Audit;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using config = Scoring_Report.Configuration.Audit;
+using policy = Scoring_Report.Policies.Audit;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -15,9 +15,9 @@ namespace Scoring_Report.Scoring.Sections
 
         public string Header => "Audit Policy:";
 
-        public static Configuration.AuditPolicy ConfigPolicy { get; set; }
+        public static config.AuditPolicy ConfigPolicy { get; set; }
 
-        public static Policies.AuditPolicy SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.AuditPolicy;
+        public static policy.AuditPolicy SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.AuditPolicy;
 
         public readonly Dictionary<EAuditSettings, string> AuditSettingFormat = new Dictionary<EAuditSettings, string>()
         {
@@ -76,7 +76,7 @@ namespace Scoring_Report.Scoring.Sections
         public void Load(BinaryReader reader)
         {
             // Get stored policy
-            Configuration.AuditPolicy policy = Configuration.AuditPolicy.Parse(reader);
+            config.AuditPolicy policy = config.AuditPolicy.Parse(reader);
 
             // Store policy in global variable
             ConfigPolicy = policy;

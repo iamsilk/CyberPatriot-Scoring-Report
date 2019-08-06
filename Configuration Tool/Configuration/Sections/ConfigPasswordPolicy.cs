@@ -1,4 +1,5 @@
-﻿using Configuration_Tool.Controls;
+﻿using Configuration_Tool.Configuration.Password;
+using Configuration_Tool.Controls;
 using System.IO;
 
 namespace Configuration_Tool.Configuration.Sections

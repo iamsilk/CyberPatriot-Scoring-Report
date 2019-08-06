@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Scoring_Report.Scoring;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Windows;
-using Scoring_Report.Configuration.Groups;
-using Scoring_Report.Configuration.SecOptions;
-using Scoring_Report.Configuration.UserRights;
-using Scoring_Report.Scoring;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Scoring_Report.Configuration
 {

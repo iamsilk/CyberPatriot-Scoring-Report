@@ -1,11 +1,7 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Configuration.SecOptions;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {

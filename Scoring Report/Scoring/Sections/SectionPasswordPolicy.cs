@@ -1,11 +1,9 @@
 ﻿using Scoring_Report.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Scoring_Report.Policies;
+using System.Collections.Generic;
 using System.IO;
+using config = Scoring_Report.Configuration.Password;
+using policy = Scoring_Report.Policies.Password;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -15,9 +13,9 @@ namespace Scoring_Report.Scoring.Sections
 
         public string Header => "Password Policy:";
 
-        public static Configuration.PasswordPolicy ConfigPolicy { get; set; }
+        public static config.PasswordPolicy ConfigPolicy { get; set; }
 
-        public static Policies.PasswordPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.PasswordPolicy;
+        public static policy.PasswordPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.PasswordPolicy;
 
         public int MaxScore()
         {
@@ -84,7 +82,7 @@ namespace Scoring_Report.Scoring.Sections
         public void Load(BinaryReader reader)
         {
             // Get stored policy
-            Configuration.PasswordPolicy policy = Configuration.PasswordPolicy.Parse(reader);
+            config.PasswordPolicy policy = config.PasswordPolicy.Parse(reader);
 
             // Store policy in global variable
             ConfigPolicy = policy;

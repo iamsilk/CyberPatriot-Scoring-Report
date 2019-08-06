@@ -1,12 +1,9 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Configuration.Groups;
-using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {

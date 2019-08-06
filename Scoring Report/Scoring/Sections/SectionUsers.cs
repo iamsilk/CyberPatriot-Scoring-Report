@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.Users;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices;
-using Scoring_Report.Configuration;
-using System.Runtime.InteropServices;
+using System.DirectoryServices.AccountManagement;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Scoring_Report.Scoring.Sections
 {

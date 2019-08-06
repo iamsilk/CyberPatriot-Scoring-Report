@@ -54,15 +54,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AuditPolicy.cs" />
+    <Compile Include="Configuration\Audit\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\EAuditSettings.cs" />
+    <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
     <Compile Include="Configuration\Groups\MemberUsername.cs" />
-    <Compile Include="Configuration\LockoutPolicy.cs" />
-    <Compile Include="Configuration\PasswordPolicy.cs" />
+    <Compile Include="Configuration\Lockout\LockoutPolicy.cs" />
+    <Compile Include="Configuration\Password\PasswordPolicy.cs" />
     <Compile Include="Configuration\Range.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\SecOptions\RegistryComboBox.xaml.cs" />
@@ -78,23 +78,23 @@
       <Generator>MSBuild:Compile</Generator>
     </Compile>
     <Compile Include="Configuration\UserRights\UserRightsDefinition.cs" />
-    <Compile Include="Configuration\UserSettings.cs" />
+    <Compile Include="Configuration\Users\UserSettings.cs" />
     <Compile Include="Policies\AccountPolicies.cs" />
-    <Compile Include="Policies\AuditPolicy.cs" />
+    <Compile Include="Policies\Audit\AuditPolicy.cs" />
     <Compile Include="Policies\LocalPolicies.cs" />
-    <Compile Include="Policies\LockoutPolicy.cs" />
-    <Compile Include="Policies\LSA_ENUMERATION_INFORMATION.cs" />
+    <Compile Include="Policies\Lockout\LockoutPolicy.cs" />
+    <Compile Include="Policies\UserRights\LSA_ENUMERATION_INFORMATION.cs" />
     <Compile Include="Policies\LSA_OBJECT_ATTRIBUTES.cs" />
     <Compile Include="Policies\LSA_UNICODE_STRING.cs" />
-    <Compile Include="Policies\PasswordPolicy.cs" />
-    <Compile Include="Policies\POLICY_AUDIT_EVENT.cs" />
-    <Compile Include="Policies\POLICY_AUDIT_EVENTS_INFO.cs" />
-    <Compile Include="Policies\POLICY_AUDIT_EVENT_TYPE.cs" />
+    <Compile Include="Policies\Password\PasswordPolicy.cs" />
+    <Compile Include="Policies\Audit\POLICY_AUDIT_EVENT.cs" />
+    <Compile Include="Policies\Audit\POLICY_AUDIT_EVENTS_INFO.cs" />
+    <Compile Include="Policies\Audit\POLICY_AUDIT_EVENT_TYPE.cs" />
     <Compile Include="Policies\POLICY_INFORMATION_CLASS.cs" />
     <Compile Include="Policies\SecurityPolicyManager.cs" />
-    <Compile Include="Policies\UserRightsAssignment.cs" />
-    <Compile Include="Policies\USER_MODALS_INFO_0.cs" />
-    <Compile Include="Policies\USER_MODALS_INFO_3.cs" />
+    <Compile Include="Policies\UserRights\UserRightsAssignment.cs" />
+    <Compile Include="Policies\Password\USER_MODALS_INFO_0.cs" />
+    <Compile Include="Policies\Lockout\USER_MODALS_INFO_3.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

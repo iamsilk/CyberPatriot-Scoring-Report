@@ -1,5 +1,4 @@
-﻿using Configuration_Tool.Configuration;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Controls;
 
 namespace Configuration_Tool.Controls.SecOptions

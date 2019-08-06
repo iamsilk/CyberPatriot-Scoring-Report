@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration.Install;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scoring_Report
+﻿namespace Scoring_Report
 {
     static class Program
     {

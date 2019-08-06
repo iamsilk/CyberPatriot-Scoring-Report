@@ -1,18 +1,14 @@
-﻿using System;
+﻿using Configuration_Tool.Controls;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Configuration_Tool.Controls;
-using System.Windows;
-using Configuration_Tool.Configuration.Groups;
-using System.Windows.Input;
 using System.ComponentModel;
-using Configuration_Tool.Controls.SecOptions;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
 
 namespace Configuration_Tool.Configuration
 {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Scoring_Report.Policies.Audit;
+using Scoring_Report.Policies.UserRights;
 
 namespace Scoring_Report.Policies
 {

@@ -1,12 +1,6 @@
-﻿using Microsoft.Win32;
-using Scoring_Report.Configuration;
-using System;
+﻿using Scoring_Report.Configuration;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {

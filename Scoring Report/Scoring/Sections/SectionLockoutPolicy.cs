@@ -1,11 +1,9 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Policies;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using config = Scoring_Report.Configuration.Lockout;
+using policy = Scoring_Report.Policies.Lockout;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -15,9 +13,9 @@ namespace Scoring_Report.Scoring.Sections
 
         public string Header => "Account Lockout Policy:";
 
-        public static Configuration.LockoutPolicy ConfigPolicy { get; set; }
+        public static config.LockoutPolicy ConfigPolicy { get; set; }
 
-        public static Policies.LockoutPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.LockoutPolicy;
+        public static policy.LockoutPolicy SystemPolicy => SecurityPolicyManager.Settings.AccountPolicies.LockoutPolicy;
 
         public int MaxScore()
         {
@@ -62,7 +60,7 @@ namespace Scoring_Report.Scoring.Sections
         public void Load(BinaryReader reader)
         {
             // Get stored policy
-            Configuration.LockoutPolicy policy = Configuration.LockoutPolicy.Parse(reader);
+            Configuration.Lockout.LockoutPolicy policy = config.LockoutPolicy.Parse(reader);
 
             // Store policy in global variable
             ConfigPolicy = policy;
