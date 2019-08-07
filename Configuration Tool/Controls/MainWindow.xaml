@@ -522,6 +522,18 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Startup">
+                    <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.StartupInfos}}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Owner" Binding="{Binding Owner}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Command" Binding="{Binding Command}" Width="2*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding StartupTypeString}" Width="2*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="2*" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" Width="2*" IsReadOnly="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
                 <TabItem Header="Other">
                     <Grid Margin="10">
                         <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"

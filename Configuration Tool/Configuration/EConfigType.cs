@@ -12,6 +12,7 @@
         InstalledPrograms,
         ProhibitedFiles,
         Shares,
-        Other,
+        Startup,
+        Other = 99,
     }
 }

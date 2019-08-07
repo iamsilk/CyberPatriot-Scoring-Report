@@ -73,6 +73,8 @@
     <Compile Include="Configuration\SecOptions\SeceditTextRegex.xaml.cs" />
     <Compile Include="Configuration\SecOptions\ESecurityOptionType.cs" />
     <Compile Include="Configuration\SecOptions\ISecurityOption.cs" />
+    <Compile Include="Configuration\Startup\EStartupType.cs" />
+    <Compile Include="Configuration\Startup\StartupInfo.cs" />
     <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\UserRights\UserRightsIdentifier.cs">
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +127,7 @@
     <Compile Include="Scoring\Sections\SectionProhibitedFiles.cs" />
     <Compile Include="Scoring\Sections\SectionSecurityOptions.cs" />
     <Compile Include="Scoring\Sections\SectionShares.cs" />
+    <Compile Include="Scoring\Sections\SectionStartup.cs" />
     <Compile Include="Scoring\Sections\SectionUserRights.cs" />
     <Compile Include="Scoring\Sections\SectionUsers.cs" />
     <Compile Include="Policies\SeceditWrapper.cs" />

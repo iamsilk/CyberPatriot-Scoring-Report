@@ -1,4 +1,5 @@
-﻿using Scoring_Report.Scoring;
+﻿using Scoring_Report.Configuration.Startup;
+using Scoring_Report.Scoring;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,6 +47,8 @@ namespace Scoring_Report.Configuration
         public const string BackupTranslationFormat = "{0} {1}";
 
         public static Dictionary<string, string> Translations { get; } = new Dictionary<string, string>();
+
+        public static List<StartupInfo> StartupInfos { get; } = new List<StartupInfo>();
 
         public static void Startup(string startupParameter)
         {

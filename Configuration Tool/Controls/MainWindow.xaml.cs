@@ -1,4 +1,5 @@
 ﻿using Configuration_Tool.Configuration;
+using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls.Files;
 using Configuration_Tool.Controls.Groups;
 using Configuration_Tool.Controls.Programs;
@@ -47,6 +48,8 @@ namespace Configuration_Tool.Controls
             }
 
             PopulateProgramsList();
+
+            PopulateStartupInfos();
 
             ConfigurationManager.Startup(startupParameter);
 
@@ -299,6 +302,12 @@ namespace Configuration_Tool.Controls
 
                 listPrograms.Items.Add(control);
             }
+        }
+
+        public void PopulateStartupInfos()
+        {            
+            // Get startup information
+            StartupInfo.GetStartupInfos(ConfigurationManager.StartupInfos);
         }
 
         private void btnAddPath_Click(object sender, RoutedEventArgs e)

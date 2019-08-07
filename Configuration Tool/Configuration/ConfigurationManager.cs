@@ -1,4 +1,5 @@
-﻿using Configuration_Tool.Controls;
+﻿using Configuration_Tool.Configuration.Startup;
+using Configuration_Tool.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,6 +47,7 @@ namespace Configuration_Tool.Configuration
         {
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
+        
         public static BindingList<Translation> Translations { get; } = new BindingList<Translation>()
         {
             new Translation("UserExists",               "User {3} - Exists on local machine ({2})"),
@@ -71,8 +73,11 @@ namespace Configuration_Tool.Configuration
             new Translation("InstalledPrograms",        "'{0}' set correctly - {1}"),
             new Translation("ProhibitedFiles",          "File '{0}' has been deleted"),
             new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
-            new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}")
+            new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
+            new Translation("Startup",                  "Startup '{1}' has been removed."),
         };
+
+        public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();
 
         public static void Startup(string startupParameter)
         {

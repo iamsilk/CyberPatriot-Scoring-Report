@@ -65,6 +65,7 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
+    <Compile Include="Configuration\Sections\ConfigStartup.cs" />
     <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
@@ -213,6 +214,8 @@
     <Compile Include="Controls\SecOptions\ControlRegistryComboBox.xaml.cs">
       <DependentUpon>ControlRegistryComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configuration\Startup\EStartupType.cs" />
+    <Compile Include="Configuration\Startup\StartupInfo.cs" />
     <Compile Include="Controls\UserRights\ControlSettingUserRightsSID.xaml.cs">
       <DependentUpon>ControlSettingUserRightsSID.xaml</DependentUpon>
     </Compile>
