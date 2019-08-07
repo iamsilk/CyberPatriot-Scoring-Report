@@ -249,9 +249,6 @@ namespace Configuration_Tool.Configuration
                 throw new Exception("Couldn't find main window while saving configuration.");
             }
 
-            // Update all bindings
-            mainWindow.UpdateBindingSources();
-
             // Setup memory stream to save buffer for later comparisons on exiting/loading
             using (MemoryStream bufferStream = new MemoryStream())
             {
@@ -271,6 +268,9 @@ namespace Configuration_Tool.Configuration
 
         public static int SaveToStream(Stream stream, MainWindow mainWindow)
         {
+            // Update all bindings
+            mainWindow.UpdateBindingSources();
+
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 saveOutputFiles(writer);
