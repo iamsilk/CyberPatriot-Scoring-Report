@@ -40,6 +40,7 @@ The sections which are currently a part of this Scoring Report include:
 - Installed Programs
 - Prohibited Files
 - Shares
+- Startup
 - Other
   - Remote Desktop Protocol
 
