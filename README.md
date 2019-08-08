@@ -63,6 +63,13 @@ The Scoring Report Windows Service starts automatically as the Local System user
 
 You can not run the Scoring Report as a regular user unless you are using some debugger. You may install/uninstall it as a service by passing the /i or /u argument respectively. Then you will need to start the service using some service manager.
 
+Return codes when running as a user are as follows:
+- -1 - Unknown
+- 0 - Success
+- 1 - No arguments specified
+- 2 - Unknown argument
+- 0x80004005 - Service already installed or uninstalled
+
 The output of the scoring report is manually configurable and it is planned in the future to make this process simpler. Currently, you can specify different output files within the Configuration Tool in the Advanced tab; however, this is only the first step.
 
 I will try to explain the formatting and process to creating your own customized output file; however, if you run into any issues, you may either ask or examine the [source code](https://github.com/Stephen3495/CyberPatriot-Scoring-Report/tree/master/Scoring%20Report/Scoring/Output) yourself to see the workings of the output management.
