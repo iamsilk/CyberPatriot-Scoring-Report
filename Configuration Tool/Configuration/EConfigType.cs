@@ -13,6 +13,7 @@
         ProhibitedFiles,
         Shares,
         Startup,
+        FirewallProfiles,
         Other = 99,
     }
 }

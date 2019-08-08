@@ -75,6 +75,7 @@ namespace Configuration_Tool.Configuration
             new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
             new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
             new Translation("Startup",                  "Startup '{1}' has been removed."),
+            new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
         };
 
         public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();

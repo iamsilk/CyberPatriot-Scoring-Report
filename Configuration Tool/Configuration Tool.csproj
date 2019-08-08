@@ -65,6 +65,10 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
+    <Compile Include="Configuration\Sections\ConfigFirewallProfiles.cs" />
+    <Compile Include="Controls\Firewall\ControlProfile.xaml.cs">
+      <DependentUpon>ControlProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\Sections\ConfigStartup.cs" />
     <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
@@ -92,6 +96,10 @@
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
     <Compile Include="Configuration\Translation.cs" />
     <Compile Include="Configuration\Users\UserSettings.cs" />
+    <Page Include="Controls\Firewall\ControlProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Files\ControlProhibitedFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
