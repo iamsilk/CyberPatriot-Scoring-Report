@@ -14,7 +14,7 @@ If anything is unclear and needs better explanation, feel free to ask. I hope th
 ![Example Image of Scoring Report](/Scoring%20Report%20Example%20Image.png)
 
 ## Installation:
-To install this Scoring Report, download and run the latest installer from the [Releases tab](/releases). You will also need .NET Framework 4.6.1 or later.
+To install this Scoring Report, download and run the latest installer from the [Releases tab](https://github.com/Stephen3495/CyberPatriot-Scoring-Report/releases). You will also need .NET Framework 4.6.1 or later.
 
 In the installation, two executables will be unpacked, the Configuration Tool and the Scoring Report. Both of these tools will be explained in their own sections.
 
