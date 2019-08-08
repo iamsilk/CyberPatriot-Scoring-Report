@@ -1,4 +1,14 @@
-﻿namespace Scoring_Report
+﻿#if !DEBUG
+using System;
+using System.ComponentModel;
+using System.Configuration.Install;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.ServiceProcess;
+#endif
+
+namespace Scoring_Report
 {
     static class Program
     {
