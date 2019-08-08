@@ -9,11 +9,13 @@ namespace Scoring_Report.Scoring.Sections
     {
         public string Header => "Startup:";
 
+        public static List<StartupInfo> StartupInfos { get; } = new List<StartupInfo>();
+
         public ESectionType Type => ESectionType.Startup;
 
         public int MaxScore()
         {
-            return ConfigurationManager.StartupInfos.Count;
+            return StartupInfos.Count;
         }
 
         public SectionDetails GetScore()
@@ -36,7 +38,7 @@ namespace Scoring_Report.Scoring.Sections
             }
 
             // For each startup info config
-            foreach (StartupInfo info in ConfigurationManager.StartupInfos)
+            foreach (StartupInfo info in StartupInfos)
             {
                 // Get string representation of startup info
                 // Used to compare against others
@@ -57,7 +59,7 @@ namespace Scoring_Report.Scoring.Sections
         public void Load(BinaryReader reader)
         {
             // Clear startup infos
-            ConfigurationManager.StartupInfos.Clear();
+            StartupInfos.Clear();
 
             // Get number of startup infos to load
             int count = reader.ReadInt32();
@@ -69,7 +71,7 @@ namespace Scoring_Report.Scoring.Sections
 
                 // If it's scored, add to global list
                 if (loadedInfo.IsScored)
-                    ConfigurationManager.StartupInfos.Add(loadedInfo);
+                    StartupInfos.Add(loadedInfo);
             }
         }
     }

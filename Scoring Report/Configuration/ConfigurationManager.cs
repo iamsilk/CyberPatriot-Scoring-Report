@@ -48,8 +48,6 @@ namespace Scoring_Report.Configuration
 
         public static Dictionary<string, string> Translations { get; } = new Dictionary<string, string>();
 
-        public static List<StartupInfo> StartupInfos { get; } = new List<StartupInfo>();
-
         public static void Startup(string startupParameter)
         {
             CurrentConfigPath = startupParameter;
