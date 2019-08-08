@@ -22,27 +22,25 @@ namespace Scoring_Report
             //  0 - Success
             //  1 - No arguments specified
             //  2 - Unknown argument
+            //  0x80004005 - Service already installed or uninstalled
 
             // Debugable without installing service manually.
             // Thanks to https://www.dotnetforall.com/creating-installing-windows-service/
-            #if DEBUG
+#if DEBUG
             ScoringReport scoringReport = new ScoringReport();
             scoringReport.OnDebug();
             return 0;
-            #else
+#else
 
             // Program self-installation thanks to:
             // https://stackoverflow.com/a/9021540
 
             // If program is being ran by user
-            if (System.Environment.UserInteractive)
+            if (Environment.UserInteractive)
             {
                 if (args.Length == 0)
                 {
-                    Console.WriteLine("No arguments specified. Process must be started as a service.");
-                    Console.WriteLine("Arguments:");
-                    Console.WriteLine("\t/i - Install service");
-                    Console.WriteLine("\t/u - Install service");
+                    // No arguments specified
                     return 1;
                 }
                 switch (args[0].ToLower())
@@ -52,7 +50,7 @@ namespace Scoring_Report
                     case "/u":
                         return UninstallService();
                     default:
-                        Console.WriteLine("Unknown argument specified: {0}", args[0]);
+                        // Unknown argument
                         return 2;
                 }
             }
@@ -85,13 +83,11 @@ namespace Scoring_Report
                 {
                     // if Win32Exception, service is already installed
                     Win32Exception wex = (Win32Exception)ex.InnerException;
-                    Console.WriteLine("Error(0x{0:X}): Service already installed!", wex.ErrorCode);
                     code = wex.ErrorCode;
                 }
                 else
                 {
                     // Unknown error
-                    Console.WriteLine(ex.ToString());
                     code = -1;
                 }
             }
@@ -121,13 +117,11 @@ namespace Scoring_Report
                 {
                     // Service isn't installed
                     Win32Exception wex = (Win32Exception)ex.InnerException;
-                    Console.WriteLine("Error(0x{0:X}): Service not installed!", wex.ErrorCode);
                     code = wex.ErrorCode;
                 }
                 else
                 {
                     // Unknown error
-                    Console.WriteLine(ex.ToString());
                     code = -1;
                 }
             }
