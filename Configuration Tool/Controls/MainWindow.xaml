@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cfg="clr-namespace:Configuration_Tool.Configuration"
+        xmlns:cfgfirewall="clr-namespace:Configuration_Tool.Configuration.Firewall"
         xmlns:local="clr-namespace:Configuration_Tool.Controls"
         xmlns:audit="clr-namespace:Configuration_Tool.Controls.Audit"
         xmlns:firewall="clr-namespace:Configuration_Tool.Controls.Firewall"
@@ -550,6 +551,100 @@
                                     <firewall:ControlProfile Header="Public Profile"/>
                                 </ItemsControl>
                             </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Inbound Rules">
+                            <DataGrid x:Name="dataGridInboundRules" Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.InboundRules}}" ColumnWidth="*" AutoGenerateColumns="False">
+                                <DataGrid.Resources>
+                                    <ContextMenu x:Key="firewallRulesColumnHeaderContextMenu">
+                                        <MenuItem Header="Add/remove columns..." Click="fwInboundRulesAddRemoveColumns_Click"/>
+                                    </ContextMenu>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource firewallRulesColumnHeaderContextMenu}"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Visibility="Hidden"/>
+                                    <DataGridTemplateColumn Header="Profile">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <CheckBox Content="Domain" IsChecked="{Binding Path=IsDomainProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Private" IsChecked="{Binding Path=IsPrivateProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Public" IsChecked="{Binding Path=IsPublicProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled}" Width="Auto"/>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <RadioButton Content="Allow the connection" IsChecked="{Binding Path=IsAllowed, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RadioButton Content="Block the connection" IsChecked="{Binding Path=IsBlocked, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Program" Binding="{Binding ApplicationName}"/>
+                                    <DataGridTextColumn Header="Service" Binding="{Binding Service}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Local Address" Binding="{Binding LocalAddresses}"/>
+                                    <DataGridTextColumn Header="Remote Address" Binding="{Binding RemoteAddresses}"/>
+                                    <DataGridComboBoxColumn Header="Protocol" ItemsSource="{Binding Source={x:Static cfgfirewall:Rule.ProtocolNames}}" SelectedItemBinding="{Binding Protocol}"/>
+                                    <DataGridTextColumn Header="Local Port" Binding="{Binding LocalPorts}"/>
+                                    <DataGridTextColumn Header="Remote Port" Binding="{Binding RemotePorts}"/>
+                                    <DataGridCheckBoxColumn Header="Scored on Removal" Binding="{Binding IsScored}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Outbound Rules">
+                            <DataGrid x:Name="dataGridOutboundRules" Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.OutboundRules}}" ColumnWidth="*" AutoGenerateColumns="False">
+                                <DataGrid.Resources>
+                                    <ContextMenu x:Key="firewallRulesColumnHeaderContextMenu">
+                                        <MenuItem Header="Add/remove columns..." Click="fwOutboundRulesAddRemoveColumns_Click"/>
+                                    </ContextMenu>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource firewallRulesColumnHeaderContextMenu}"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Visibility="Hidden"/>
+                                    <DataGridTemplateColumn Header="Profile">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <CheckBox Content="Domain" IsChecked="{Binding Path=IsDomainProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Private" IsChecked="{Binding Path=IsPrivateProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Public" IsChecked="{Binding Path=IsPublicProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled}" Width="Auto"/>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <RadioButton Content="Allow the connection" IsChecked="{Binding Path=IsAllowed, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RadioButton Content="Block the connection" IsChecked="{Binding Path=IsBlocked, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Program" Binding="{Binding ApplicationName}"/>
+                                    <DataGridTextColumn Header="Service" Binding="{Binding Service}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Local Address" Binding="{Binding LocalAddresses}"/>
+                                    <DataGridTextColumn Header="Remote Address" Binding="{Binding RemoteAddresses}"/>
+                                    <DataGridComboBoxColumn Header="Protocol" ItemsSource="{Binding Source={x:Static cfgfirewall:Rule.ProtocolNames}}" SelectedItemBinding="{Binding Protocol}"/>
+                                    <DataGridTextColumn Header="Local Port" Binding="{Binding LocalPorts}"/>
+                                    <DataGridTextColumn Header="Remote Port" Binding="{Binding RemotePorts}"/>
+                                    <DataGridCheckBoxColumn Header="Scored on Removal" Binding="{Binding IsScored}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </TabItem>
                     </TabControl>
                 </TabItem>

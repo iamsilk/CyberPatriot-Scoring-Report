@@ -1,11 +1,14 @@
 ﻿using Configuration_Tool.Configuration;
+using Configuration_Tool.Configuration.Firewall;
 using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls.Files;
+using Configuration_Tool.Controls.Firewall;
 using Configuration_Tool.Controls.Groups;
 using Configuration_Tool.Controls.Programs;
 using Configuration_Tool.Controls.Shares;
 using Configuration_Tool.Controls.Users;
 using Microsoft.Win32;
+using NetFwTypeLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +53,8 @@ namespace Configuration_Tool.Controls
             PopulateProgramsList();
 
             PopulateStartupInfos();
+
+            PopulateFirewallRules();
 
             ConfigurationManager.Startup(startupParameter);
 
@@ -310,6 +315,25 @@ namespace Configuration_Tool.Controls
             StartupInfo.GetStartupInfos(ConfigurationManager.StartupInfos);
         }
 
+        public void PopulateFirewallRules()
+        {
+            // Get all firewall rules
+            PopulateFirewallInboundRules();
+            PopulateFirewallOutboundRules();
+        }
+
+        public void PopulateFirewallInboundRules()
+        {
+            // Get inbound firewall rules
+            Rule.GetFirewallRules(NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_IN, ConfigurationManager.InboundRules);
+        }
+
+        public void PopulateFirewallOutboundRules()
+        {
+            // Get outbound firewall rules
+            Rule.GetFirewallRules(NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT, ConfigurationManager.OutboundRules);
+        }
+
         private void btnAddPath_Click(object sender, RoutedEventArgs e)
         {
             ControlProhibitedFile control = new ControlProhibitedFile();
@@ -329,6 +353,20 @@ namespace Configuration_Tool.Controls
             {
                 e.Cancel = true;
             }
+        }
+
+        private void fwInboundRulesAddRemoveColumns_Click(object sender, RoutedEventArgs e)
+        {
+            WindowFirewallColumns window = new WindowFirewallColumns(dataGridInboundRules);
+
+            window.ShowDialog();
+        }
+
+        private void fwOutboundRulesAddRemoveColumns_Click(object sender, RoutedEventArgs e)
+        {
+            WindowFirewallColumns window = new WindowFirewallColumns(dataGridOutboundRules);
+
+            window.ShowDialog();
         }
     }
 }

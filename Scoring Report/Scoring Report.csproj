@@ -58,6 +58,7 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\Firewall\FirewallProfile.cs" />
+    <Compile Include="Configuration\Firewall\Rule.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionFirewallInboundRules.cs" />
+    <Compile Include="Scoring\Sections\SectionFirewallOutboundRules.cs" />
     <Compile Include="Scoring\Sections\SectionAuditPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallProfiles.cs" />
     <Compile Include="Scoring\Sections\SectionGroups.cs" />

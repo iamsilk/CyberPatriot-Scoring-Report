@@ -1,0 +1,39 @@
+﻿<Window x:Class="Configuration_Tool.Controls.Firewall.WindowFirewallColumns"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Add/Remove Columns" Height="300" Width="500">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBlock Text="Available columns:"/>
+                <ListBox x:Name="availableColumns" Margin="0,20,0,0"/>
+            </Grid>
+            <Grid Grid.Column="1" Margin="5,0,5,0">
+                <Button Content="Add ->" VerticalAlignment="Center" Margin="0,0,0,24" Click="buttonAdd_Click"/>
+                <Button Content="&lt;- Remove" VerticalAlignment="Center" Margin="0,24,0,0" Click="buttonRemove_Click"/>
+            </Grid>
+            <Grid Grid.Column="2">
+                <TextBlock Text="Displayed columns:"/>
+                <ListBox x:Name="displayedColumns" Margin="0,20,0,0"/>
+            </Grid>
+        </Grid>
+        <Separator Grid.Row="1"/>
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Button HorizontalAlignment="Right" Margin="0,0,55,0" Width="50" Content="OK" Click="buttonOK_Click"/>
+            <Button HorizontalAlignment="Right" Width="50" Content="Cancel" Click="buttonCancel_Click"/>
+        </Grid>
+    </Grid>
+</Window>

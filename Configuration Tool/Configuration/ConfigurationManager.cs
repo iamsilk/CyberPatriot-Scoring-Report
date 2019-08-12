@@ -1,4 +1,5 @@
-﻿using Configuration_Tool.Configuration.Startup;
+﻿using Configuration_Tool.Configuration.Firewall;
+using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls;
 using System;
 using System.Collections.Generic;
@@ -76,9 +77,15 @@ namespace Configuration_Tool.Configuration
             new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
             new Translation("Startup",                  "Startup '{1}' has been removed."),
             new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
+            new Translation("FirewallInboundRule",      "Rule '{0}' has been removed"),
+            new Translation("FirewallOutboundRule",     "Rule '{0}' has been removed"),
         };
 
         public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();
+
+        public static BindingList<Rule> InboundRules { get; } = new BindingList<Rule>();
+
+        public static BindingList<Rule> OutboundRules { get; } = new BindingList<Rule>();
 
         public static void Startup(string startupParameter)
         {

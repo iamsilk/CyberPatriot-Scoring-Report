@@ -14,6 +14,8 @@
         Shares,
         Startup,
         FirewallProfiles,
+        FirewallInboundRules,
+        FirewallOutboundRules,
         Other = 99,
     }
 }
