@@ -41,6 +41,9 @@ The sections which are currently a part of this Scoring Report include:
 - Prohibited Files
 - Shares
 - Startup
+- Firewall
+  - Profile details
+  - Inbound/Outbound Rule Checking
 - Other
   - Remote Desktop Protocol
 
