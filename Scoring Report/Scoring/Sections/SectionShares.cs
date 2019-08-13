@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Scoring_Report.Configuration;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,17 +7,11 @@ namespace Scoring_Report.Scoring.Sections
 {
     class SectionShares : ISection
     {
-        public ESectionType Type => ESectionType.Share;
+        public ESectionType Type => ESectionType.Shares;
 
         public string Header => "Shares:";
 
         public static Dictionary<string, bool> LocalShares { get; } = new Dictionary<string, bool>();
-
-        //
-        // {0} - Sharename
-        // {1} - Exists/Deleted
-        //
-        public const string Format = "Share '{0}' has been set properly - {1}";
 
         public int MaxScore()
         {
@@ -33,7 +28,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (ShareExists(share.Key) == share.Value)
                 {
                     details.Points++;
-                    details.Output.Add(string.Format(Format, share.Key, share.Value ? "Exists" : "Deleted"));
+                    details.Output.Add(ConfigurationManager.Translate("Shares", share.Key, share.Value ? "Exists" : "Deleted"));
                 }
             }
 

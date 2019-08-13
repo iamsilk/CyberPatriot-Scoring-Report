@@ -1,13 +1,13 @@
-﻿using Scoring_Report.Configuration;
-using Scoring_Report.Configuration.UserRights;
+﻿using Scoring_Report.Configuration.UserRights;
+using Scoring_Report.Policies.Audit;
+using Scoring_Report.Policies.Lockout;
+using Scoring_Report.Policies.Password;
+using Scoring_Report.Policies.UserRights;
 using Scoring_Report.Scoring.Sections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Policies
 {

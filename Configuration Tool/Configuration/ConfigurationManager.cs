@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using Configuration_Tool.Configuration.Firewall;
+using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls;
-using System.Windows;
-using Configuration_Tool.Configuration.Groups;
-using System.Windows.Input;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using Configuration_Tool.Controls.SecOptions;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
 
 namespace Configuration_Tool.Configuration
 {
@@ -49,6 +48,44 @@ namespace Configuration_Tool.Configuration
         {
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
+        
+        public static BindingList<Translation> Translations { get; } = new BindingList<Translation>()
+        {
+            new Translation("UserExists",               "User {3} - Exists on local machine ({2})"),
+            new Translation("PasswordChanged",          "User {3} - Password changed from default"),
+            new Translation("PasswordExpired",          "User {3} - Password must be changed at next logon set to {2}"),
+            new Translation("PasswordChangeDisabled",   "User {3} - Password change disabled set to {2}"),
+            new Translation("PasswordNeverExpires",     "User {3} - Password never expires set to {2}"),
+            new Translation("AccountDisabled",          "User {3} - Account disabled set to {2}"),
+            new Translation("AccountLockedOut",         "User {3} - Account locked out set to {2}"),
+            new Translation("Group",                    "Group '{0}' correctly configured - {1}"),
+            new Translation("EnforcePasswordHistory",   "'Enforce password history' set correctly - {0} passwords remembered"),
+            new Translation("MaxPasswordAge",           "'Maximum password age' set correctly - {0} days"),
+            new Translation("MinPasswordAge",           "'Minimum password age' set correctly - {0} days"),
+            new Translation("MinPasswordLength",        "'Minimum password length' set correctly - {0} characters"),
+            new Translation("PasswordComplexity",       "'Password must meet complexity requirements' set correctly - {0}"),
+            new Translation("ReversibleEncryption",     "'Store passwords using reversible encryption' set correctly - {0}"),
+            new Translation("AccountLockoutDuration",   "'Account lockout duration' set correctly - {0} minutes"),
+            new Translation("AccountLockoutThreshold",  "'Account lockout threshold' set correctly - {0} invalid logon attempts"),
+            new Translation("ResetLockoutCounterAfter", "'Reset account lockout counter after' set correctly - {0} minutes"),
+            new Translation("AuditPolicy",              "'{0}' set correctly - {1}"),
+            new Translation("UserRights",               "'{0}' set correctly - {1}"),
+            new Translation("SecurityOptions",          "'{0}' set correctly - {1}"),
+            new Translation("InstalledPrograms",        "'{0}' set correctly - {1}"),
+            new Translation("ProhibitedFiles",          "File '{0}' has been deleted"),
+            new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
+            new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
+            new Translation("Startup",                  "Startup '{1}' has been removed."),
+            new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
+            new Translation("FirewallInboundRule",      "Rule '{0}' has been removed"),
+            new Translation("FirewallOutboundRule",     "Rule '{0}' has been removed"),
+        };
+
+        public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();
+
+        public static BindingList<Rule> InboundRules { get; } = new BindingList<Rule>();
+
+        public static BindingList<Rule> OutboundRules { get; } = new BindingList<Rule>();
 
         public static void Startup(string startupParameter)
         {
@@ -141,7 +178,9 @@ namespace Configuration_Tool.Configuration
             }
 
             // Get all bytes from config file
-            CurrentConfiguration = File.ReadAllBytes(CurrentConfigPath);
+            byte[] fileEncrypted = File.ReadAllBytes(CurrentConfigPath);
+
+            CurrentConfiguration = decryptBuffer(fileEncrypted, Key, IV);
 
             // Create stream to go over file's data
             using (MemoryStream bufferStream = new MemoryStream(CurrentConfiguration))
@@ -177,52 +216,9 @@ namespace Configuration_Tool.Configuration
             {
                 loadOutputFiles(reader);
 
+                loadTranslations(reader);
+
                 error = loadSections(reader, mainWindow);
-            }
-
-            return error;
-        }
-
-        // Returns true if an error occured
-        private static bool loadSections(BinaryReader reader, MainWindow mainWindow)
-        {
-            bool error = false;
-
-            // Get number of config sections
-            int count = reader.ReadInt32();
-
-            // For every config section
-            for (int i = 0; i < count; i++)
-            {
-                // Get config section type
-                EConfigType type = (EConfigType)reader.ReadInt32();
-
-                // Get length of data for specific section
-                int bufferLength = reader.ReadInt32();
-
-                // Read buffer for section to isolate from others
-                byte[] buffer = reader.ReadBytes(bufferLength);
-
-                // Find section for loading
-                IConfig config = ConfigSections.FirstOrDefault(x => x.Type == type);
-
-                // Possibly removed section, skip it
-                if (config == null) continue;
-
-                // Create isolated binary reader for section loading
-                using (MemoryStream bufferStream = new MemoryStream(buffer))
-                using (BinaryReader sectionReader = new BinaryReader(bufferStream))
-                {
-                    // Set main window
-                    config.MainWindow = mainWindow;
-                    
-                    try
-                    {
-                        // Load config
-                        config.Load(sectionReader);
-                    }
-                    catch { error = true; }
-                }
             }
 
             return error;
@@ -261,9 +257,6 @@ namespace Configuration_Tool.Configuration
                 throw new Exception("Couldn't find main window while saving configuration.");
             }
 
-            // Update all bindings
-            mainWindow.UpdateBindingSources();
-
             // Setup memory stream to save buffer for later comparisons on exiting/loading
             using (MemoryStream bufferStream = new MemoryStream())
             {
@@ -278,50 +271,23 @@ namespace Configuration_Tool.Configuration
                 CurrentConfiguration = buffer;
             }
 
-            File.WriteAllBytes(CurrentConfigPath, CurrentConfiguration);
+            EncryptToFile(CurrentConfigPath, CurrentConfiguration);
         }
 
         public static int SaveToStream(Stream stream, MainWindow mainWindow)
         {
+            // Update all bindings
+            mainWindow.UpdateBindingSources();
+
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 saveOutputFiles(writer);
 
+                saveTranslations(writer);
+
                 saveSections(writer, mainWindow);
 
                 return (int)stream.Length;
-            }
-        }
-
-        private static void saveSections(BinaryWriter writer, MainWindow mainWindow)
-        {
-            // Write number of config sections
-            writer.Write(ConfigSections.Count);
-
-            // For each config section
-            foreach (IConfig config in ConfigSections)
-            {
-                // Write config type
-                writer.Write((Int32)config.Type);
-
-                // Create isolated binary writer
-                using (MemoryStream bufferStream = new MemoryStream())
-                using (BinaryWriter sectionWriter = new BinaryWriter(bufferStream))
-                {
-                    // Set main window
-                    config.MainWindow = mainWindow;
-
-                    // Save config to section writer
-                    config.Save(sectionWriter);
-
-                    // Get buffer
-                    int length = Convert.ToInt32(bufferStream.Length);
-                    byte[] buffer = bufferStream.GetBuffer();
-
-                    // Write buffer length and buffer
-                    writer.Write(length);
-                    writer.Write(buffer, 0, length);
-                }
             }
         }
 
@@ -371,6 +337,8 @@ namespace Configuration_Tool.Configuration
             }
         }
 
+        public static bool LoadingDefaults = false;
+
         public static void LoadDefaults()
         {
             // Get main window
@@ -383,12 +351,17 @@ namespace Configuration_Tool.Configuration
                 throw new Exception("Couldn't find main window while loading default configuration.");
             }
 
+            // Variable used by some functions as different actions may be necessary to clear config
+            LoadingDefaults = true;
+
             // Create memory stream of default config buffer
             using (MemoryStream bufferStream = new MemoryStream(DefaultConfiguration))
             {
                 // Load from default buffer stream
                 LoadFromStream(bufferStream, mainWindow);
             }
+
+            LoadingDefaults = false;
         }
 
         // Used for efficient byte array comparison
@@ -398,14 +371,17 @@ namespace Configuration_Tool.Configuration
         // Returns true if action is cancelled
         public static bool CheckSavingChanges(MainWindow mainWindow)
         {
-            MessageBoxResult save = MessageBoxResult.No;
+            if (CurrentConfiguration == null)
+            {
+                // No config was loaded, started as default
+                CurrentConfiguration = DefaultConfiguration;
+            }
 
-            // If the current configuration is blank, return
-            if (CurrentConfiguration == null) return false;
+            MessageBoxResult save = MessageBoxResult.No;
 
             using (MemoryStream bufferStream = new MemoryStream())
             {
-                int length = ConfigurationManager.SaveToStream(bufferStream, mainWindow);
+                int length = SaveToStream(bufferStream, mainWindow);
 
                 // Get and resize buffer to true length
                 byte[] buffer = bufferStream.GetBuffer();
@@ -422,7 +398,8 @@ namespace Configuration_Tool.Configuration
                     if (save == MessageBoxResult.Yes)
                     {
                         // Save changes
-                        File.WriteAllBytes(CurrentConfigPath, buffer);
+                        CurrentConfiguration = buffer;
+                        EncryptToFile(CurrentConfigPath, CurrentConfiguration);
                     }
 
                     return save == MessageBoxResult.Cancel;
@@ -461,6 +438,189 @@ namespace Configuration_Tool.Configuration
             foreach (string file in OutputFiles)
             {
                 writer.Write(file);
+            }
+        }
+
+        private static void loadTranslations(BinaryReader reader)
+        {
+            if (LoadingDefaults)
+            {
+                // Clear translations
+                Translations.Clear();
+            }
+
+            // Get number of translations
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get translation
+                Translation translation = Translation.Parse(reader);
+
+                if (LoadingDefaults)
+                {
+                    // If loading defaults, just add and skip the searching
+                    Translations.Add(translation);
+                    continue;
+                }
+
+                // Search for matching header
+                Translation match = Translations.FirstOrDefault(x => x.Header == translation.Header);
+
+                // If no match was found
+                if (match == null)
+                {
+                    // Add translation to list
+                    Translations.Add(translation);
+                }
+                else
+                {
+                    // Set format to read format from config
+                    match.Format = translation.Format;
+                }
+            }
+        }
+
+        private static void saveTranslations(BinaryWriter writer)
+        {
+            // Write number of translations
+            writer.Write(Translations.Count);
+
+            // Loop over each translation
+            foreach (Translation translation in Translations)
+            {
+                // Write translation
+                translation.Write(writer);
+            }
+        }
+
+        // Returns true if an error occured
+        private static bool loadSections(BinaryReader reader, MainWindow mainWindow)
+        {
+            bool error = false;
+
+            // Get number of config sections
+            int count = reader.ReadInt32();
+
+            // For every config section
+            for (int i = 0; i < count; i++)
+            {
+                // Get config section type
+                EConfigType type = (EConfigType)reader.ReadInt32();
+
+                // Get length of data for specific section
+                int bufferLength = reader.ReadInt32();
+
+                // Read buffer for section to isolate from others
+                byte[] buffer = reader.ReadBytes(bufferLength);
+
+                // Find section for loading
+                IConfig config = ConfigSections.FirstOrDefault(x => x.Type == type);
+
+                // Possibly removed section, skip it
+                if (config == null) continue;
+
+                // Create isolated binary reader for section loading
+                using (MemoryStream bufferStream = new MemoryStream(buffer))
+                using (BinaryReader sectionReader = new BinaryReader(bufferStream))
+                {
+                    // Set main window
+                    config.MainWindow = mainWindow;
+
+                    try
+                    {
+                        // Load config
+                        config.Load(sectionReader);
+                    }
+                    catch { error = true; }
+                }
+            }
+
+            return error;
+        }
+
+        private static void saveSections(BinaryWriter writer, MainWindow mainWindow)
+        {
+            // Write number of config sections
+            writer.Write(ConfigSections.Count);
+
+            // For each config section
+            foreach (IConfig config in ConfigSections)
+            {
+                // Write config type
+                writer.Write((Int32)config.Type);
+
+                // Create isolated binary writer
+                using (MemoryStream bufferStream = new MemoryStream())
+                using (BinaryWriter sectionWriter = new BinaryWriter(bufferStream))
+                {
+                    // Set main window
+                    config.MainWindow = mainWindow;
+
+                    // Save config to section writer
+                    config.Save(sectionWriter);
+
+                    // Get buffer
+                    int length = Convert.ToInt32(bufferStream.Length);
+                    byte[] buffer = bufferStream.GetBuffer();
+
+                    // Write buffer length and buffer
+                    writer.Write(length);
+                    writer.Write(buffer, 0, length);
+                }
+            }
+        }
+
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
+
+        public static bool EncryptToFile(string file, byte[] buffer)
+        {
+            AesManaged aesManaged = new AesManaged();
+            aesManaged.KeySize = 256;
+            aesManaged.Mode = CipherMode.CBC;
+            aesManaged.Padding = PaddingMode.PKCS7;
+            aesManaged.Key = Encoding.ASCII.GetBytes(Key);
+            aesManaged.IV = Encoding.ASCII.GetBytes(IV);
+            ICryptoTransform encryptor = aesManaged.CreateEncryptor();
+
+            using (FileStream fileStream = new FileStream(file, FileMode.Create, FileAccess.Write))
+            using (CryptoStream cryptoStream = new CryptoStream(fileStream, encryptor, CryptoStreamMode.Write))
+            {
+                cryptoStream.Write(buffer, 0, buffer.Length);
+            }
+
+            return true;
+        }
+
+        private static byte[] decryptBuffer(byte[] encrypted, string key, string iv)
+        {
+            byte[] keyBytes = Encoding.ASCII.GetBytes(key);
+            byte[] ivBytes = Encoding.ASCII.GetBytes(iv);
+
+            return decryptBuffer(encrypted, keyBytes, ivBytes);
+        }
+
+        private static byte[] decryptBuffer(byte[] encrypted, byte[] key, byte[] iv)
+        {
+            AesManaged aesManaged = new AesManaged();
+            aesManaged.KeySize = 256;
+            aesManaged.Mode = CipherMode.CBC;
+            aesManaged.Padding = PaddingMode.PKCS7;
+            aesManaged.Key = key;
+            aesManaged.IV = iv;
+            ICryptoTransform decryptor = aesManaged.CreateDecryptor();
+
+            List<byte> bytes = new List<byte>();
+
+            using (MemoryStream bufferStream = new MemoryStream(encrypted))
+            using (CryptoStream cryptoStream = new CryptoStream(bufferStream, decryptor, CryptoStreamMode.Read))
+            {
+                int b;
+                while ((b = cryptoStream.ReadByte()) != -1)
+                    bytes.Add((byte)b);
+
+                return bytes.ToArray();
             }
         }
     }

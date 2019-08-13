@@ -1,12 +1,6 @@
-﻿using Microsoft.Win32;
-using Scoring_Report.Configuration;
-using System;
+﻿using Scoring_Report.Configuration;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -17,11 +11,6 @@ namespace Scoring_Report.Scoring.Sections
         public string Header => "Prohibited Files:";
 
         public static List<string> ProhibitedFiles { get; } = new List<string>();
-
-        //
-        // {0} - File Location
-        //
-        public const string Format = "File '{0}' has been deleted";
 
         public int MaxScore()
         {
@@ -39,7 +28,7 @@ namespace Scoring_Report.Scoring.Sections
                 if(WinAPI.GetFileAttributes(filelocation) == -1)
                 {
                     details.Points++;
-                    details.Output.Add(string.Format(Format, filelocation));
+                    details.Output.Add(ConfigurationManager.Translate("ProhibitedFiles", filelocation));
                 }
             }
 

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.UserRights;
+using Scoring_Report.Policies;
+using Scoring_Report.Policies.UserRights;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Scoring_Report.Configuration;
-using Scoring_Report.Configuration.UserRights;
-using Scoring_Report.Policies;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -20,8 +18,6 @@ namespace Scoring_Report.Scoring.Sections
         public static List<UserRightsDefinition> UserRightsDefinitions { get; } = new List<UserRightsDefinition>();
 
         public static UserRightsAssignment SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.UserRightsAssignment;
-
-        public const string Format = "'{0}' set correctly - {1}";
 
         public int MaxScore()
         {
@@ -151,7 +147,7 @@ namespace Scoring_Report.Scoring.Sections
                         IEnumerable<string> names = definition.Identifiers.Select(x => x.Name);
 
                         details.Points++;
-                        details.Output.Add(string.Format(Format, definition.Setting, string.Join(", ", names)));
+                        details.Output.Add(ConfigurationManager.Translate("UserRights", definition.Setting, string.Join(", ", names)));
                     }
 
                     tempDict.Remove(foundUserRights);

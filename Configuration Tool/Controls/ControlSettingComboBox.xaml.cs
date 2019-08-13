@@ -1,6 +1,5 @@
 ﻿using Configuration_Tool.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace Configuration_Tool.Controls

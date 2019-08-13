@@ -1,4 +1,6 @@
-﻿using Configuration_Tool.Controls;
+﻿using Configuration_Tool.Configuration.UserRights;
+using Configuration_Tool.Controls;
+using Configuration_Tool.Controls.UserRights;
 using System;
 using System.Collections.Generic;
 using System.IO;

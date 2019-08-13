@@ -1,11 +1,7 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Configuration.SecOptions;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -16,11 +12,6 @@ namespace Scoring_Report.Scoring.Sections
         public string Header => "Other";
 
         public static RegistryComboBox RemoteDesktopStatus = null;
-
-        public static class Format
-        {
-            public const string RemoteDesktop = "Remote Desktop allowance set correctly - {0}";
-        }
 
         public int MaxScore()
         {
@@ -45,7 +36,7 @@ namespace Scoring_Report.Scoring.Sections
                     if (value == RemoteDesktopStatus.SelectedIndex)
                     {
                         details.Points++;
-                        details.Output.Add(string.Format(Format.RemoteDesktop, RemoteDesktopStatus.SelectedItem));
+                        details.Output.Add(ConfigurationManager.Translate("RemoteDesktop", RemoteDesktopStatus.SelectedItem));
                     }
                 }
             }

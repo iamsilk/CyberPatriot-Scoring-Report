@@ -14,7 +14,7 @@ If anything is unclear and needs better explanation, feel free to ask. I hope th
 ![Example Image of Scoring Report](/Scoring%20Report%20Example%20Image.png)
 
 ## Installation:
-To install this Scoring Report, download and run the latest installer from the [Releases tab](/releases). You will also need .NET Framework 4.6.1 or later.
+To install this Scoring Report, download and run the latest installer from the [Releases tab](https://github.com/Stephen3495/CyberPatriot-Scoring-Report/releases). You will also need .NET Framework 4.6.1 or later.
 
 In the installation, two executables will be unpacked, the Configuration Tool and the Scoring Report. Both of these tools will be explained in their own sections.
 
@@ -39,6 +39,11 @@ The sections which are currently a part of this Scoring Report include:
 - Local Groups
 - Installed Programs
 - Prohibited Files
+- Shares
+- Startup
+- Firewall
+  - Profile details
+  - Inbound/Outbound Rule Checking
 - Other
   - Remote Desktop Protocol
 
@@ -60,6 +65,13 @@ The output of the scoring report, by default, is saved in the 'Scoring Report.ht
 The Scoring Report Windows Service starts automatically as the Local System user. This is because the user in which it runs as needs administrator privileges in order to get information about scored users and settings.
 
 You can not run the Scoring Report as a regular user unless you are using some debugger. You may install/uninstall it as a service by passing the /i or /u argument respectively. Then you will need to start the service using some service manager.
+
+Return codes when running as a user are as follows:
+- -1 - Unknown
+- 0 - Success
+- 1 - No arguments specified
+- 2 - Unknown argument
+- 0x80004005 - Service already installed or uninstalled
 
 The output of the scoring report is manually configurable and it is planned in the future to make this process simpler. Currently, you can specify different output files within the Configuration Tool in the Advanced tab; however, this is only the first step.
 
@@ -89,6 +101,15 @@ The parameters for this function are as follows in proper, incremental order:
 - `{2:0.00}` - Percentage value of awarded score divided by total available. The addition of `:0.00` within the text forces two decimal places on the formatting. Details on formatting can be found within Microsoft's [documentation for the string.format function](https://docs.microsoft.com/en-us/dotnet/api/system.string.format)
 - `{3}` - Date and time when the output file was generated based on score. Time is given in the system's time zone.
 - `{4}` - String where all the sections are placed. The "meat" of the output. Takes into account the other formatting file specified earlier.
+
+## Translations
+Using the configuration tool, you may change the format in which section details are output.
+
+To do this, start the configuration tool. On the side tab, click Other -> Translations.
+
+You will see a list of every header and format of every loaded translation.
+
+TODO: Write details of all translation parameters.
 
 ## Development
 To mess with the source code, for the C# aspects, you're only going to need a compiler. However, to change stuff with the installer, you're going to need [Microsoft Visual Studio Installer Projects Extensions](https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects).

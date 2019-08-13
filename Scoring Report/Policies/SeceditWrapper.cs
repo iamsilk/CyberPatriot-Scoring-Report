@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Scoring_Report.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scoring_Report.Configuration;
 
 namespace Scoring_Report.Policies
 {

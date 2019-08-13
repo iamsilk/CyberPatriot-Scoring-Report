@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows;
-using Scoring_Report.Configuration.Groups;
-using Scoring_Report.Configuration.SecOptions;
-using Scoring_Report.Configuration.UserRights;
+﻿using Scoring_Report.Configuration.Startup;
 using Scoring_Report.Scoring;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Scoring_Report.Configuration
 {
@@ -44,6 +41,12 @@ namespace Scoring_Report.Configuration
         {
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
+
+        // {0} - Translation Header
+        // {1} - Joined parameters of translation (delimeter ' ')
+        public const string BackupTranslationFormat = "{0} {1}";
+
+        public static Dictionary<string, string> Translations { get; } = new Dictionary<string, string>();
 
         public static void Startup(string startupParameter)
         {
@@ -92,6 +95,28 @@ namespace Scoring_Report.Configuration
             loadConfig();
         }
 
+        private static bool checkFiles()
+        {
+            // If config file directory doesn't exist
+            if (!Directory.Exists(CurrentConfigDirectory))
+            {
+                // Stop process of loading configuration
+                return false;
+            }
+
+            // If file doesn't exist
+            if (!File.Exists(CurrentConfigPath))
+            {
+                // Stop process of loading configuration
+                return false;
+            }
+
+            return true;
+        }
+
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
+
         private static void loadConfig(bool loadedPrev = false)
         {
             // If file/directory doesn't exist
@@ -122,10 +147,23 @@ namespace Scoring_Report.Configuration
 
                 try
                 {
+                    // Create aes managed class for creating decryptor
+                    AesManaged aesManaged = new AesManaged();
+                    aesManaged.KeySize = 256;
+                    aesManaged.Mode = CipherMode.CBC;
+                    aesManaged.Padding = PaddingMode.PKCS7;
+                    aesManaged.Key = Encoding.ASCII.GetBytes(Key);
+                    aesManaged.IV = Encoding.ASCII.GetBytes(IV);
+                    ICryptoTransform decryptor = aesManaged.CreateDecryptor();
+
+                    // Crypto stream to decrypt config file
+                    using (CryptoStream cryptoStream = new CryptoStream(ConfigFileStream, decryptor, CryptoStreamMode.Read))
                     // Binary reader for parsing of data
-                    using (BinaryReader reader = new BinaryReader(ConfigFileStream))
+                    using (BinaryReader reader = new BinaryReader(cryptoStream))
                     {
                         loadOutputFiles(reader);
+
+                        loadTranslations(reader);
 
                         // Get number of sections
                         int count = reader.ReadInt32();
@@ -174,25 +212,6 @@ namespace Scoring_Report.Configuration
             }
         }
 
-        private static bool checkFiles()
-        {
-            // If config file directory doesn't exist
-            if (!Directory.Exists(CurrentConfigDirectory))
-            {
-                // Stop process of loading configuration
-                return false;
-            }
-
-            // If file doesn't exist
-            if (!File.Exists(CurrentConfigPath))
-            {
-                // Stop process of loading configuration
-                return false;
-            }
-
-            return true;
-        }
-
         private static void loadOutputFiles(BinaryReader reader)
         {
             // Clear current list of output files
@@ -210,6 +229,40 @@ namespace Scoring_Report.Configuration
                 // Add output file to list
                 OutputFiles.Add(file);
             }
+        }
+
+        private static void loadTranslations(BinaryReader reader)
+        {
+            Translations.Clear();
+
+            // Get number of translations
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                // Get translation header/format
+                string header = reader.ReadString();
+                string format = reader.ReadString();
+
+                // Add to global list
+                Translations.Add(header, format);
+            }
+        }
+
+        public static string Translate(string format, params object[] parameters)
+        {
+            // If header/format pair exists
+            if (Translations.ContainsKey(format))
+            {
+                // Return properly formatted translation
+                return string.Format(Translations[format], parameters);
+            }
+
+            // Join all parameters in one string separated by spaces
+            string joined = string.Join(" ", parameters);
+
+            // Return header and parameters in format of fallback
+            return string.Format(BackupTranslationFormat, format, joined);
         }
     }
 }

@@ -12,6 +12,10 @@
         InstalledPrograms,
         ProhibitedFiles,
         Shares,
-        Other,
+        Startup,
+        FirewallProfiles,
+        FirewallInboundRules,
+        FirewallOutboundRules,
+        Other = 99,
     }
 }

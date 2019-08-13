@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scoring_Report.Scoring
+﻿namespace Scoring_Report.Scoring
 {
     public enum ESectionType
     {
@@ -17,7 +11,11 @@ namespace Scoring_Report.Scoring
         SecurityOptions,
         InstalledPrograms,
         ProhibitedFiles,
-        Share,
-        Other,
+        Shares,
+        Startup,
+        FirewallProfiles,
+        FirewallInboundRules,
+        FirewallOutboundRules,
+        Other = 99,
     }
 }

@@ -37,6 +37,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.NetFwTypeLib">
+      <HintPath>..\Scoring Report\obj\Debug\Interop.NetFwTypeLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
@@ -61,21 +65,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration\AuditPolicy.cs" />
+    <Compile Include="Configuration\Audit\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\EAuditSettings.cs" />
+    <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
-    <Compile Include="Configuration\EUserRightsIdentifierType.cs" />
+    <Compile Include="Configuration\Sections\ConfigFirewallOutboundRules.cs" />
+    <Compile Include="Configuration\Sections\ConfigFirewallInboundRules.cs" />
+    <Compile Include="Configuration\Sections\ConfigFirewallProfiles.cs" />
+    <Compile Include="Controls\Firewall\ControlProfile.xaml.cs">
+      <DependentUpon>ControlProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\Sections\ConfigStartup.cs" />
+    <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
     <Compile Include="Configuration\Groups\MemberUsername.cs" />
     <Compile Include="Configuration\IConfig.cs" />
-    <Compile Include="Configuration\IUserRightsIdentifier.cs">
+    <Compile Include="Configuration\UserRights\IUserRightsIdentifier.cs">
       <Generator>MSBuild:Compile</Generator>
     </Compile>
-    <Compile Include="Configuration\LockoutPolicy.cs" />
-    <Compile Include="Configuration\PasswordPolicy.cs" />
+    <Compile Include="Configuration\Lockout\LockoutPolicy.cs" />
+    <Compile Include="Configuration\Password\PasswordPolicy.cs" />
     <Compile Include="Configuration\Range.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\Sections\ConfigAuditPolicy.cs" />
@@ -89,16 +100,25 @@
     <Compile Include="Configuration\Sections\ConfigShares.cs" />
     <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
-    <Compile Include="Configuration\UserSettings.cs" />
-    <Page Include="Controls\ControlProhibitedFile.xaml">
+    <Compile Include="Configuration\Translation.cs" />
+    <Compile Include="Configuration\Users\UserSettings.cs" />
+    <Page Include="Controls\Firewall\ControlProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlSettingProgram.xaml">
+    <Page Include="Controls\Files\ControlProhibitedFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlShares.xaml">
+    <Page Include="Controls\Firewall\WindowFirewallColumns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Programs\ControlSettingProgram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Shares\ControlShares.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,27 +150,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlSettingUserRightsSID.xaml">
+    <Page Include="Controls\UserRights\ControlSettingUserRightsSID.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ControlSettingUserRightsName.xaml">
+    <Page Include="Controls\UserRights\ControlSettingUserRightsName.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlGroupSettings.xaml">
+    <Page Include="Controls\Groups\ControlGroupSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ControlGroupSIDSetting.xaml">
+    <Page Include="Controls\Groups\ControlGroupSIDSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ControlGroupUsernameSetting.xaml">
+    <Page Include="Controls\Groups\ControlGroupUsernameSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\ControlSettingAudit.xaml">
+    <Page Include="Controls\Audit\ControlSettingAudit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,11 +186,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlSettingUserRights.xaml">
+    <Page Include="Controls\UserRights\ControlSettingUserRights.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlUserSettings.xaml">
+    <Page Include="Controls\Users\ControlUserSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -182,13 +202,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Controls\ControlProhibitedFile.xaml.cs">
+    <Compile Include="Controls\Files\ControlProhibitedFile.xaml.cs">
       <DependentUpon>ControlProhibitedFile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSettingProgram.xaml.cs">
+    <Compile Include="Configuration\Firewall\Rule.cs" />
+    <Compile Include="Controls\Firewall\WindowFirewallColumns.xaml.cs">
+      <DependentUpon>WindowFirewallColumns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Programs\ControlSettingProgram.xaml.cs">
       <DependentUpon>ControlSettingProgram.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlShares.xaml.cs">
+    <Compile Include="Controls\Shares\ControlShares.xaml.cs">
       <DependentUpon>ControlShares.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SecOptions\ControlNotImplemented.xaml.cs">
@@ -212,10 +236,12 @@
     <Compile Include="Controls\SecOptions\ControlRegistryComboBox.xaml.cs">
       <DependentUpon>ControlRegistryComboBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSettingUserRightsSID.xaml.cs">
+    <Compile Include="Configuration\Startup\EStartupType.cs" />
+    <Compile Include="Configuration\Startup\StartupInfo.cs" />
+    <Compile Include="Controls\UserRights\ControlSettingUserRightsSID.xaml.cs">
       <DependentUpon>ControlSettingUserRightsSID.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSettingUserRightsName.xaml.cs">
+    <Compile Include="Controls\UserRights\ControlSettingUserRightsName.xaml.cs">
       <DependentUpon>ControlSettingUserRightsName.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\App.xaml.cs">
@@ -223,16 +249,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\BindingUpdater.cs" />
-    <Compile Include="Controls\ControlGroupSettings.xaml.cs">
+    <Compile Include="Controls\Groups\ControlGroupSettings.xaml.cs">
       <DependentUpon>ControlGroupSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlGroupSIDSetting.xaml.cs">
+    <Compile Include="Controls\Groups\ControlGroupSIDSetting.xaml.cs">
       <DependentUpon>ControlGroupSIDSetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlGroupUsernameSetting.xaml.cs">
+    <Compile Include="Controls\Groups\ControlGroupUsernameSetting.xaml.cs">
       <DependentUpon>ControlGroupUsernameSetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSettingAudit.xaml.cs">
+    <Compile Include="Controls\Audit\ControlSettingAudit.xaml.cs">
       <DependentUpon>ControlSettingAudit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlSettingComboBox.xaml.cs">
@@ -244,10 +270,10 @@
     <Compile Include="Controls\ControlSettingRange.xaml.cs">
       <DependentUpon>ControlSettingRange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlSettingUserRights.xaml.cs">
+    <Compile Include="Controls\UserRights\ControlSettingUserRights.xaml.cs">
       <DependentUpon>ControlSettingUserRights.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ControlUserSettings.xaml.cs">
+    <Compile Include="Controls\Users\ControlUserSettings.xaml.cs">
       <DependentUpon>ControlUserSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NumericBox.xaml.cs">

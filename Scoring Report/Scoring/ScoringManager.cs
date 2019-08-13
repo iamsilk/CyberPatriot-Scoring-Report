@@ -1,15 +1,9 @@
-﻿using System;
+﻿using Scoring_Report.Policies;
+using Scoring_Report.Scoring.Output;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
-using System.IO;
-using Scoring_Report.Configuration;
-using System.Security.Permissions;
-using System.Security;
-using Scoring_Report.Scoring.Output;
-using Scoring_Report.Policies;
 
 namespace Scoring_Report.Scoring
 {

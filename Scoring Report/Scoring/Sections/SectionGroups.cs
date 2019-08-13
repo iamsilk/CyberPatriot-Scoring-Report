@@ -1,12 +1,9 @@
 ﻿using Scoring_Report.Configuration;
 using Scoring_Report.Configuration.Groups;
-using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Scoring.Sections
 {
@@ -17,8 +14,6 @@ namespace Scoring_Report.Scoring.Sections
         public string Header => "Groups:";
 
         public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
-
-        public const string GroupFormat = "Group \"{0}\" correctly configured - {1}";
 
         public int MaxScore()
         {
@@ -121,7 +116,7 @@ namespace Scoring_Report.Scoring.Sections
                                 // Get list of members' names separated by commas
                                 string members = string.Join(", ", group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
 
-                                details.Output.Add(string.Format(GroupFormat, settings.GroupName, members));
+                                details.Output.Add(ConfigurationManager.Translate("Group", settings.GroupName, members));
                             }
                         }
                     }

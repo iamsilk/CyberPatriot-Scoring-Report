@@ -1,11 +1,15 @@
 ﻿<Window x:Class="Configuration_Tool.Controls.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Configuration_Tool.Controls"
         xmlns:cfg="clr-namespace:Configuration_Tool.Configuration"
+        xmlns:cfgfirewall="clr-namespace:Configuration_Tool.Configuration.Firewall"
+        xmlns:local="clr-namespace:Configuration_Tool.Controls"
+        xmlns:audit="clr-namespace:Configuration_Tool.Controls.Audit"
+        xmlns:firewall="clr-namespace:Configuration_Tool.Controls.Firewall"
         xmlns:secoptions="clr-namespace:Configuration_Tool.Controls.SecOptions"
+        xmlns:userrights="clr-namespace:Configuration_Tool.Controls.UserRights"
         mc:Ignorable="d"
         Title="Configuration Tool" Height="500" Width="1000" Closing="SaveonExit">
     <Window.CommandBindings>
@@ -88,15 +92,15 @@
                                                 <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                             </Style>
                                         </ItemsControl.ItemContainerStyle>
-                                        <local:ControlSettingAudit Header="Audit account logon events"/>
-                                        <local:ControlSettingAudit Header="Audit account management"/>
-                                        <local:ControlSettingAudit Header="Audit directory service access"/>
-                                        <local:ControlSettingAudit Header="Audit logon events"/>
-                                        <local:ControlSettingAudit Header="Audit object access"/>
-                                        <local:ControlSettingAudit Header="Audit policy change"/>
-                                        <local:ControlSettingAudit Header="Audit privilege use"/>
-                                        <local:ControlSettingAudit Header="Audit process tracking"/>
-                                        <local:ControlSettingAudit Header="Audit system events"/>
+                                        <audit:ControlSettingAudit Header="Audit account logon events"/>
+                                        <audit:ControlSettingAudit Header="Audit account management"/>
+                                        <audit:ControlSettingAudit Header="Audit directory service access"/>
+                                        <audit:ControlSettingAudit Header="Audit logon events"/>
+                                        <audit:ControlSettingAudit Header="Audit object access"/>
+                                        <audit:ControlSettingAudit Header="Audit policy change"/>
+                                        <audit:ControlSettingAudit Header="Audit privilege use"/>
+                                        <audit:ControlSettingAudit Header="Audit process tracking"/>
+                                        <audit:ControlSettingAudit Header="Audit system events"/>
                                     </ItemsControl>
                                 </ScrollViewer>
                             </Grid>
@@ -110,50 +114,50 @@
                                                 <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                             </Style>
                                         </ItemsControl.ItemContainerStyle>
-                                        <local:ControlSettingUserRights Setting="Access Credential Manager as a trusted caller" UserRightsConstantName="SeTrustedCredManAccessPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Access this computer from the network" UserRightsConstantName="SeNetworkLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Act as part of the operating system" UserRightsConstantName="SeTcbPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Add workstations to domain" UserRightsConstantName="SeMachineAccountPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Adjust memory quotas for a process" UserRightsConstantName="SeIncreaseQuotaPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Allow log on locally" UserRightsConstantName="SeInteractiveLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Allow log on through Remote Desktop Services" UserRightsConstantName="SeRemoteInteractiveLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Back up files and directories" UserRightsConstantName="SeBackupPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Bypass traverse checking" UserRightsConstantName="SeChangeNotifyPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Change the system time" UserRightsConstantName="SeSystemtimePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Change the time zone" UserRightsConstantName="SeTimeZonePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Create a pagefile" UserRightsConstantName="SeCreatePagefilePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Create a token object" UserRightsConstantName="SeCreateTokenPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Create global objects" UserRightsConstantName="SeCreateGlobalPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Create permanent shared objects" UserRightsConstantName="SeCreatePermanentPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Create symbolic links" UserRightsConstantName="SeCreateSymbolicLinkPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Debug programs" UserRightsConstantName="SeDebugPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Deny access to this computer from the network" UserRightsConstantName="SeDenyNetworkLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Deny log on as a batch job" UserRightsConstantName="SeDenyBatchLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Deny log on as a service" UserRightsConstantName="SeDenyServiceLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Deny log on locally" UserRightsConstantName="SeDenyInteractiveLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Deny log on through Remote Desktop Services" UserRightsConstantName="SeDenyRemoteInteractiveLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Enable computer and user accounts to be trusted for delegation" UserRightsConstantName="SeEnableDelegationPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Force shutdown from a remote system" UserRightsConstantName="SeRemoteShutdownPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Generate security audits" UserRightsConstantName="SeAuditPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Impersonate a client after authentication" UserRightsConstantName="SeImpersonatePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Increase a process working set" UserRightsConstantName="SeIncreaseWorkingSetPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Increase scheduling priority" UserRightsConstantName="SeIncreaseBasePriorityPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Load and unload device drivers" UserRightsConstantName="SeLoadDriverPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Lock pages in memory" UserRightsConstantName="SeLockMemoryPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Log on as a batch job" UserRightsConstantName="SeBatchLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Log on as a service" UserRightsConstantName="SeServiceLogonRight"/>
-                                        <local:ControlSettingUserRights Setting="Manage auditing and security log" UserRightsConstantName="SeSecurityPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Modify an object label" UserRightsConstantName="SeRelabelPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Modify firmware environment values" UserRightsConstantName="SeSystemEnvironmentPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Perform volume maintenance tasks" UserRightsConstantName="SeManageVolumePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Profile single process" UserRightsConstantName="SeProfileSingleProcessPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Profile system performance" UserRightsConstantName="SeSystemProfilePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Remove computer from docking station" UserRightsConstantName="SeUndockPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Replace a process level token" UserRightsConstantName="SeAssignPrimaryTokenPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Restore files and directories" UserRightsConstantName="SeRestorePrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Shut down the system" UserRightsConstantName="SeShutdownPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Synchronize directory service data" UserRightsConstantName="SeSyncAgentPrivilege"/>
-                                        <local:ControlSettingUserRights Setting="Take ownership of files or other objects" UserRightsConstantName="SeTakeOwnershipPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Access Credential Manager as a trusted caller" UserRightsConstantName="SeTrustedCredManAccessPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Access this computer from the network" UserRightsConstantName="SeNetworkLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Act as part of the operating system" UserRightsConstantName="SeTcbPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Add workstations to domain" UserRightsConstantName="SeMachineAccountPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Adjust memory quotas for a process" UserRightsConstantName="SeIncreaseQuotaPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Allow log on locally" UserRightsConstantName="SeInteractiveLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Allow log on through Remote Desktop Services" UserRightsConstantName="SeRemoteInteractiveLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Back up files and directories" UserRightsConstantName="SeBackupPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Bypass traverse checking" UserRightsConstantName="SeChangeNotifyPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Change the system time" UserRightsConstantName="SeSystemtimePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Change the time zone" UserRightsConstantName="SeTimeZonePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Create a pagefile" UserRightsConstantName="SeCreatePagefilePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Create a token object" UserRightsConstantName="SeCreateTokenPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Create global objects" UserRightsConstantName="SeCreateGlobalPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Create permanent shared objects" UserRightsConstantName="SeCreatePermanentPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Create symbolic links" UserRightsConstantName="SeCreateSymbolicLinkPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Debug programs" UserRightsConstantName="SeDebugPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Deny access to this computer from the network" UserRightsConstantName="SeDenyNetworkLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Deny log on as a batch job" UserRightsConstantName="SeDenyBatchLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Deny log on as a service" UserRightsConstantName="SeDenyServiceLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Deny log on locally" UserRightsConstantName="SeDenyInteractiveLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Deny log on through Remote Desktop Services" UserRightsConstantName="SeDenyRemoteInteractiveLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Enable computer and user accounts to be trusted for delegation" UserRightsConstantName="SeEnableDelegationPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Force shutdown from a remote system" UserRightsConstantName="SeRemoteShutdownPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Generate security audits" UserRightsConstantName="SeAuditPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Impersonate a client after authentication" UserRightsConstantName="SeImpersonatePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Increase a process working set" UserRightsConstantName="SeIncreaseWorkingSetPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Increase scheduling priority" UserRightsConstantName="SeIncreaseBasePriorityPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Load and unload device drivers" UserRightsConstantName="SeLoadDriverPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Lock pages in memory" UserRightsConstantName="SeLockMemoryPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Log on as a batch job" UserRightsConstantName="SeBatchLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Log on as a service" UserRightsConstantName="SeServiceLogonRight"/>
+                                        <userrights:ControlSettingUserRights Setting="Manage auditing and security log" UserRightsConstantName="SeSecurityPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Modify an object label" UserRightsConstantName="SeRelabelPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Modify firmware environment values" UserRightsConstantName="SeSystemEnvironmentPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Perform volume maintenance tasks" UserRightsConstantName="SeManageVolumePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Profile single process" UserRightsConstantName="SeProfileSingleProcessPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Profile system performance" UserRightsConstantName="SeSystemProfilePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Remove computer from docking station" UserRightsConstantName="SeUndockPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Replace a process level token" UserRightsConstantName="SeAssignPrimaryTokenPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Restore files and directories" UserRightsConstantName="SeRestorePrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Shut down the system" UserRightsConstantName="SeShutdownPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Synchronize directory service data" UserRightsConstantName="SeSyncAgentPrivilege"/>
+                                        <userrights:ControlSettingUserRights Setting="Take ownership of files or other objects" UserRightsConstantName="SeTakeOwnershipPrivilege"/>
                                     </ItemsControl>
                                 </ScrollViewer>
                             </Grid>
@@ -454,8 +458,8 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
                             <ItemsControl x:Name="listUserConfigs" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="local:ControlUserSettings">
-                                        <Setter Property="Margin" Value="10,0,10,5"/>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="10,0,10,5"/>
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
@@ -469,8 +473,8 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
                             <ItemsControl x:Name="listGroupConfigs" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="local:ControlGroupSettings">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
@@ -482,8 +486,8 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
                             <ItemsControl x:Name="listPrograms" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="local:ControlSettingProgram">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
@@ -497,8 +501,8 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
                             <ItemsControl x:Name="itemsProhibitedFiles" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="local:ControlProhibitedFile">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
@@ -512,13 +516,137 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
                             <ItemsControl x:Name="itemsShares" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
-                                    <Style TargetType="local:ControlShares">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
                         </ScrollViewer>
                     </Grid>
+                </TabItem>
+                <TabItem Header="Startup">
+                    <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.StartupInfos}}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Owner" Binding="{Binding Owner}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Command" Binding="{Binding Command}" Width="2*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding StartupTypeString}" Width="2*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="2*" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" Width="2*" IsReadOnly="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Firewall">
+                    <TabControl>
+                        <TabItem Header="Profiles">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0">
+                                <ItemsControl x:Name="itemsFirewallProfiles" HorizontalContentAlignment="Stretch" Margin="10,0,10,0">
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="FrameworkElement.Margin" Value="0,0,0,10"/>
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                    <firewall:ControlProfile Header="Domain Profile"/>
+                                    <firewall:ControlProfile Header="Private Profile"/>
+                                    <firewall:ControlProfile Header="Public Profile"/>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Inbound Rules">
+                            <DataGrid x:Name="dataGridInboundRules" Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.InboundRules}}" ColumnWidth="*" AutoGenerateColumns="False">
+                                <DataGrid.Resources>
+                                    <ContextMenu x:Key="firewallRulesColumnHeaderContextMenu">
+                                        <MenuItem Header="Add/remove columns..." Click="fwInboundRulesAddRemoveColumns_Click"/>
+                                    </ContextMenu>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource firewallRulesColumnHeaderContextMenu}"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Visibility="Hidden"/>
+                                    <DataGridTemplateColumn Header="Profile">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <CheckBox Content="Domain" IsChecked="{Binding Path=IsDomainProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Private" IsChecked="{Binding Path=IsPrivateProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Public" IsChecked="{Binding Path=IsPublicProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled}" Width="Auto"/>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <RadioButton Content="Allow the connection" IsChecked="{Binding Path=IsAllowed, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RadioButton Content="Block the connection" IsChecked="{Binding Path=IsBlocked, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Program" Binding="{Binding ApplicationName}"/>
+                                    <DataGridTextColumn Header="Service" Binding="{Binding Service}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Local Address" Binding="{Binding LocalAddresses}"/>
+                                    <DataGridTextColumn Header="Remote Address" Binding="{Binding RemoteAddresses}"/>
+                                    <DataGridComboBoxColumn Header="Protocol" ItemsSource="{Binding Source={x:Static cfgfirewall:Rule.ProtocolNames}}" SelectedItemBinding="{Binding Protocol}"/>
+                                    <DataGridTextColumn Header="Local Port" Binding="{Binding LocalPorts}"/>
+                                    <DataGridTextColumn Header="Remote Port" Binding="{Binding RemotePorts}"/>
+                                    <DataGridCheckBoxColumn Header="Scored on Removal" Binding="{Binding IsScored}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Outbound Rules">
+                            <DataGrid x:Name="dataGridOutboundRules" Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.OutboundRules}}" ColumnWidth="*" AutoGenerateColumns="False">
+                                <DataGrid.Resources>
+                                    <ContextMenu x:Key="firewallRulesColumnHeaderContextMenu">
+                                        <MenuItem Header="Add/remove columns..." Click="fwOutboundRulesAddRemoveColumns_Click"/>
+                                    </ContextMenu>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource firewallRulesColumnHeaderContextMenu}"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Visibility="Hidden"/>
+                                    <DataGridTemplateColumn Header="Profile">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <CheckBox Content="Domain" IsChecked="{Binding Path=IsDomainProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Private" IsChecked="{Binding Path=IsPrivateProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <CheckBox Content="Public" IsChecked="{Binding Path=IsPublicProfile, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled}" Width="Auto"/>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl>
+                                                    <RadioButton Content="Allow the connection" IsChecked="{Binding Path=IsAllowed, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RadioButton Content="Block the connection" IsChecked="{Binding Path=IsBlocked, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Program" Binding="{Binding ApplicationName}"/>
+                                    <DataGridTextColumn Header="Service" Binding="{Binding Service}" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="Local Address" Binding="{Binding LocalAddresses}"/>
+                                    <DataGridTextColumn Header="Remote Address" Binding="{Binding RemoteAddresses}"/>
+                                    <DataGridComboBoxColumn Header="Protocol" ItemsSource="{Binding Source={x:Static cfgfirewall:Rule.ProtocolNames}}" SelectedItemBinding="{Binding Protocol}"/>
+                                    <DataGridTextColumn Header="Local Port" Binding="{Binding LocalPorts}"/>
+                                    <DataGridTextColumn Header="Remote Port" Binding="{Binding RemotePorts}"/>
+                                    <DataGridCheckBoxColumn Header="Scored on Removal" Binding="{Binding IsScored}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
                 <TabItem Header="Other">
                     <Grid Margin="10">
@@ -529,22 +657,32 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Advanced">
-                    <Grid>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
-                            <Grid>
-                                <TextBlock Text="Output Files:" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtOutputFileInput" VerticalAlignment="Top" Margin="0,21,80,0"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,0,0" Height="18" Width="75"
+                    <TabControl>
+                        <TabItem Header="Output">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
+                                <Grid>
+                                    <TextBlock Text="Output Files:" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="txtOutputFileInput" VerticalAlignment="Top" Margin="0,21,80,0"/>
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,0,0" Height="18" Width="75"
                                         Content="Add" Click="btnOutputFileAdd_Click"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,44,0,0" Height="18" Width="75"
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,44,0,0" Height="18" Width="75"
                                         Content="Browse..." Click="btnOutputFileBrowse_Click"/>
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,67,0,0" Height="18" Width="75"
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,67,0,0" Height="18" Width="75"
                                         Content="Remove" Click="btnOutputFileRemove_Click"/>
-                                <ListBox x:Name="listOutputFiles" VerticalAlignment="Top" Height="150" Margin="0,44,80,0"
+                                    <ListBox x:Name="listOutputFiles" VerticalAlignment="Top" Height="150" Margin="0,44,80,0"
                                         ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.OutputFiles}}"/>
-                            </Grid>
-                        </ScrollViewer>
-                    </Grid>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Translations">
+                            <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Translations}}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Header" Binding="{Binding Header}" Width="*" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Format" Binding="{Binding Format}" Width="2*" IsReadOnly="False"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
             </TabControl>
         </Grid>
