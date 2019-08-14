@@ -16,6 +16,7 @@
         FirewallProfiles,
         FirewallInboundRules,
         FirewallOutboundRules,
+        Services,
         Other = 99,
     }
 }
