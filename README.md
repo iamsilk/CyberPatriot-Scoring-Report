@@ -44,6 +44,7 @@ The sections which are currently a part of this Scoring Report include:
 - Firewall
   - Profile details
   - Inbound/Outbound Rule Checking
+- Services
 - Other
   - Remote Desktop Protocol
 
