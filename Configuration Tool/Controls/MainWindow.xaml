@@ -660,12 +660,22 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Other">
-                    <Grid Margin="10">
-                        <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"
+                    <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl HorizontalContentAlignment="Stretch">
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"
                                                             SelectedItem="Don't allow remote connections to this computer"
-                                                            Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server" ValueName="fDenyTSConnections"
-                                                            VerticalAlignment="Top"/>
-                    </Grid>
+                                                            Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server" ValueName="fDenyTSConnections"/>
+                            <Grid Height="20">
+                                <TextBlock VerticalAlignment="Center" Text="Host file must contain default or no entries"/>
+                                <CheckBox x:Name="checkBoxHostFileScored" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Scored"/>
+                            </Grid>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Advanced">
                     <TabControl>

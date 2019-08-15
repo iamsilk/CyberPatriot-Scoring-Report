@@ -13,12 +13,23 @@ namespace Configuration_Tool.Configuration.Sections
         {
             // Load remote desktop info
             MainWindow.rdpRegistry.Parse(reader);
+
+            // Load host file scoring status
+            MainWindow.checkBoxHostFileScored.IsChecked = reader.ReadBoolean();
         }
 
         public void Save(BinaryWriter writer)
         {
             // Save remote desktop info
             MainWindow.rdpRegistry.Write(writer);
+
+            // Save host file scoring status
+            bool hostFileScored = false;
+
+            if (MainWindow.checkBoxHostFileScored.IsChecked.HasValue)
+                hostFileScored = MainWindow.checkBoxHostFileScored.IsChecked.Value;
+
+            writer.Write(hostFileScored);
         }
     }
 }

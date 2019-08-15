@@ -76,6 +76,7 @@ namespace Configuration_Tool.Configuration
             new Translation("ProhibitedFiles",          "File '{0}' has been deleted"),
             new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
             new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
+            new Translation("HostFile",                 "Host file contains only default entries"),
             new Translation("Startup",                  "Startup '{1}' has been removed."),
             new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
             new Translation("FirewallInboundRule",      "Rule '{0}' has been removed"),
