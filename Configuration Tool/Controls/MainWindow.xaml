@@ -659,6 +659,15 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
+                <TabItem Header="Features">
+                    <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Features}}" ColumnWidth="*" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn Header="Installed" Binding="{Binding Installed}" IsReadOnly="False"/>
+                            <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" IsReadOnly="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
                 <TabItem Header="Other">
                     <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
                         <ItemsControl HorizontalContentAlignment="Stretch">

@@ -45,6 +45,7 @@ The sections which are currently a part of this Scoring Report include:
   - Profile details
   - Inbound/Outbound Rule Checking
 - Services
+- Windows Features
 - Other
   - Remote Desktop Protocol
   - Host file entry checking

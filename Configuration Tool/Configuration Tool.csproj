@@ -46,6 +46,7 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -69,6 +70,8 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
+    <Compile Include="Configuration\Features\WindowsFeature.cs" />
+    <Compile Include="Configuration\Sections\ConfigFeatures.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallOutboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallInboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallProfiles.cs" />
