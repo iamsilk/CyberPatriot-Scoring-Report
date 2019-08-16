@@ -79,6 +79,24 @@ namespace Configuration_Tool.Configuration.Services
                 // Add service info to list
                 serviceInfos.Add(info);
             }
+
+            // Gets drivers of local machine
+            services = ServiceController.GetDevices();
+
+            // For each service on local machine
+            foreach (ServiceController service in services)
+            {
+                // Create service info storage
+                ServiceInfo info = new ServiceInfo(service.ServiceName);
+
+                // Preset values as statuses can change and may not be persistent
+                info.Status = "Stopped";
+                info.StartupType = "Automatic";
+                info.IsScored = false;
+
+                // Add service info to list
+                serviceInfos.Add(info);
+            }
         }
     }
 }

@@ -26,11 +26,18 @@ namespace Scoring_Report.Scoring.Sections
             // Gets services of local machine
             ServiceController[] services = ServiceController.GetServices();
 
+            // Gets drivers of local machine
+            ServiceController[] drivers = ServiceController.GetDevices();
+
+            // Combine arrays
+            List<ServiceController> combined = new List<ServiceController>(services);
+            combined.AddRange(drivers);
+
             // For each service info config
             foreach (ServiceInfo info in Services)
             {
                 // For each service on local machine
-                foreach (ServiceController service in services)
+                foreach (ServiceController service in combined)
                 {
                     // If config and service have matching names
                     if (info.Name == service.ServiceName)
