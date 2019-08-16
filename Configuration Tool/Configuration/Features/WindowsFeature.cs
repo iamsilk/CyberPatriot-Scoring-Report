@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Management;
 
 namespace Configuration_Tool.Configuration.Features
 {
-    public class WindowsFeature
+    public class WindowsFeature : IComparable<WindowsFeature>
     {
         public string Name { get; set; } = "";
 
@@ -17,10 +18,18 @@ namespace Configuration_Tool.Configuration.Features
             Name = name;
         }
 
+        public int CompareTo(WindowsFeature feature)
+        {
+            return Name.CompareTo(feature.Name);
+        }
+
         public static void GetWindowsFeatures(IList<WindowsFeature> features)
         {
             // Clear list
             features.Clear();
+
+            // Create Temp List
+            List<WindowsFeature> windowsFeaturestemp = new List<WindowsFeature>();
 
             SelectQuery query = new SelectQuery("Win32_OptionalFeature");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
@@ -44,8 +53,13 @@ namespace Configuration_Tool.Configuration.Features
                 feature.Installed = installState == 1;
 
                 // Add feature to list
-                features.Add(feature);
+                windowsFeaturestemp.Add(feature);
             }
+
+            windowsFeaturestemp.Sort();
+
+            foreach (WindowsFeature windowsFeature in windowsFeaturestemp)
+                features.Add(windowsFeature);
         }
 
         public static WindowsFeature Parse(BinaryReader reader)

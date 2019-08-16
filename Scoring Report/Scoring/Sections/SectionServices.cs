@@ -48,7 +48,7 @@ namespace Scoring_Report.Scoring.Sections
                         {
                             // Set correctly, increment score and give message
                             details.Points++;
-                            details.Output.Add(ConfigurationManager.Translate("Service", info.Name, info.Status, info.StartupType));
+                            details.Output.Add(ConfigurationManager.Translate("Service", info.DisplayName, info.Status, info.StartupType));
                         }
 
                         // Found match, stop looking
