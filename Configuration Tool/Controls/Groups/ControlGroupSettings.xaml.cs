@@ -51,6 +51,8 @@ namespace Configuration_Tool.Controls.Groups
                     listUserConfigs.Items.Add(container);
                 }
             }
+
+            DataContext = this;
         }
 
         private void btnAddSID_Click(object sender, RoutedEventArgs e)

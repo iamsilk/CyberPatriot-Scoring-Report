@@ -71,6 +71,8 @@ namespace Configuration_Tool.Controls.UserRights
             {
                 comboBoxIdentifier.Items.Add(group);
             }
+
+            DataContext = this;
         }
 
         public ControlSettingUserRights()

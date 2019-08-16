@@ -20,6 +20,8 @@ namespace Configuration_Tool.Controls.UserRights
         public ControlSettingUserRightsSID()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
 
         public ControlSettingUserRightsSID(string _identifier)
@@ -27,6 +29,8 @@ namespace Configuration_Tool.Controls.UserRights
             identifier = _identifier;
 
             InitializeComponent();
+
+            DataContext = this;
         }
 
         public EUserRightsIdentifierType Type => EUserRightsIdentifierType.SecurityID;

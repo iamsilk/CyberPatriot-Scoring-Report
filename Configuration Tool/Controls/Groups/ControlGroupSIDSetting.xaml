@@ -7,7 +7,7 @@
              Height="23">
     <Grid>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="SID:" VerticalAlignment="Top" Margin="0,1,0,0"/>
-        <TextBox Height="23" Margin="26,0,51,0" Text="{Binding Path=Member.Identifier, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+        <TextBox Height="23" Margin="26,0,51,0" Text="{Binding Path=Member.Identifier}"/>
         <Button HorizontalAlignment="Right" Content="Remove" Click="btnRemove_Click"/>
     </Grid>
 </UserControl>

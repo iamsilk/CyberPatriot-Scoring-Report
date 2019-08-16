@@ -6,42 +6,42 @@
              mc:Ignorable="d" Width="Auto" Height="111" HorizontalContentAlignment="Stretch">
     <Grid>
         <RadioButton x:Name="radioBtnUsername" Content="Username:" GroupName="{Binding Path=GroupName}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,3,0,0"
-                IsChecked="{Binding Path=Settings.IdentifiedByUsername, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                IsChecked="{Binding Path=Settings.IdentifiedByUsername}"/>
         <RadioButton x:Name="radioBtnSecurityID" Content="Security ID:" GroupName="{Binding Path=GroupName}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0"
-                IsChecked="{Binding Path=Settings.IdentifiedBySID, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                IsChecked="{Binding Path=Settings.IdentifiedBySID}"/>
         <TextBox x:Name="txtUsername"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="84,1,307,0" Height="23"
-                 TextWrapping="Wrap" Text="{Binding Path=Settings.Username, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                 TextWrapping="Wrap" Text="{Binding Path=Settings.Username}"/>
         <TextBox x:Name="txtSecurityID" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="83,29,308,0" Height="23"
-                 TextWrapping="Wrap" Text="{Binding Path=Settings.SecurityID, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                 TextWrapping="Wrap" Text="{Binding Path=Settings.SecurityID}"/>
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="19,58,0,0" TextWrapping="Wrap" Text="Password:"/>
         <TextBox x:Name="txtPassword" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="83,57,308,0" Height="23"
-                 TextWrapping="Wrap" Text="{Binding Path=Settings.Password.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                 TextWrapping="Wrap" Text="{Binding Path=Settings.Password.Value}"/>
         <CheckBox x:Name="checkIsScoredOnPasswordChanged" Content="Password Change Scored" HorizontalAlignment="Left" Margin="83,94,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.Password.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.Password.IsScored}"/>
         <CheckBox x:Name="checkUserExists"              Content="User exists" HorizontalAlignment="Right" Margin="0,0,208,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Settings.Exists.Value, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}" Width="95"/>
+                  IsChecked="{Binding Settings.Exists.Value}" Width="95"/>
         <CheckBox x:Name="checkPasswordExpired"         Content="User must change password at next logon" HorizontalAlignment="Right" Margin="0,15,61,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordExpired.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordExpired.Value}"/>
         <CheckBox x:Name="checkPasswordChangeDisabled"  Content="User cannot change password" HorizontalAlignment="Right" Margin="0,30,124,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordChangeDisabled.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordChangeDisabled.Value}"/>
         <CheckBox x:Name="checkPasswordNeverExpires"    Content="Password never expires" HorizontalAlignment="Right" Margin="0,45,160,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordNeverExpires.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordNeverExpires.Value}"/>
         <CheckBox x:Name="checkAccountDisabled"         Content="Account is disabled" HorizontalAlignment="Right" Margin="0,60,180,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.AccountDisabled.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.AccountDisabled.Value}"/>
         <CheckBox x:Name="checkAccountLockedOut"        Content="Account is locked out" HorizontalAlignment="Right" Margin="0,75,169,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.AccountLockedOut.Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.AccountLockedOut.Value}"/>
         <CheckBox x:Name="checkIsScoredUserExists"        Content="Scored" HorizontalAlignment="Right" VerticalAlignment="Top"
-            IsChecked="{Binding Settings.Exists.IsScored, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"/>
+            IsChecked="{Binding Settings.Exists.IsScored}"/>
         <CheckBox x:Name="checkIsScoredPasswordExpired"         Content="Scored" HorizontalAlignment="Right" Margin="0,15,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordExpired.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordExpired.IsScored}"/>
         <CheckBox x:Name="checkIsScoredPasswordChangeDisabled"  Content="Scored" HorizontalAlignment="Right" Margin="0,30,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordChangeDisabled.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordChangeDisabled.IsScored}"/>
         <CheckBox x:Name="checkIsScoredPasswordNeverExpires"    Content="Scored" HorizontalAlignment="Right" Margin="0,45,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.PasswordNeverExpires.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.PasswordNeverExpires.IsScored}"/>
         <CheckBox x:Name="checkIsScoredAccountDisabled"         Content="Scored" HorizontalAlignment="Right" Margin="0,60,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.AccountDisabled.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.AccountDisabled.IsScored}"/>
         <CheckBox x:Name="checkIsScoredAccountLockedOut"        Content="Scored" HorizontalAlignment="Right" Margin="0,75,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=Settings.AccountLockedOut.IsScored, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+                  IsChecked="{Binding Path=Settings.AccountLockedOut.IsScored}"/>
         <Button x:Name="btnRemoveUser" Content="Remove User" HorizontalAlignment="Stretch" Margin="246,91,0,0" VerticalAlignment="Top" Click="btnRemoveUser_Click"/>
     </Grid>
 </UserControl>

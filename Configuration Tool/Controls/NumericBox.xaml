@@ -23,6 +23,6 @@
             </Button>
         </Grid>
         <TextBox x:Name="txtNumber" TextAlignment="Right" PreviewLostKeyboardFocus="txtNumber_PreviewLostKeyboardFocus"
-                 Text="{Binding Path=Number, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Path=Number}"/>
     </Grid>
 </UserControl>
