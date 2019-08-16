@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
 
 namespace Configuration_Tool.Configuration.Services
 {
-    public class ServiceInfo
+    public class ServiceInfo : IComparable<ServiceInfo>
     {
+        public string DisplayName { get; set; } = "";
+
         public string Name { get; set; } = "";
 
         public string Status { get; set; } = "";
@@ -32,6 +35,11 @@ namespace Configuration_Tool.Configuration.Services
             Name = name;
         }
 
+        public int CompareTo(ServiceInfo serviceInfo)
+        {
+            return DisplayName.CompareTo(serviceInfo.DisplayName);
+        }
+
         public static ServiceInfo Parse(BinaryReader reader)
         {
             // Get name
@@ -40,6 +48,7 @@ namespace Configuration_Tool.Configuration.Services
             // Create storage for service info and all info
             ServiceInfo service = new ServiceInfo(name)
             {
+                DisplayName = reader.ReadString(),
                 Status = reader.ReadString(),
                 StartupType = reader.ReadString(),
                 IsScored = reader.ReadBoolean()
@@ -52,6 +61,7 @@ namespace Configuration_Tool.Configuration.Services
         {
             // Write all info
             writer.Write(Name);
+            writer.Write(DisplayName);
             writer.Write(Status);
             writer.Write(StartupType);
             writer.Write(IsScored);
@@ -61,7 +71,10 @@ namespace Configuration_Tool.Configuration.Services
         {
             // Clear list
             serviceInfos.Clear();
-            
+
+            // Create temp list for storing the list
+            List<ServiceInfo> serviceInfoTempList = new List<ServiceInfo>();
+
             // Gets services of local machine
             ServiceController[] services = ServiceController.GetServices();
 
@@ -72,12 +85,13 @@ namespace Configuration_Tool.Configuration.Services
                 ServiceInfo info = new ServiceInfo(service.ServiceName);
 
                 // Preset values as statuses can change and may not be persistent
+                info.DisplayName = GetServiceDisplayName(service.ServiceName);
                 info.Status = "Stopped";
                 info.StartupType = "Automatic";
                 info.IsScored = false;
 
-                // Add service info to list
-                serviceInfos.Add(info);
+                // Add service info to temp list
+                serviceInfoTempList.Add(info);
             }
 
             // Gets drivers of local machine
@@ -90,13 +104,28 @@ namespace Configuration_Tool.Configuration.Services
                 ServiceInfo info = new ServiceInfo(service.ServiceName);
 
                 // Preset values as statuses can change and may not be persistent
+                info.DisplayName = GetServiceDisplayName(service.ServiceName);
                 info.Status = "Stopped";
                 info.StartupType = "Automatic";
                 info.IsScored = false;
 
-                // Add service info to list
-                serviceInfos.Add(info);
+                // Add service info to temp list
+                serviceInfoTempList.Add(info);
             }
+
+            // Sort the temp array
+            serviceInfoTempList.Sort();
+            foreach (ServiceInfo tempserv in serviceInfoTempList)
+                serviceInfos.Add(tempserv);
+        }
+        public static string GetServiceDisplayName(string service)
+        {
+            try
+            {
+                ServiceController serviceController = new ServiceController(service);
+                return serviceController.DisplayName;
+            }
+            catch { return null; }
         }
     }
 }
