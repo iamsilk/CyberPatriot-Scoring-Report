@@ -57,6 +57,7 @@
     <Compile Include="Configuration\Audit\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
+    <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Firewall\FirewallProfile.cs" />
     <Compile Include="Configuration\Firewall\Rule.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Configuration\SecOptions\SeceditTextRegex.xaml.cs" />
     <Compile Include="Configuration\SecOptions\ESecurityOptionType.cs" />
     <Compile Include="Configuration\SecOptions\ISecurityOption.cs" />
+    <Compile Include="Configuration\Services\ServiceInfo.cs" />
     <Compile Include="Configuration\Startup\EStartupType.cs" />
     <Compile Include="Configuration\Startup\StartupInfo.cs" />
     <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionFeatures.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallInboundRules.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallOutboundRules.cs" />
     <Compile Include="Scoring\Sections\SectionAuditPolicy.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Scoring\Sections\SectionPasswordPolicy.cs" />
     <Compile Include="Scoring\Sections\SectionProhibitedFiles.cs" />
     <Compile Include="Scoring\Sections\SectionSecurityOptions.cs" />
+    <Compile Include="Scoring\Sections\SectionServices.cs" />
     <Compile Include="Scoring\Sections\SectionShares.cs" />
     <Compile Include="Scoring\Sections\SectionStartup.cs" />
     <Compile Include="Scoring\Sections\SectionUserRights.cs" />

@@ -38,6 +38,8 @@ namespace Configuration_Tool.Controls
         public NumericBox()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
 
         public NumericBox(int num)

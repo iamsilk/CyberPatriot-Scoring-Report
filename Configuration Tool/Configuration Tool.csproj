@@ -46,13 +46,14 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -69,9 +70,13 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
+    <Compile Include="Configuration\Features\WindowsFeature.cs" />
+    <Compile Include="Configuration\Sections\ConfigFeatures.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallOutboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallInboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallProfiles.cs" />
+    <Compile Include="Configuration\Sections\ConfigServices.cs" />
+    <Compile Include="Configuration\Services\ServiceInfo.cs" />
     <Compile Include="Controls\Firewall\ControlProfile.xaml.cs">
       <DependentUpon>ControlProfile.xaml</DependentUpon>
     </Compile>

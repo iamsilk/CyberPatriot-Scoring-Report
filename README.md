@@ -44,8 +44,11 @@ The sections which are currently a part of this Scoring Report include:
 - Firewall
   - Profile details
   - Inbound/Outbound Rule Checking
+- Services
+- Windows Features
 - Other
   - Remote Desktop Protocol
+  - Host file entry checking
 
 For specifying users, you may specify either a username or security ID. This is a feature because accounts such as the default administrator and guest may be renamed, but you may still need to address details regarding their accounts.
 

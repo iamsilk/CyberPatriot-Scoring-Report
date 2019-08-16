@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cfg="clr-namespace:Configuration_Tool.Configuration"
         xmlns:cfgfirewall="clr-namespace:Configuration_Tool.Configuration.Firewall"
+        xmlns:services="clr-namespace:Configuration_Tool.Configuration.Services"
         xmlns:local="clr-namespace:Configuration_Tool.Controls"
         xmlns:audit="clr-namespace:Configuration_Tool.Controls.Audit"
         xmlns:firewall="clr-namespace:Configuration_Tool.Controls.Firewall"
@@ -648,13 +649,42 @@
                         </TabItem>
                     </TabControl>
                 </TabItem>
+                <TabItem Header="Services">
+                    <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Services}}" ColumnWidth="*" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridComboBoxColumn Header="Status" ItemsSource="{Binding Source={x:Static services:ServiceInfo.Statuses}}" SelectedItemBinding="{Binding Status}" IsReadOnly="False"/>
+                            <DataGridComboBoxColumn Header="Startup Type" ItemsSource="{Binding Source={x:Static services:ServiceInfo.StartupTypes}}" SelectedItemBinding="{Binding StartupType}" IsReadOnly="False"/>
+                            <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" IsReadOnly="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Features">
+                    <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Features}}" ColumnWidth="*" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn Header="Installed" Binding="{Binding Installed}" IsReadOnly="False"/>
+                            <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" IsReadOnly="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
                 <TabItem Header="Other">
-                    <Grid Margin="10">
-                        <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"
+                    <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl HorizontalContentAlignment="Stretch">
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <secoptions:ControlRegistryComboBox x:Name="rdpRegistry" Header="Remote Desktop" Items="Allow remote connections to this computer;Don't allow remote connections to this computer"
                                                             SelectedItem="Don't allow remote connections to this computer"
-                                                            Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server" ValueName="fDenyTSConnections"
-                                                            VerticalAlignment="Top"/>
-                    </Grid>
+                                                            Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server" ValueName="fDenyTSConnections"/>
+                            <Grid Height="20">
+                                <TextBlock VerticalAlignment="Center" Text="Host file must contain default or no entries"/>
+                                <CheckBox x:Name="checkBoxHostFileScored" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Scored"/>
+                            </Grid>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Advanced">
                     <TabControl>

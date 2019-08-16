@@ -3,9 +3,6 @@ Total Project:
 	Add configuration version checking for loading old configurations
 
 	Add Scored Sections:
-	-Services
-	-Hostfile
-	-Windows Features
 	-Custom registry checks
 	-Forensics Questions
 	-Custom process output checks

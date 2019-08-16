@@ -20,6 +20,8 @@ namespace Configuration_Tool.Controls.Users
             if (settings != null) Settings = settings;
 
             InitializeComponent();
+
+            DataContext = this;
         }
 
         private void btnRemoveUser_Click(object sender, RoutedEventArgs e)

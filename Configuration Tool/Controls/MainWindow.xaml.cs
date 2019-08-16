@@ -1,5 +1,7 @@
 ﻿using Configuration_Tool.Configuration;
+using Configuration_Tool.Configuration.Features;
 using Configuration_Tool.Configuration.Firewall;
+using Configuration_Tool.Configuration.Services;
 using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls.Files;
 using Configuration_Tool.Controls.Firewall;
@@ -55,6 +57,10 @@ namespace Configuration_Tool.Controls
             PopulateStartupInfos();
 
             PopulateFirewallRules();
+
+            PopulateServices();
+
+            PopulateFeatures();
 
             ConfigurationManager.Startup(startupParameter);
 
@@ -332,6 +338,18 @@ namespace Configuration_Tool.Controls
         {
             // Get outbound firewall rules
             Rule.GetFirewallRules(NET_FW_RULE_DIRECTION_.NET_FW_RULE_DIR_OUT, ConfigurationManager.OutboundRules);
+        }
+
+        public void PopulateServices()
+        {
+            // Get services
+            ServiceInfo.GetServices(ConfigurationManager.Services);
+        }
+
+        public void PopulateFeatures()
+        {
+            // Get windows features
+            WindowsFeature.GetWindowsFeatures(ConfigurationManager.Features);
         }
 
         private void btnAddPath_Click(object sender, RoutedEventArgs e)

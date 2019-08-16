@@ -16,6 +16,8 @@ namespace Configuration_Tool.Controls.Groups
             InitializeComponent();
 
             if (member != null) Member = member;
+
+            DataContext = this;
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)

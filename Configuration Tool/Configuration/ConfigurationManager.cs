@@ -1,4 +1,6 @@
-﻿using Configuration_Tool.Configuration.Firewall;
+﻿using Configuration_Tool.Configuration.Features;
+using Configuration_Tool.Configuration.Firewall;
+using Configuration_Tool.Configuration.Services;
 using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls;
 using System;
@@ -75,10 +77,14 @@ namespace Configuration_Tool.Configuration
             new Translation("ProhibitedFiles",          "File '{0}' has been deleted"),
             new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
             new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
+            new Translation("HostFile",                 "Host file contains only default entries"),
             new Translation("Startup",                  "Startup '{1}' has been removed."),
             new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
             new Translation("FirewallInboundRule",      "Rule '{0}' has been removed"),
             new Translation("FirewallOutboundRule",     "Rule '{0}' has been removed"),
+            new Translation("Service",                  "Service '{0}' has been configured properly: Status - {1}, Startup - {2}"),
+            new Translation("WindowsFeatureInstalled",      "Feature '{0}' has been installed"),
+            new Translation("WindowsFeatureNotInstalled",   "Feature '{0}' has been uninstalled"),
         };
 
         public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();
@@ -86,6 +92,10 @@ namespace Configuration_Tool.Configuration
         public static BindingList<Rule> InboundRules { get; } = new BindingList<Rule>();
 
         public static BindingList<Rule> OutboundRules { get; } = new BindingList<Rule>();
+
+        public static BindingList<ServiceInfo> Services { get; } = new BindingList<ServiceInfo>();
+
+        public static BindingList<WindowsFeature> Features { get; } = new BindingList<WindowsFeature>();
 
         public static void Startup(string startupParameter)
         {
