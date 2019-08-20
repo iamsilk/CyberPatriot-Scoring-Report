@@ -126,17 +126,20 @@ namespace Configuration_Tool.Configuration.Startup
                         // Concat to get profile's startup folder
                         string profileStartupFolder = profileImagePath + @"\AppData\Roaming" + startupFolder;
 
-                        // Loop over each file in startup folder
-                        foreach (string startupFile in Directory.GetFiles(profileStartupFolder))
+                        if (Directory.Exists(profileStartupFolder))
                         {
-                            // If file is the desktop.ini file, skip
-                            if (startupFile.EndsWith("desktop.ini")) continue;
+                            // Loop over each file in startup folder
+                            foreach (string startupFile in Directory.GetFiles(profileStartupFolder))
+                            {
+                                // If file is the desktop.ini file, skip
+                                if (startupFile.EndsWith("desktop.ini")) continue;
 
-                            // Get name of file
-                            string name = Path.GetFileNameWithoutExtension(startupFile);
+                                // Get name of file
+                                string name = Path.GetFileNameWithoutExtension(startupFile);
 
-                            // Add startup info to list
-                            infos.Add(new StartupInfo(username, name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                                // Add startup info to list
+                                infos.Add(new StartupInfo(username, name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                            }
                         }
                     }
                 }
@@ -145,17 +148,20 @@ namespace Configuration_Tool.Configuration.Startup
             // Get program data folder
             string programDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
-            // Get all files in shared startup folder
-            foreach (string startupFile in Directory.GetFiles(programDataFolder + startupFolder))
+            if (Directory.Exists(programDataFolder + startupFolder))
             {
-                // If file is the desktop.ini file, skip
-                if (startupFile.EndsWith("desktop.ini")) continue;
+                // Get all files in shared startup folder
+                foreach (string startupFile in Directory.GetFiles(programDataFolder + startupFolder))
+                {
+                    // If file is the desktop.ini file, skip
+                    if (startupFile.EndsWith("desktop.ini")) continue;
 
-                // Get name of file
-                string name = Path.GetFileNameWithoutExtension(startupFile);
+                    // Get name of file
+                    string name = Path.GetFileNameWithoutExtension(startupFile);
 
-                // Add startup info to list
-                infos.Add(new StartupInfo("All Users", name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                    // Add startup info to list
+                    infos.Add(new StartupInfo("All Users", name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                }
             }
 
 

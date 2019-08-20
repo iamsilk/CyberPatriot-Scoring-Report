@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
 
 namespace Scoring_Report.Configuration.Services
 {
-    public class ServiceInfo
+    public class ServiceInfo : IComparable<ServiceInfo>
     {
+        public string DisplayName { get; set; } = "";
+
         public string Name { get; set; } = "";
 
         public string Status { get; set; } = "";
@@ -32,6 +35,11 @@ namespace Scoring_Report.Configuration.Services
             Name = name;
         }
 
+        public int CompareTo(ServiceInfo serviceInfo)
+        {
+            return DisplayName.CompareTo(serviceInfo.DisplayName);
+        }
+
         public static ServiceInfo Parse(BinaryReader reader)
         {
             // Get name
@@ -40,6 +48,7 @@ namespace Scoring_Report.Configuration.Services
             // Create storage for service info and all info
             ServiceInfo service = new ServiceInfo(name)
             {
+                DisplayName = reader.ReadString(),
                 Status = reader.ReadString(),
                 StartupType = reader.ReadString(),
                 IsScored = reader.ReadBoolean()

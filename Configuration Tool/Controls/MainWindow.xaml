@@ -652,7 +652,8 @@
                 <TabItem Header="Services">
                     <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Services}}" ColumnWidth="*" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Display Name" Binding="{Binding DisplayName}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Service Name" Binding="{Binding Name}" IsReadOnly="True"/>
                             <DataGridComboBoxColumn Header="Status" ItemsSource="{Binding Source={x:Static services:ServiceInfo.Statuses}}" SelectedItemBinding="{Binding Status}" IsReadOnly="False"/>
                             <DataGridComboBoxColumn Header="Startup Type" ItemsSource="{Binding Source={x:Static services:ServiceInfo.StartupTypes}}" SelectedItemBinding="{Binding StartupType}" IsReadOnly="False"/>
                             <DataGridCheckBoxColumn Header="Is Scored" Binding="{Binding IsScored}" IsReadOnly="False"/>
