@@ -41,11 +41,11 @@ namespace Scoring_Report.Scoring.Sections
 
                             if (scoredFeature.Installed)
                             {
-                                details.Output.Add(ConfigurationManager.Translate("WindowsFeatureInstalled", scoredFeature.Name));
+                                details.Output.Add(TranslationManager.Translate("WindowsFeatureInstalled", scoredFeature.Name));
                             }
                             else
                             {
-                                details.Output.Add(ConfigurationManager.Translate("WindowsFeatureNotInstalled", scoredFeature.Name));
+                                details.Output.Add(TranslationManager.Translate("WindowsFeatureNotInstalled", scoredFeature.Name));
                             }
                         }
 

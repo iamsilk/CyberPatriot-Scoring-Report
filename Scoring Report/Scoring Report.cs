@@ -29,19 +29,26 @@ namespace Scoring_Report
         protected override void OnStart(string[] args)
         {
             // Load configuration
-            string startupParameter = "";
+            string configPath = "";
+            string translationsPath = "";
 
-            if (args != null && args.Length > 1)
+            if (args != null)
             {
                 // Skip first command line argument, as it is the current directory
-                startupParameter = args[1];
+                if (args.Length > 1) configPath = args[1];
+
+                // Second argument is translations file
+                if (args.Length > 2) translationsPath = args[2];
             }
 
             // Setup scoring manager
             ScoringManager.Setup();
 
             // Start up configuration
-            ConfigurationManager.Startup(startupParameter);
+            ConfigurationManager.Startup(configPath);
+
+            // Start up translation manager
+            TranslationManager.Startup(translationsPath);
 
             // Setup output manager
             OutputManager.Setup();
@@ -71,6 +78,9 @@ namespace Scoring_Report
 
                 // Allow configuration to check for any config updates
                 ConfigurationManager.Loop();
+
+                // Allow translation manager to check for updates
+                TranslationManager.Loop();
 
                 // Delay by loop delay length of milliseconds
                 // If StopRequest.Set is called during delay, will return true

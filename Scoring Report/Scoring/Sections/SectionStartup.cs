@@ -49,7 +49,7 @@ namespace Scoring_Report.Scoring.Sections
                 {
                     // Increase score and add to output
                     details.Points++;
-                    details.Output.Add(ConfigurationManager.Translate("Startup", info.Owner, info.Name, info.Command, info.StartupTypeString, info.Location));
+                    details.Output.Add(TranslationManager.Translate("Startup", info.Owner, info.Name, info.Command, info.StartupTypeString, info.Location));
                 }
             }
 

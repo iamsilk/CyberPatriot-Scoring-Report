@@ -704,14 +704,6 @@
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        <TabItem Header="Translations">
-                            <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static cfg:ConfigurationManager.Translations}}" AutoGenerateColumns="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Header" Binding="{Binding Header}" Width="*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Header="Format" Binding="{Binding Format}" Width="2*" IsReadOnly="False"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </TabItem>
                     </TabControl>
                 </TabItem>
             </TabControl>

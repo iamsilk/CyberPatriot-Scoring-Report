@@ -40,7 +40,7 @@ namespace Scoring_Report.Scoring.Sections
                     if (value == RemoteDesktopStatus.SelectedIndex)
                     {
                         details.Points++;
-                        details.Output.Add(ConfigurationManager.Translate("RemoteDesktop", RemoteDesktopStatus.SelectedItem));
+                        details.Output.Add(TranslationManager.Translate("RemoteDesktop", RemoteDesktopStatus.SelectedItem));
                     }
                 }
             }
@@ -80,7 +80,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (emptyOrDefault)
                 {
                     details.Points++;
-                    details.Output.Add(ConfigurationManager.Translate("HostFile"));
+                    details.Output.Add(TranslationManager.Translate("HostFile"));
                 }
             }
 

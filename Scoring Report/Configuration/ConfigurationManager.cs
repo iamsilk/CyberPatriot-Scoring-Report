@@ -41,13 +41,7 @@ namespace Scoring_Report.Configuration
         {
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
-
-        // {0} - Translation Header
-        // {1} - Joined parameters of translation (delimeter ' ')
-        public const string BackupTranslationFormat = "{0} {1}";
-
-        public static Dictionary<string, string> Translations { get; } = new Dictionary<string, string>();
-
+        
         public static void Startup(string startupParameter)
         {
             CurrentConfigPath = startupParameter;
@@ -163,8 +157,6 @@ namespace Scoring_Report.Configuration
                     {
                         loadOutputFiles(reader);
 
-                        loadTranslations(reader);
-
                         // Get number of sections
                         int count = reader.ReadInt32();
 
@@ -229,40 +221,6 @@ namespace Scoring_Report.Configuration
                 // Add output file to list
                 OutputFiles.Add(file);
             }
-        }
-
-        private static void loadTranslations(BinaryReader reader)
-        {
-            Translations.Clear();
-
-            // Get number of translations
-            int count = reader.ReadInt32();
-
-            for (int i = 0; i < count; i++)
-            {
-                // Get translation header/format
-                string header = reader.ReadString();
-                string format = reader.ReadString();
-
-                // Add to global list
-                Translations.Add(header, format);
-            }
-        }
-
-        public static string Translate(string format, params object[] parameters)
-        {
-            // If header/format pair exists
-            if (Translations.ContainsKey(format))
-            {
-                // Return properly formatted translation
-                return string.Format(Translations[format], parameters);
-            }
-
-            // Join all parameters in one string separated by spaces
-            string joined = string.Join(" ", parameters);
-
-            // Return header and parameters in format of fallback
-            return string.Format(BackupTranslationFormat, format, joined);
         }
     }
 }

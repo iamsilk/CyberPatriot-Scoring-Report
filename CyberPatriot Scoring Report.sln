@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scoring Report.html_format"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{26081A63-1995-47D8-9609-CE60E4A59102}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translation Editor", "Translation Editor\Translation Editor.csproj", "{2DDEEE85-2455-4D37-A451-9EE64B3C2034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|Any CPU.ActiveCfg = Debug
 		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|Any CPU.ActiveCfg = Release
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

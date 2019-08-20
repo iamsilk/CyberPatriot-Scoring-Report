@@ -50,42 +50,6 @@ namespace Configuration_Tool.Configuration
         {
             Path.Combine(DefaultConfigDirectory, DefaultOutputFile)
         };
-        
-        public static BindingList<Translation> Translations { get; } = new BindingList<Translation>()
-        {
-            new Translation("UserExists",               "User {3} - Exists on local machine ({2})"),
-            new Translation("PasswordChanged",          "User {3} - Password changed from default"),
-            new Translation("PasswordExpired",          "User {3} - Password must be changed at next logon set to {2}"),
-            new Translation("PasswordChangeDisabled",   "User {3} - Password change disabled set to {2}"),
-            new Translation("PasswordNeverExpires",     "User {3} - Password never expires set to {2}"),
-            new Translation("AccountDisabled",          "User {3} - Account disabled set to {2}"),
-            new Translation("AccountLockedOut",         "User {3} - Account locked out set to {2}"),
-            new Translation("Group",                    "Group '{0}' correctly configured - {1}"),
-            new Translation("EnforcePasswordHistory",   "'Enforce password history' set correctly - {0} passwords remembered"),
-            new Translation("MaxPasswordAge",           "'Maximum password age' set correctly - {0} days"),
-            new Translation("MinPasswordAge",           "'Minimum password age' set correctly - {0} days"),
-            new Translation("MinPasswordLength",        "'Minimum password length' set correctly - {0} characters"),
-            new Translation("PasswordComplexity",       "'Password must meet complexity requirements' set correctly - {0}"),
-            new Translation("ReversibleEncryption",     "'Store passwords using reversible encryption' set correctly - {0}"),
-            new Translation("AccountLockoutDuration",   "'Account lockout duration' set correctly - {0} minutes"),
-            new Translation("AccountLockoutThreshold",  "'Account lockout threshold' set correctly - {0} invalid logon attempts"),
-            new Translation("ResetLockoutCounterAfter", "'Reset account lockout counter after' set correctly - {0} minutes"),
-            new Translation("AuditPolicy",              "'{0}' set correctly - {1}"),
-            new Translation("UserRights",               "'{0}' set correctly - {1}"),
-            new Translation("SecurityOptions",          "'{0}' set correctly - {1}"),
-            new Translation("InstalledPrograms",        "'{0}' set correctly - {1}"),
-            new Translation("ProhibitedFiles",          "File '{0}' has been deleted"),
-            new Translation("Shares",                   "Share '{0}' has been set properly - {1}"),
-            new Translation("RemoteDesktop",            "Remote Desktop allowance set correctly - {0}"),
-            new Translation("HostFile",                 "Host file contains only default entries"),
-            new Translation("Startup",                  "Startup '{1}' has been removed."),
-            new Translation("FirewallProfileProperty",  "{0} - '{1}' has been set properly - '{2}'"),
-            new Translation("FirewallInboundRule",      "Rule '{0}' has been removed"),
-            new Translation("FirewallOutboundRule",     "Rule '{0}' has been removed"),
-            new Translation("Service",                  "Service '{0}' has been configured properly: Status - {1}, Startup - {2}"),
-            new Translation("WindowsFeatureInstalled",      "Feature '{0}' has been installed"),
-            new Translation("WindowsFeatureNotInstalled",   "Feature '{0}' has been uninstalled"),
-        };
 
         public static BindingList<StartupInfo> StartupInfos { get; } = new BindingList<StartupInfo>();
 
@@ -226,8 +190,6 @@ namespace Configuration_Tool.Configuration
             {
                 loadOutputFiles(reader);
 
-                loadTranslations(reader);
-
                 error = loadSections(reader, mainWindow);
             }
 
@@ -292,8 +254,6 @@ namespace Configuration_Tool.Configuration
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 saveOutputFiles(writer);
-
-                saveTranslations(writer);
 
                 saveSections(writer, mainWindow);
 
@@ -448,59 +408,6 @@ namespace Configuration_Tool.Configuration
             foreach (string file in OutputFiles)
             {
                 writer.Write(file);
-            }
-        }
-
-        private static void loadTranslations(BinaryReader reader)
-        {
-            if (LoadingDefaults)
-            {
-                // Clear translations
-                Translations.Clear();
-            }
-
-            // Get number of translations
-            int count = reader.ReadInt32();
-
-            for (int i = 0; i < count; i++)
-            {
-                // Get translation
-                Translation translation = Translation.Parse(reader);
-
-                if (LoadingDefaults)
-                {
-                    // If loading defaults, just add and skip the searching
-                    Translations.Add(translation);
-                    continue;
-                }
-
-                // Search for matching header
-                Translation match = Translations.FirstOrDefault(x => x.Header == translation.Header);
-
-                // If no match was found
-                if (match == null)
-                {
-                    // Add translation to list
-                    Translations.Add(translation);
-                }
-                else
-                {
-                    // Set format to read format from config
-                    match.Format = translation.Format;
-                }
-            }
-        }
-
-        private static void saveTranslations(BinaryWriter writer)
-        {
-            // Write number of translations
-            writer.Write(Translations.Count);
-
-            // Loop over each translation
-            foreach (Translation translation in Translations)
-            {
-                // Write translation
-                translation.Write(writer);
             }
         }
 

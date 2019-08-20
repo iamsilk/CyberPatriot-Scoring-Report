@@ -147,7 +147,7 @@ namespace Scoring_Report.Scoring.Sections
                         IEnumerable<string> names = definition.Identifiers.Select(x => x.Name);
 
                         details.Points++;
-                        details.Output.Add(ConfigurationManager.Translate("UserRights", definition.Setting, string.Join(", ", names)));
+                        details.Output.Add(TranslationManager.Translate("UserRights", definition.Setting, string.Join(", ", names)));
                     }
 
                     tempDict.Remove(foundUserRights);

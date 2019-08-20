@@ -39,19 +39,19 @@ namespace Scoring_Report.Scoring.Sections
                 ConfigPolicy.AccountLockoutDuration.Value.WithinBounds(SystemPolicy.AccountLockoutDuration))
             {
                 details.Points++;
-                details.Output.Add(ConfigurationManager.Translate("AccountLockoutDuration", SystemPolicy.AccountLockoutDuration));
+                details.Output.Add(TranslationManager.Translate("AccountLockoutDuration", SystemPolicy.AccountLockoutDuration));
             }
             if (ConfigPolicy.AccountLockoutThreshold.IsScored &&
                 ConfigPolicy.AccountLockoutThreshold.Value.WithinBounds(SystemPolicy.AccountLockoutThreshold))
             {
                 details.Points++;
-                details.Output.Add(ConfigurationManager.Translate("AccountLockoutThreshold", SystemPolicy.AccountLockoutThreshold));
+                details.Output.Add(TranslationManager.Translate("AccountLockoutThreshold", SystemPolicy.AccountLockoutThreshold));
             }
             if (ConfigPolicy.ResetLockoutCounterAfter.IsScored &&
                 ConfigPolicy.ResetLockoutCounterAfter.Value.WithinBounds(SystemPolicy.ResetLockoutCounterAfter))
             {
                 details.Points++;
-                details.Output.Add(ConfigurationManager.Translate("ResetLockoutCounterAfter", SystemPolicy.ResetLockoutCounterAfter));
+                details.Output.Add(TranslationManager.Translate("ResetLockoutCounterAfter", SystemPolicy.ResetLockoutCounterAfter));
             }
 
             return details;

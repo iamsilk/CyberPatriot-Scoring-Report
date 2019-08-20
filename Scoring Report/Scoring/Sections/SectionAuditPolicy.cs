@@ -64,7 +64,7 @@ namespace Scoring_Report.Scoring.Sections
                         {
                             // Setting is properly configured
                             details.Points++;
-                            details.Output.Add(ConfigurationManager.Translate("AuditPolicy", config.Key, AuditSettingFormat[config.Value.Value]));
+                            details.Output.Add(TranslationManager.Translate("AuditPolicy", config.Key, AuditSettingFormat[config.Value.Value]));
                         }
                     }
                 }

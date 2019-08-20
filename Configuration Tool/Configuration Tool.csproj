@@ -105,7 +105,6 @@
     <Compile Include="Configuration\Sections\ConfigShares.cs" />
     <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
-    <Compile Include="Configuration\Translation.cs" />
     <Compile Include="Configuration\Users\UserSettings.cs" />
     <Page Include="Controls\Firewall\ControlProfile.xaml">
       <SubType>Designer</SubType>

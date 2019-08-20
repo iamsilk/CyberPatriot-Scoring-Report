@@ -116,7 +116,7 @@ namespace Scoring_Report.Scoring.Sections
                                 // Get list of members' names separated by commas
                                 string members = string.Join(", ", group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
 
-                                details.Output.Add(ConfigurationManager.Translate("Group", settings.GroupName, members));
+                                details.Output.Add(TranslationManager.Translate("Group", settings.GroupName, members));
                             }
                         }
                     }
