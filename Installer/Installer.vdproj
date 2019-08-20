@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_36B7E830A67B41B49CB07C7C327C1A61"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -53,12 +59,6 @@
         {
         "MsmKey" = "8:_C7941B268B434455862F1613031E7AB4"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DEAFD1DDA6201FDCD6B7057EA4077A9B"
-        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -94,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
+        "OwnerKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DEAFD1DDA6201FDCD6B7057EA4077A9B"
+        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -344,37 +344,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DEAFD1DDA6201FDCD6B7057EA4077A9B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_DEAFD1DDA6201FDCD6B7057EA4077A9B"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E957DE4A47C44CC2A494733341DDD80D"
@@ -1052,9 +1021,37 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2FAC299660E841F0AC1E67524542C2F1"
+            {
+            "SourcePath" = "8:..\\Translation Editor\\obj\\Debug\\Translation Editor.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{2DDEEE85-2455-4D37-A451-9EE64B3C2034}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C7941B268B434455862F1613031E7AB4"
             {
-            "SourcePath" = "8:..\\Configuration Tool\\obj\\Release\\Configuration Tool.exe"
+            "SourcePath" = "8:..\\Configuration Tool\\obj\\Debug\\Configuration Tool.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
@@ -1082,7 +1079,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E94618A06CEF40689943A9FDD8F322EE"
             {
-            "SourcePath" = "8:..\\Scoring Report\\obj\\Release\\Scoring Report.exe"
+            "SourcePath" = "8:..\\Scoring Report\\obj\\Debug\\Scoring Report.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
