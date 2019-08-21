@@ -320,11 +320,6 @@
   <ItemGroup>
     <Resource Include="Images\arrow_up.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Scoring Report\Scoring Report.csproj">
-      <Project>{18104c95-b028-4d17-93af-0fb1ca0e7114}</Project>
-      <Name>Scoring Report</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

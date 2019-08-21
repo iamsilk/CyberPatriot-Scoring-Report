@@ -108,8 +108,8 @@ namespace Scoring_Report.Configuration
             return true;
         }
 
-        public static string Key = "cH4N63th!S!!1!}~";
-        public static string IV = "7wwkEANRXQJr2Uxs";
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
 
         private static void loadConfig(bool loadedPrev = false)
         {

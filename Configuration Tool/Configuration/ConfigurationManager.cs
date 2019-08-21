@@ -488,8 +488,8 @@ namespace Configuration_Tool.Configuration
             }
         }
 
-        private static string Key => Scoring_Report.Configuration.ConfigurationManager.Key;
-        private static string IV => Scoring_Report.Configuration.ConfigurationManager.IV;
+        private static string Key = "cH4N63th!S!!1!}~";
+        private static string IV = "7wwkEANRXQJr2Uxs";
 
         public static bool EncryptToFile(string file, byte[] buffer)
         {
