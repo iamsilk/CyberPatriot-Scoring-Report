@@ -94,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
+        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
+        "OwnerKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -594,6 +594,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1754DB8729464C98A60CCD166A8F9287"
+            {
+            "Name" = "8:Translation Editor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_2FAC299660E841F0AC1E67524542C2F1"
+            "Folder" = "8:_A03800BB2F02489F9444275E2E0B376C"
+            "WorkingFolder" = "8:_A017F374235A4F6782504C6F69C67782"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_54994944B26945F1B7B40F509ABEC7E9"
             {
             "Name" = "8:Configuration Tool"
