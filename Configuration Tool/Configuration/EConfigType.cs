@@ -18,6 +18,7 @@
         FirewallOutboundRules,
         Services,
         Features,
+        CustomReg,
         Other = 99,
     }
 }

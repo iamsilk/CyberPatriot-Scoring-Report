@@ -67,6 +67,9 @@
     <Compile Include="Configuration\Lockout\LockoutPolicy.cs" />
     <Compile Include="Configuration\Password\PasswordPolicy.cs" />
     <Compile Include="Configuration\Range.cs" />
+    <Compile Include="Configuration\Registry\CustomRegKey.cs" />
+    <Compile Include="Configuration\Registry\RegistryHives.cs" />
+    <Compile Include="Configuration\Registry\RegistryType.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\SecOptions\RegistryComboBox.xaml.cs" />
     <Compile Include="Configuration\SecOptions\RegistryMultiLine.xaml.cs" />
