@@ -6,8 +6,6 @@ Total Project:
 	-Custom registry checks
 	-Forensics Questions
 	-Custom process output checks
-	
-	Separate translations from configuration to allow for people to share translations for other languages without needing to change configurations
 
 	Document details of translations
 
