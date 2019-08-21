@@ -11,4 +11,6 @@ If you have any suggestions, open a ticket tagged as suggestion and it will be a
 
 If anything is unclear and needs better explanation, feel free to ask. I hope the documentation here will be enough to explain. I have worked to comment nearly all the code to help explain aspects of this project to those just learning of this project.
 
+[Wiki for this project](./wiki)
+
 ![Example Image of Scoring Report](/Scoring%20Report%20Example%20Image.png)
