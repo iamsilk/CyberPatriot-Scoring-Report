@@ -190,7 +190,11 @@ namespace Configuration_Tool.Controls
                 "echo Removing Configuration Tool and other files...",
                 "ping 127.0.0.1 > nul", // Waits, gives enough time for Configuration Tool to close
                 "del /F \"%public%\\Desktop\\Configuration Tool.lnk\"",
+                "del /F \"%userprofile%\\Desktop\\Configuration Tool.lnk\"",
                 "del /F \"Configuration Tool.exe\"",
+                "del /F \"%public%\\Desktop\\Translation Editor.lnk\"",
+                "del /F \"%userprofile%\\Desktop\\Translation Editor.lnk\"",
+                "del /F \"Translation Editor.exe\"",
                 "del remove.bat"
             });
 
