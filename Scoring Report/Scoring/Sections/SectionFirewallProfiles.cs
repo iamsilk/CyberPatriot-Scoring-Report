@@ -9,7 +9,7 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionFirewallProfiles : ISection
     {
-        public string Header => "Firewall - Profiles:";
+        public string Header => TranslationManager.Translate("SectionFirewallProfiles");
 
         public static List<FirewallProfile> Profiles { get; } = new List<FirewallProfile>();
 
@@ -96,8 +96,19 @@ namespace Scoring_Report.Scoring.Sections
                     // Check if config and system values match
                     if (systemValue == property.Value)
                     {
+                        switch (systemValue)
+                        {
+                            case "On": systemValue = TranslationManager.Translate("On"); break;
+                            case "Off": systemValue = TranslationManager.Translate("Off"); break;
+                            case "Allow": systemValue = TranslationManager.Translate("Allow"); break;
+                            case "Block": systemValue = TranslationManager.Translate("Block"); break;
+                            case "Block all connections": systemValue = TranslationManager.Translate("BlockAll"); break;
+                            case "Yes": systemValue = TranslationManager.Translate("Yes"); break;
+                            case "No": systemValue = TranslationManager.Translate("No"); break;
+                        }
+
                         details.Points++;
-                        details.Output.Add(TranslationManager.Translate("FirewallProfileProperty", profile.Profile, property.Key, property.Value));
+                        details.Output.Add(TranslationManager.Translate("FirewallProfileProperty", profile.Profile, property.Key, systemValue));
                     }
                 }
             }

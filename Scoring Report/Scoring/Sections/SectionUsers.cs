@@ -13,7 +13,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.Users;
 
-        public string Header => "Users:";
+        public string Header => TranslationManager.Translate("SectionUsers");
 
         public static List<UserSettings> Users { get; } = new List<UserSettings>();
 
@@ -69,12 +69,12 @@ namespace Scoring_Report.Scoring.Sections
                         if (settings.IdentifiedBySID)
                         {
                             id = settings.SecurityID;
-                            idType = "SID";
+                            idType = TranslationManager.Translate("SecurityID");
                         }
                         else
                         {
                             id = settings.Username;
-                            idType = "Username";
+                            idType = TranslationManager.Translate("Username");
                         }
 
                         // For each user on the machine
@@ -201,7 +201,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (!settings.PasswordLastStatus)
                                 {
                                     details.Points++;
-                                    details.Output.Add(TranslationManager.Translate("PasswordChanged", id, idType, settings.Password.Value, username, sid));
+                                    details.Output.Add(TranslationManager.Translate("PasswordChanged", id, idType, username, sid));
                                 }
                             }
 

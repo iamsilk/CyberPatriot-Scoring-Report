@@ -11,7 +11,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.PasswordPolicy;
 
-        public string Header => "Password Policy:";
+        public string Header => TranslationManager.Translate("SectionPasswordPolicy");
 
         public static config.PasswordPolicy ConfigPolicy { get; set; }
 
@@ -63,7 +63,11 @@ namespace Scoring_Report.Scoring.Sections
                 details.Output.Add(TranslationManager.Translate("MinPasswordLength", SystemPolicy.MinimumPasswordLength));
             }
 
-            string[] readableNames = new string[] { "Disabled", "Enabled" };
+            string[] readableNames = new string[] 
+            {
+                TranslationManager.Translate("Disabled"),
+                TranslationManager.Translate("Enabled")
+            };
 
             if (ConfigPolicy.PasswordComplexity.IsScored && ConfigPolicy.PasswordComplexity.Value == SystemPolicy.PasswordComplexity)
             {

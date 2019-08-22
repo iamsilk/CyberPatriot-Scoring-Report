@@ -11,7 +11,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.Groups;
 
-        public string Header => "Groups:";
+        public string Header => TranslationManager.Translate("SectionGroups");
 
         public static List<GroupSettings> Groups { get; } = new List<GroupSettings>();
 
@@ -114,7 +114,7 @@ namespace Scoring_Report.Scoring.Sections
                                 details.Points++;
 
                                 // Get list of members' names separated by commas
-                                string members = string.Join(", ", group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
+                                string members = string.Join(TranslationManager.Translate("Delimiter"), group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
 
                                 details.Output.Add(TranslationManager.Translate("Group", settings.GroupName, members));
                             }

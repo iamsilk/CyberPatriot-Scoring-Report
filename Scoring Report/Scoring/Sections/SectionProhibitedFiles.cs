@@ -8,7 +8,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.ProhibitedFiles;
 
-        public string Header => "Prohibited Files:";
+        public string Header => TranslationManager.Translate("SectionProhibitedFiles");
 
         public static List<string> ProhibitedFiles { get; } = new List<string>();
 

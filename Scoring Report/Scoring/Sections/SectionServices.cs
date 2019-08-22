@@ -8,7 +8,7 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionServices : ISection
     {
-        public string Header => "Services:";
+        public string Header => TranslationManager.Translate("SectionServices");
 
         public List<ServiceInfo> Services { get; } = new List<ServiceInfo>();
 

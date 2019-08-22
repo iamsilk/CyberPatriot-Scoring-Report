@@ -9,7 +9,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.InstalledPrograms;
 
-        public string Header => "Installed Programs:";
+        public string Header => TranslationManager.Translate("SectionInstalledPrograms");
 
         public static Dictionary<string, bool> InstalledPrograms { get; } = new Dictionary<string, bool>();
         
@@ -146,7 +146,8 @@ namespace Scoring_Report.Scoring.Sections
                 if (installed == programConfig.Value)
                 {
                     details.Points++;
-                    details.Output.Add(TranslationManager.Translate("InstalledPrograms", programConfig.Key, programConfig.Value ? "Installed" : "Uninstalled"));
+                    details.Output.Add(TranslationManager.Translate("InstalledPrograms", programConfig.Key, programConfig.Value ?
+                        TranslationManager.Translate("Installed") : TranslationManager.Translate("Uninstalled")));
                 }
             }
 

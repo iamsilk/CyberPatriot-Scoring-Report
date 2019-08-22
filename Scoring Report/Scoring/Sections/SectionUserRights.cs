@@ -13,7 +13,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.UserRights;
 
-        public string Header => "User Rights Assignment:";
+        public string Header => TranslationManager.Translate("SectionUserRights");
 
         public static List<UserRightsDefinition> UserRightsDefinitions { get; } = new List<UserRightsDefinition>();
 
@@ -147,7 +147,8 @@ namespace Scoring_Report.Scoring.Sections
                         IEnumerable<string> names = definition.Identifiers.Select(x => x.Name);
 
                         details.Points++;
-                        details.Output.Add(TranslationManager.Translate("UserRights", definition.Setting, string.Join(", ", names)));
+                        details.Output.Add(TranslationManager.Translate("UserRights", definition.Setting, 
+                            string.Join(TranslationManager.Translate("Delimiter"), names)));
                     }
 
                     tempDict.Remove(foundUserRights);

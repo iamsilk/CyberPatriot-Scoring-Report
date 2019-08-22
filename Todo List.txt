@@ -7,8 +7,6 @@ Total Project:
 	-Forensics Questions
 	-Custom process output checks
 
-	Document details of translations
-
 Configuration Tool:
 
 Scoring Report:
