@@ -1,0 +1,44 @@
+﻿<Window x:Class="Translation_Editor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Translation_Editor"
+        mc:Ignorable="d"
+        Title="Translation Editor" Height="450" Width="800" Closing="SaveonExit">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.FileOpen" Executed="FileOpenCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.FileSave" Executed="FileSaveCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.FileSaveAs" Executed="FileSaveAsCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.ClearTranslations" Executed="ClearTranslationsCommand_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="local:CustomCommands.FileOpen"/>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="local:CustomCommands.FileSave"/>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top" >
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open" InputGestureText="Ctrl+O" Command="local:CustomCommands.FileOpen"/>
+                    <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="local:CustomCommands.FileSave"/>
+                    <MenuItem Header="Save _As..." Command="local:CustomCommands.FileSaveAs"/>
+                    <MenuItem Header="Clear Current Translations" Command="local:CustomCommands.ClearTranslations"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel/>
+        </DockPanel>
+        <Grid Grid.Row="1" Margin="10">
+            <DataGrid Margin="-3" ItemsSource="{Binding Source={x:Static local:TranslationManager.Translations}}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Header" Binding="{Binding Header}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Format" Binding="{Binding Format}" Width="2*" IsReadOnly="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

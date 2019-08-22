@@ -68,7 +68,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (!foundMatch)
                 {
                     details.Points++;
-                    details.Output.Add(ConfigurationManager.Translate("FirewallInboundRule", 
+                    details.Output.Add(TranslationManager.Translate("FirewallInboundRule", 
                         rule.Name, 
                         rule.Group, 
                         rule.Description, 

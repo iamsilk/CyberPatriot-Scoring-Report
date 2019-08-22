@@ -28,7 +28,7 @@ namespace Scoring_Report.Scoring.Sections
                 if(WinAPI.GetFileAttributes(filelocation) == -1)
                 {
                     details.Points++;
-                    details.Output.Add(ConfigurationManager.Translate("ProhibitedFiles", filelocation));
+                    details.Output.Add(TranslationManager.Translate("ProhibitedFiles", filelocation));
                 }
             }
 

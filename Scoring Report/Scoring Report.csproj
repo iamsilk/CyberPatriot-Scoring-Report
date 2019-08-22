@@ -82,6 +82,7 @@
     <Compile Include="Configuration\Services\ServiceInfo.cs" />
     <Compile Include="Configuration\Startup\EStartupType.cs" />
     <Compile Include="Configuration\Startup\StartupInfo.cs" />
+    <Compile Include="Configuration\TranslationManager.cs" />
     <Compile Include="Configuration\UserRights\EUserRightsIdentifierType.cs" />
     <Compile Include="Configuration\UserRights\UserRightsIdentifier.cs">
       <Generator>MSBuild:Compile</Generator>

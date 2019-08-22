@@ -146,7 +146,7 @@ namespace Scoring_Report.Scoring.Sections
                 if (installed == programConfig.Value)
                 {
                     details.Points++;
-                    details.Output.Add(ConfigurationManager.Translate("InstalledPrograms", programConfig.Key, programConfig.Value ? "Installed" : "Uninstalled"));
+                    details.Output.Add(TranslationManager.Translate("InstalledPrograms", programConfig.Key, programConfig.Value ? "Installed" : "Uninstalled"));
                 }
             }
 

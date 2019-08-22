@@ -8,3 +8,6 @@ Scoring Report/Scoring Report.csproj.user
 Installer/Debug/*
 Installer/Release/*
 Output/*
+Translation Editor/bin/*
+Translation Editor/obj/*
+Translation Editor/Translation Editor.csproj.user

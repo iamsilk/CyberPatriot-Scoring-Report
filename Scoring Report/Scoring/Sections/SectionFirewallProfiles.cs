@@ -97,7 +97,7 @@ namespace Scoring_Report.Scoring.Sections
                     if (systemValue == property.Value)
                     {
                         details.Points++;
-                        details.Output.Add(ConfigurationManager.Translate("FirewallProfileProperty", profile.Profile, property.Key, property.Value));
+                        details.Output.Add(TranslationManager.Translate("FirewallProfileProperty", profile.Profile, property.Key, property.Value));
                     }
                 }
             }

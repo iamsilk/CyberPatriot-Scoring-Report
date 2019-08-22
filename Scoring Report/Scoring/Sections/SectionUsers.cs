@@ -201,7 +201,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (!settings.PasswordLastStatus)
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("PasswordChanged", id, idType, settings.Password.Value, username, sid));
+                                    details.Output.Add(TranslationManager.Translate("PasswordChanged", id, idType, settings.Password.Value, username, sid));
                                 }
                             }
 
@@ -211,34 +211,34 @@ namespace Scoring_Report.Scoring.Sections
                             if (settings.PasswordExpired.IsScored && settings.PasswordExpired.Value == ((int)properties["PasswordExpired"][0] == 1))
                             {
                                 details.Points++;
-                                details.Output.Add(ConfigurationManager.Translate("PasswordExpired", id, idType, settings.PasswordExpired.Value, username, sid));
+                                details.Output.Add(TranslationManager.Translate("PasswordExpired", id, idType, settings.PasswordExpired.Value, username, sid));
                             }
                             if (settings.PasswordChangeDisabled.IsScored && settings.PasswordChangeDisabled.Value == user.UserCannotChangePassword)
                             {
                                 details.Points++;
-                                details.Output.Add(ConfigurationManager.Translate("PasswordChangeDisabled", id, idType, settings.PasswordChangeDisabled.Value, username, sid));
+                                details.Output.Add(TranslationManager.Translate("PasswordChangeDisabled", id, idType, settings.PasswordChangeDisabled.Value, username, sid));
                             }
                             if (settings.PasswordNeverExpires.IsScored & settings.PasswordNeverExpires.Value == user.PasswordNeverExpires)
                             {
                                 details.Points++;
-                                details.Output.Add(ConfigurationManager.Translate("PasswordNeverExpires", id, idType, settings.PasswordNeverExpires.Value, username, sid));
+                                details.Output.Add(TranslationManager.Translate("PasswordNeverExpires", id, idType, settings.PasswordNeverExpires.Value, username, sid));
                             }
                             if (settings.AccountDisabled.IsScored && settings.AccountDisabled.Value == !user.Enabled)
                             {
                                 details.Points++;
-                                details.Output.Add(ConfigurationManager.Translate("AccountDisabled", id, idType, settings.AccountDisabled.Value, username, sid));
+                                details.Output.Add(TranslationManager.Translate("AccountDisabled", id, idType, settings.AccountDisabled.Value, username, sid));
                             }
                             if (settings.AccountLockedOut.IsScored && settings.AccountLockedOut.Value == user.IsAccountLockedOut())
                             {
                                 details.Points++;
-                                details.Output.Add(ConfigurationManager.Translate("AccountLockedOut", id, idType, settings.AccountLockedOut.Value, username, sid));
+                                details.Output.Add(TranslationManager.Translate("AccountLockedOut", id, idType, settings.AccountLockedOut.Value, username, sid));
                             }
                         }
 
                         if (settings.Exists.IsScored && settings.Exists.Value == userexists)
                         {
                             details.Points++;
-                            details.Output.Add(ConfigurationManager.Translate("UserExists", id, idType, settings.Exists.Value, username, sid));
+                            details.Output.Add(TranslationManager.Translate("UserExists", id, idType, settings.Exists.Value, username, sid));
                         }
                     }
                 }

@@ -45,7 +45,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (option.SelectedIndex.ToString() == systemValue.ToString())
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, option.SelectedItem));
+                                    details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, option.SelectedItem));
                                 }
                             }
                         }
@@ -73,7 +73,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (matches == option.RegexMatches)
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, "\"" + systemText + "\""));
+                                    details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, "\"" + systemText + "\""));
                                 }
                             }
                             break;
@@ -94,7 +94,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (value >= option.Minimum && value <= option.Maximum)
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, value));
+                                    details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, value));
                                 }
                             }
 
@@ -153,7 +153,7 @@ namespace Scoring_Report.Scoring.Sections
                                     if (areEqual)
                                     {
                                         details.Points++;
-                                        details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, string.Join(Environment.NewLine, systemValue)));
+                                        details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, string.Join(Environment.NewLine, systemValue)));
                                     }
                                 }
                             }
@@ -175,7 +175,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (option.SelectedIndex.ToString() == systemValue)
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, option.SelectedItem));
+                                    details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, option.SelectedItem));
                                 }
                             }
                             break;
@@ -201,7 +201,7 @@ namespace Scoring_Report.Scoring.Sections
                                 if (matches == option.RegexMatches)
                                 {
                                     details.Points++;
-                                    details.Output.Add(ConfigurationManager.Translate("SecurityOptions", option.Header, systemText));
+                                    details.Output.Add(TranslationManager.Translate("SecurityOptions", option.Header, systemText));
                                 }
                             }
                             break;
