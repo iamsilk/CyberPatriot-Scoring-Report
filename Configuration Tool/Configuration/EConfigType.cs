@@ -18,6 +18,7 @@
         FirewallOutboundRules,
         Services,
         Features,
+        Forensics,
         Other = 99,
     }
 }

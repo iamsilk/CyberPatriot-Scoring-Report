@@ -5,6 +5,7 @@ using Configuration_Tool.Configuration.Services;
 using Configuration_Tool.Configuration.Startup;
 using Configuration_Tool.Controls.Files;
 using Configuration_Tool.Controls.Firewall;
+using Configuration_Tool.Controls.Forensics;
 using Configuration_Tool.Controls.Groups;
 using Configuration_Tool.Controls.Programs;
 using Configuration_Tool.Controls.Shares;
@@ -389,6 +390,24 @@ namespace Configuration_Tool.Controls
             WindowFirewallColumns window = new WindowFirewallColumns(dataGridOutboundRules);
 
             window.ShowDialog();
+        }
+
+        private void btnAddForensicQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ControlForensicQuestion control = new ControlForensicQuestion();
+
+            int i = 1;
+
+            // While a question exists with the title of 'Forensic Question ' with index succeeding, increment index
+            while (listForensicQuestions.Items.OfType<ControlForensicQuestion>()
+                .FirstOrDefault(x => x.Title == "Forensic Question " + i) != null)
+            {
+                i++;
+            }
+
+            control.Title = "Forensic Question " + i;
+
+            listForensicQuestions.Items.Add(control);
         }
     }
 }

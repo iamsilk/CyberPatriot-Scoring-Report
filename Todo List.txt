@@ -4,7 +4,6 @@ Total Project:
 
 	Add Scored Sections:
 	-Custom registry checks
-	-Forensics Questions
 	-Custom process output checks
 
 Configuration Tool:

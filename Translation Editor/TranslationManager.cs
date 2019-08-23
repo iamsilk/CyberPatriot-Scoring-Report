@@ -101,6 +101,9 @@ namespace Translation_Editor
             { "WindowsFeatureInstalled",    "Feature '{0}' has been installed" },
             { "WindowsFeatureNotInstalled", "Feature '{0}' has been uninstalled" },
 
+            { "SectionForensics",   "Forensic Questions:" },
+            { "AnswerCorrect",    "'{0}' is correct" },
+
             { "SectionOther",   "Other:" },
             { "RemoteDesktop",  "Remote Desktop allowance set correctly - {0}" },
             { "HostFile",       "Host file contains only default entries" },

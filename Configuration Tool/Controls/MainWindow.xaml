@@ -669,6 +669,20 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
+                <TabItem Header="Forensics">
+                    <Grid Margin="10">
+                        <Button VerticalAlignment="Top" Content="Add Forensic Question" Click="btnAddForensicQuestion_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,25,0,0">
+                            <ItemsControl x:Name="listForensicQuestions" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
                         <ItemsControl HorizontalContentAlignment="Stretch">
