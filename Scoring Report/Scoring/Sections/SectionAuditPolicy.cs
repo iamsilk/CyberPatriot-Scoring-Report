@@ -13,19 +13,30 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.AuditPolicy;
 
-        public string Header => "Audit Policy:";
+        public string Header => TranslationManager.Translate("SectionAuditPolicy");
 
         public static config.AuditPolicy ConfigPolicy { get; set; }
 
         public static policy.AuditPolicy SystemPolicy => SecurityPolicyManager.Settings.LocalPolicies.AuditPolicy;
 
-        public readonly Dictionary<EAuditSettings, string> AuditSettingFormat = new Dictionary<EAuditSettings, string>()
+        public Dictionary<EAuditSettings, string> AuditSettingFormat = new Dictionary<EAuditSettings, string>()
         {
-            { EAuditSettings.Unchanged, "No auditing" },
-            { EAuditSettings.Success, "Success" },
-            { EAuditSettings.Failure, "Failure" },
-            {EAuditSettings.SuccessFailure, "Success, Failure" }
+            { EAuditSettings.Unchanged, TranslationManager.Translate("AuditUnchanged") },
+            { EAuditSettings.Success,TranslationManager.Translate("AuditSuccess") },
+            { EAuditSettings.Failure, TranslationManager.Translate("AuditFailure") },
+            { EAuditSettings.SuccessFailure, TranslationManager.Translate("AuditBoth") }
         };
+
+        private void GetAuditSettingFormat()
+        {
+            AuditSettingFormat = new Dictionary<EAuditSettings, string>()
+            {
+                { EAuditSettings.Unchanged, TranslationManager.Translate("AuditUnchanged") },
+                { EAuditSettings.Success,TranslationManager.Translate("AuditSuccess") },
+                { EAuditSettings.Failure, TranslationManager.Translate("AuditFailure") },
+                { EAuditSettings.SuccessFailure, TranslationManager.Translate("AuditBoth") }
+            };
+        }
 
 
         public int MaxScore()
@@ -46,6 +57,8 @@ namespace Scoring_Report.Scoring.Sections
             SectionDetails details = new SectionDetails(0, new List<string>(), this);
 
             SecurityPolicyManager.GetAuditPolicy();
+
+            GetAuditSettingFormat();
 
             // Loop over every audit configuration
             foreach (KeyValuePair<string, ScoredItem<EAuditSettings>> config in ConfigPolicy.HeaderSettingPairs)

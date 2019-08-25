@@ -71,10 +71,13 @@
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
     <Compile Include="Configuration\EConfigType.cs" />
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
+    <Compile Include="Configuration\Forensics\EAnswerType.cs" />
+    <Compile Include="Configuration\Forensics\IAnswer.cs" />
     <Compile Include="Configuration\Sections\ConfigFeatures.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallOutboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallInboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallProfiles.cs" />
+    <Compile Include="Configuration\Sections\ConfigForensics.cs" />
     <Compile Include="Configuration\Sections\ConfigServices.cs" />
     <Compile Include="Configuration\Services\ServiceInfo.cs" />
     <Compile Include="Controls\Firewall\ControlProfile.xaml.cs">
@@ -117,6 +120,18 @@
     <Page Include="Controls\Firewall\WindowFirewallColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Forensics\ControlAnswerRegex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Forensics\ControlAnswerText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Forensics\ControlForensicQuestion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Programs\ControlSettingProgram.xaml">
       <SubType>Designer</SubType>
@@ -212,6 +227,15 @@
     <Compile Include="Configuration\Firewall\Rule.cs" />
     <Compile Include="Controls\Firewall\WindowFirewallColumns.xaml.cs">
       <DependentUpon>WindowFirewallColumns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forensics\ControlAnswerRegex.xaml.cs">
+      <DependentUpon>ControlAnswerRegex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forensics\ControlAnswerText.xaml.cs">
+      <DependentUpon>ControlAnswerText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forensics\ControlForensicQuestion.xaml.cs">
+      <DependentUpon>ControlForensicQuestion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Programs\ControlSettingProgram.xaml.cs">
       <DependentUpon>ControlSettingProgram.xaml</DependentUpon>

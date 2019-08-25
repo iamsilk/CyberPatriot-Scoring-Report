@@ -12,9 +12,8 @@ namespace Scoring_Report
 {
     public static class TranslationManager
     {
-        // {0} - Translation Header
-        // {1} - Joined parameters of translation (delimeter ' ')
-        public const string BackupTranslationFormat = "{0} {1}";
+        // {0} - Joined parameters of translation (delimeter ' ') with format header preceding
+        public const string BackupTranslationFormat = "{0}";
 
         private static Dictionary<string, string> Translations { get; } = new Dictionary<string, string>();
 
@@ -133,6 +132,19 @@ namespace Scoring_Report
 
         public static string Translate(string format, params object[] parameters)
         {
+            object[] copyParameters = parameters;
+
+            // For each passed object
+            for (int i = 0; i < copyParameters.Length; i++)
+            {
+                // If object is boolean
+                if (copyParameters[i] is bool)
+                {
+                    // Set object to translated string value of boolean
+                    copyParameters[i] = (bool)copyParameters[i] ? Translate("True") : Translate("False");
+                }
+            }
+
             // If header/format pair exists
             if (Translations.ContainsKey(format))
             {
@@ -142,9 +154,21 @@ namespace Scoring_Report
 
             // Join all parameters in one string separated by spaces
             string joined = string.Join(" ", parameters);
+            
+            // If joined is empty string
+            if (joined == "")
+            {
+                // Set equal to format
+                joined = format;
+            }
+            else
+            {
+                // Precede with format
+                joined = format + " " + joined;
+            }
 
             // Return header and parameters in format of fallback
-            return string.Format(BackupTranslationFormat, format, joined);
+            return string.Format(BackupTranslationFormat, joined);
         }
     }
 }

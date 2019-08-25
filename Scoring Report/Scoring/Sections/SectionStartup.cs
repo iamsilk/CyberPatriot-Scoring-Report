@@ -7,7 +7,7 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionStartup : ISection
     {
-        public string Header => "Startup:";
+        public string Header => TranslationManager.Translate("SectionStartup");
 
         public static List<StartupInfo> StartupInfos { get; } = new List<StartupInfo>();
 

@@ -81,25 +81,25 @@ namespace Scoring_Report.Configuration.Firewall
                 // If all profiles are selected
                 if ((Profile & all) == all)
                 {
-                    return "All";
+                    return TranslationManager.Translate("All");
                 }
 
                 List<string> profiles = new List<string>();
 
                 if (IsDomainProfile)
                 {
-                    profiles.Add("Domain");
+                    profiles.Add(TranslationManager.Translate("Domain"));
                 }
                 if (IsPrivateProfile)
                 {
-                    profiles.Add("Private");
+                    profiles.Add(TranslationManager.Translate("Private"));
                 }
                 if (IsPublicProfile)
                 {
-                    profiles.Add("Public");
+                    profiles.Add(TranslationManager.Translate("Public"));
                 }
 
-                return string.Join(", ", profiles);
+                return string.Join(TranslationManager.Translate("Delimiter"), profiles);
             }
         }
 
@@ -154,8 +154,8 @@ namespace Scoring_Report.Configuration.Firewall
         {
             get
             {
-                if (IsAllowed) return "Allow the connection";
-                return "Block the connection";
+                if (IsAllowed) return TranslationManager.Translate("AllowConnection");
+                return TranslationManager.Translate("BlockConnection");
             }
         }
 

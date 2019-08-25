@@ -60,6 +60,11 @@
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Firewall\FirewallProfile.cs" />
     <Compile Include="Configuration\Firewall\Rule.cs" />
+    <Compile Include="Configuration\Forensics\AnswerRegex.cs" />
+    <Compile Include="Configuration\Forensics\AnswerText.cs" />
+    <Compile Include="Configuration\Forensics\EAnswerType.cs" />
+    <Compile Include="Configuration\Forensics\IAnswer.cs" />
+    <Compile Include="Configuration\Forensics\Question.cs" />
     <Compile Include="Configuration\Groups\GroupSettings.cs" />
     <Compile Include="Configuration\Groups\IMember.cs" />
     <Compile Include="Configuration\Groups\MemberSID.cs" />
@@ -124,6 +129,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionForensics.cs" />
     <Compile Include="Scoring\Sections\SectionFeatures.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallInboundRules.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallOutboundRules.cs" />

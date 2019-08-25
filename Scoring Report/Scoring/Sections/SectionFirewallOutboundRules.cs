@@ -7,7 +7,7 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionFirewallOutboundRules : ISection
     {
-        public string Header => "Firewall - Outbound Rules:";
+        public string Header => TranslationManager.Translate("SectionFirewallOutboundRules");
 
         public List<Rule> OutboundRules { get; } = new List<Rule>();
 
@@ -73,7 +73,7 @@ namespace Scoring_Report.Scoring.Sections
                         rule.Group,
                         rule.Description,
                         rule.ProfileString,
-                        rule.Enabled ? "Enabled" : "Disabled",
+                        rule.Enabled ? TranslationManager.Translate("Enabled") : TranslationManager.Translate("Disabled"),
                         rule.ActionString,
                         rule.ApplicationName,
                         rule.ServiceName,

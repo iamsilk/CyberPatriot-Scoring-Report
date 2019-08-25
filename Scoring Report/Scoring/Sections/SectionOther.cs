@@ -10,7 +10,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.Other;
 
-        public string Header => "Other:";
+        public string Header => TranslationManager.Translate("SectionOther");
 
         public static RegistryComboBox RemoteDesktopStatus = null;
 

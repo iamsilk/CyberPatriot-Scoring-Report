@@ -24,6 +24,9 @@ namespace Scoring_Report.Scoring
             
             foreach (Type type in allTypes)
             {
+                // Some types for some reason do not have namespaces, skip
+                if (type.Namespace == null) continue;
+
                 // Filter to parent namespace "Scoring_Report.Scoring.Sections"
                 if (type.Namespace.StartsWith("Scoring_Report.Scoring.Sections"))
                 {

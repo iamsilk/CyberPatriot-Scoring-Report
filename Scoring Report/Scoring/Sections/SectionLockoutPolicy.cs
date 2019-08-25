@@ -11,7 +11,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.LockoutPolicy;
 
-        public string Header => "Account Lockout Policy:";
+        public string Header => TranslationManager.Translate("SectionLockoutPolicy");
 
         public static config.LockoutPolicy ConfigPolicy { get; set; }
 

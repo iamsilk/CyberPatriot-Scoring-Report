@@ -4,12 +4,16 @@ Total Project:
 
 	Add Scored Sections:
 	-Custom registry checks
-	-Forensics Questions
 	-Custom process output checks
-
-	Document details of translations
 
 Configuration Tool:
 
 Scoring Report:
 	Optimization: Unload configurations which are not scored (not implemented prior to user rights)
+
+	Known Bugs:
+	-Scoring Report running without configuration may crash
+	-Running scoring report with running Translation Editor first will result in no translations
+
+Translation Editor:
+	Add ability to edit Security Options translations, etc.

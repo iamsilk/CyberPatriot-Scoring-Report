@@ -28,7 +28,8 @@ namespace Scoring_Report.Scoring.Sections
                 if (ShareExists(share.Key) == share.Value)
                 {
                     details.Points++;
-                    details.Output.Add(TranslationManager.Translate("Shares", share.Key, share.Value ? "Exists" : "Deleted"));
+                    details.Output.Add(TranslationManager.Translate("Shares", share.Key, share.Value ? 
+                        TranslationManager.Translate("Exists") : TranslationManager.Translate("Deleted")));
                 }
             }
 

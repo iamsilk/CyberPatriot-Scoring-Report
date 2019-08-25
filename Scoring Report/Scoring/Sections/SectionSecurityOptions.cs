@@ -12,7 +12,7 @@ namespace Scoring_Report.Scoring.Sections
     {
         public ESectionType Type => ESectionType.SecurityOptions;
 
-        public string Header => "Security Options:";
+        public string Header => TranslationManager.Translate("SectionSecurityOptions");
 
         public static List<ISecurityOption> SecurityOptions { get; } = new List<ISecurityOption>();
 

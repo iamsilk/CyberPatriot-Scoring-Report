@@ -7,7 +7,7 @@ namespace Scoring_Report.Scoring.Sections
 {
     public class SectionFeatures : ISection
     {
-        public string Header => "Windows Features:";
+        public string Header => TranslationManager.Translate("SectionFeatures");
 
         public ESectionType Type => ESectionType.Features;
 
