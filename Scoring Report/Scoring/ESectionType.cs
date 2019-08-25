@@ -18,8 +18,6 @@
         FirewallOutboundRules,
         Services,
         Features,
-        Forensics,
-	    CustomReg,
         Other = 99,
     }
 }
