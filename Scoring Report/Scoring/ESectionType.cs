@@ -19,7 +19,7 @@
         Services,
         Features,
         Forensics,
-	CustomReg,
+	    CustomReg,
         Other = 99,
     }
 }
