@@ -72,7 +72,7 @@
     <Compile Include="Configuration\Lockout\LockoutPolicy.cs" />
     <Compile Include="Configuration\Password\PasswordPolicy.cs" />
     <Compile Include="Configuration\Range.cs" />
-    <Compile Include="Configuration\Registry\CustomRegKey.cs" />
+    <Compile Include="Configuration\CustomRegistry\RegistryKey.cs" />
     <Compile Include="Configuration\ScoredItem.cs" />
     <Compile Include="Configuration\SecOptions\RegistryComboBox.xaml.cs" />
     <Compile Include="Configuration\SecOptions\RegistryMultiLine.xaml.cs" />
@@ -129,6 +129,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionCustomRegistry.cs" />
     <Compile Include="Scoring\Sections\SectionForensics.cs" />
     <Compile Include="Scoring\Sections\SectionFeatures.cs" />
     <Compile Include="Scoring\Sections\SectionFirewallInboundRules.cs" />

@@ -104,6 +104,9 @@ namespace Translation_Editor
             { "SectionForensics",   "Forensic Questions:" },
             { "AnswerCorrect",    "'{0}' is correct" },
 
+            { "SectionCustomRegistry", "Customized Registry:" },
+            { "RegistryKeyCustomOutput", "{0}" },
+
             { "SectionOther",   "Other:" },
             { "RemoteDesktop",  "Remote Desktop allowance set correctly - {0}" },
             { "HostFile",       "Host file contains only default entries" },

@@ -19,6 +19,7 @@
         Services,
         Features,
         Forensics,
+        Registry,
         Other = 99,
     }
 }
