@@ -73,6 +73,7 @@
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Forensics\EAnswerType.cs" />
     <Compile Include="Configuration\Forensics\IAnswer.cs" />
+    <Compile Include="Configuration\Sections\ConfigCustomRegistry.cs" />
     <Compile Include="Configuration\Sections\ConfigFeatures.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallOutboundRules.cs" />
     <Compile Include="Configuration\Sections\ConfigFirewallInboundRules.cs" />
@@ -80,6 +81,20 @@
     <Compile Include="Configuration\Sections\ConfigForensics.cs" />
     <Compile Include="Configuration\Sections\ConfigServices.cs" />
     <Compile Include="Configuration\Services\ServiceInfo.cs" />
+    <Compile Include="Controls\CustomRegistry\Comparisons\ControlComparisonRange.xaml.cs">
+      <DependentUpon>ControlComparisonRange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomRegistry\Comparisons\ControlComparisonRegex.xaml.cs">
+      <DependentUpon>ControlComparisonRegex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomRegistry\Comparisons\ControlComparisonSimple.xaml.cs">
+      <DependentUpon>ControlComparisonSimple.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomRegistry\ControlCustomRegistryValue.xaml.cs">
+      <DependentUpon>ControlCustomRegistryValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomRegistry\EComparison.cs" />
+    <Compile Include="Controls\CustomRegistry\IComparison.cs" />
     <Compile Include="Controls\Firewall\ControlProfile.xaml.cs">
       <DependentUpon>ControlProfile.xaml</DependentUpon>
     </Compile>
@@ -109,6 +124,22 @@
     <Compile Include="Configuration\Sections\ConfigUserRights.cs" />
     <Compile Include="Configuration\Sections\ConfigUsers.cs" />
     <Compile Include="Configuration\Users\UserSettings.cs" />
+    <Page Include="Controls\CustomRegistry\Comparisons\ControlComparisonRange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomRegistry\Comparisons\ControlComparisonRegex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomRegistry\Comparisons\ControlComparisonSimple.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomRegistry\ControlCustomRegistryValue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Firewall\ControlProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

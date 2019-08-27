@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Configuration_Tool.Controls.CustomRegistry.ControlCustomRegistryValue"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Configuration_Tool.Controls.CustomRegistry"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock Text="Custom Output:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,1,0,0"/>
+            <TextBox x:Name="txtCustomOutput" VerticalAlignment="Top" Margin="89,0,0,0"/>
+
+            <Grid Margin="0,23,0,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Registry Hive:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"/>
+                <ComboBox x:Name="comboBoxHive" VerticalAlignment="Top" Margin="89,0,0,0" SelectedIndex="0"
+                          ItemsSource="{x:Static local:ControlCustomRegistryValue.HivesNames}"/>
+                
+                <CheckBox x:Name="checkBoxIsScored" Grid.Column="1" VerticalAlignment="Top" Margin="6,4,6,0" Content="Is Scored"/>
+                
+                <Button Grid.Column="2" Content="Remove" Click="btnRemove_Click"/>
+            </Grid>
+
+            <TextBlock Text="Key Path:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,51,0,0"/>
+            <TextBox x:Name="txtKeyPath" VerticalAlignment="Top" Margin="89,50,0,0"/>
+
+            <TextBlock Text="Value Name:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,74,0,0"/>
+            <TextBox x:Name="txtValueName" VerticalAlignment="Top" Margin="89,73,0,0"/>
+
+            <Grid VerticalAlignment="Top" Margin="0,96,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Add Simple Text Match" Click="btnAddSimple_Click"/>
+                <Button Grid.Column="2" Content="Add Regex Text Match"  Click="btnAddRegex_Click"/>
+                <Button Grid.Column="4" Content="Add Range Match"       Click="btnAddRange_Click"/>
+                <CheckBox x:Name="checkBoxMatches" Grid.Column="5" VerticalAlignment="Center" Margin="5,0,0,0" Content="Matches" IsChecked="True"/>
+            </Grid>
+        </Grid>
+        <ItemsControl x:Name="itemsComparisons" Grid.Row="1">
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="FrameworkElement.Margin" Value="0,0,0,4"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
+</UserControl>

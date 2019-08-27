@@ -683,6 +683,20 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Custom Registry">
+                    <Grid Margin="10">
+                        <Button VerticalAlignment="Top" Content="Add Custom Registry Value" Click="btnAddCustomRegistryValue"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,25,0,0">
+                            <ItemsControl x:Name="listCustomRegistryValues" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,5,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
                         <ItemsControl HorizontalContentAlignment="Stretch">
