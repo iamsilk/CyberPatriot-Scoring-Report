@@ -57,6 +57,11 @@
     <Compile Include="Configuration\Audit\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
+    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonRange.cs" />
+    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonRegex.cs" />
+    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonSimple.cs" />
+    <Compile Include="Configuration\CustomRegistry\IComparison.cs" />
+    <Compile Include="Configuration\CustomRegistry\EComparison.cs" />
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Firewall\FirewallProfile.cs" />
     <Compile Include="Configuration\Firewall\Rule.cs" />

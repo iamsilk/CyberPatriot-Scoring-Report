@@ -3,6 +3,7 @@ using Configuration_Tool.Configuration.Features;
 using Configuration_Tool.Configuration.Firewall;
 using Configuration_Tool.Configuration.Services;
 using Configuration_Tool.Configuration.Startup;
+using Configuration_Tool.Controls.CustomRegistry;
 using Configuration_Tool.Controls.Files;
 using Configuration_Tool.Controls.Firewall;
 using Configuration_Tool.Controls.Forensics;
@@ -408,6 +409,13 @@ namespace Configuration_Tool.Controls
             control.Title = "Forensic Question " + i;
 
             listForensicQuestions.Items.Add(control);
+        }
+
+        private void btnAddCustomRegistryValue(object sender, RoutedEventArgs e)
+        {
+            ControlCustomRegistryValue control = new ControlCustomRegistryValue();
+
+            listCustomRegistryValues.Items.Add(control);
         }
     }
 }

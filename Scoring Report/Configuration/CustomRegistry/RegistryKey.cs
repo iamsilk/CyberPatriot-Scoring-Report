@@ -1,151 +1,126 @@
 ﻿using Microsoft.Win32;
+using Scoring_Report.Configuration.CustomRegistry.Comparisons;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scoring_Report.Configuration.CustomRegistry
 {
     public class RegistryKey
     {
-        public string customoutput = string.Empty;
+        public RegistryView KeyView = RegistryView.Default;
+
+        public RegistryHive Hive = RegistryHive.LocalMachine;
 
         public string KeyPath = string.Empty;
 
         public string ValueName = string.Empty;
 
-        public string Value = string.Empty;
+        public bool ValueEquals = true;
 
-        public RegistryView KeyView = RegistryView.Default;
+        public IComparison[] Comparisons = null;
 
-        public RegistryHive Hive = RegistryHive.LocalMachine;
+        public string CustomOutput = string.Empty;
 
-        public ScoredItem<bool> KeyEquals = new ScoredItem<bool>(false, false);
-        public bool Equalsbool = false;
-        public string KeyEqualsStr = string.Empty;
+        public bool IsScored = false;
 
         public static RegistryKey Parse(BinaryReader reader)
         {
             // Create instance of policy storage
             RegistryKey registryKey = new RegistryKey();
 
-            registryKey.customoutput = reader.ReadString();
-
+            // Read registry identifing fields
+            registryKey.Hive = (RegistryHive)reader.ReadInt32();
             registryKey.KeyPath = reader.ReadString();
             registryKey.ValueName = reader.ReadString();
-            registryKey.Value = reader.ReadString();
-            registryKey.Hive = (RegistryHive)reader.ReadInt32();
 
-            registryKey.KeyEquals.IsScored = reader.ReadBoolean();
-            registryKey.Equalsbool = reader.ReadBoolean();
-            registryKey.KeyEqualsStr = reader.ReadString();
+            // Read comparison values
+            registryKey.ValueEquals = reader.ReadBoolean();
+
+            int comparisonCount = reader.ReadInt32();
+            registryKey.Comparisons = new IComparison[comparisonCount];
+
+            for (int i = 0; i < comparisonCount; i++)
+            {
+                EComparison type = (EComparison)reader.ReadInt32();
+                switch (type)
+                {
+                    case EComparison.Simple:
+                        registryKey.Comparisons[i] = new ComparisonSimple();
+                        break;
+                    case EComparison.Regex:
+                        registryKey.Comparisons[i] = new ComparisonRegex();
+                        break;
+                    case EComparison.Range:
+                        registryKey.Comparisons[i] = new ComparisonRange();
+                        break;
+                }
+
+                registryKey.Comparisons[i].Load(reader);
+            }
+
+            // Read scoring values
+            registryKey.CustomOutput = reader.ReadString();
+            registryKey.IsScored = reader.ReadBoolean();
 
             return registryKey;
         }
 
-        public RegistryKey()
+        public bool TryGetComparisonValue(Microsoft.Win32.RegistryKey key, out string strValue)
         {
+            strValue = null;
 
+            // Get the key's value
+            object tempObj = key.GetValue(ValueName);
+
+            if (tempObj == null) return false;
+
+            strValue = tempObj.ToString();
+
+            // If the key is a binary key, get the byte array values in hex, and replace the dashes
+            if (key.GetValueKind(ValueName) == RegistryValueKind.Binary)
+            {
+                byte[] value = (byte[])tempObj;
+                string valueAsString = BitConverter.ToString(value);
+                strValue = valueAsString.Replace("-", "");
+            }
+
+            return true;
         }
 
-        public bool RegistryKeyExists()
+        public bool TryGetRegistryValue(out string strValue)
         {
-            try
+            // Check 64-bit and 32-bit registries
+            foreach (RegistryView view in new RegistryView[]
+            {
+                RegistryView.Registry64,
+                RegistryView.Registry32
+            })
             {
                 // Create reg key base
-                using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, RegistryView.Registry64))
+                using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, KeyView))
                 {
-
                     // Try to open the Registry Key
-                    using (Microsoft.Win32.RegistryKey keyy = rkbase.OpenSubKey(KeyPath))
+                    using (Microsoft.Win32.RegistryKey key = rkbase.OpenSubKey(KeyPath))
                     {
-                        if (keyy != null)
+                        // If key was found
+                        if (key != null)
                         {
-                            if (keyy.GetValue(ValueName) != null)
+                            // If value exists, get comparison value
+                            if (TryGetComparisonValue(key, out strValue))
                             {
-                                KeyView = RegistryView.Registry64;
-                                rkbase.Dispose();
+                                KeyView = view;
+
                                 return true;
                             }
                         }
                     }
-                    rkbase.Dispose();
                 }
+            }
 
-                // Repeat with Registry 32
-                using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, RegistryView.Registry32))
-                {
-                    using (Microsoft.Win32.RegistryKey keyy = rkbase.OpenSubKey(KeyPath))
-                    {
-                        if (keyy != null)
-                        {
-                            if (keyy.GetValue(ValueName) != null)
-                            {
-                                KeyView = RegistryView.Registry32;
-                                rkbase.Dispose();
-                                return true;
-                            }
-                        }
-                    }
-                    rkbase.Dispose();
-                }
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            strValue = null;
+            return false;
         }
 
-        public string GetRegistryValue()
-        {
-            try
-            {
-                if (RegistryKeyExists())
-                {
-                    // Create reg key base
-                    using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, KeyView))
-                    {
-
-                        // Try to open the Registry Key
-                        using (Microsoft.Win32.RegistryKey keyy = rkbase.OpenSubKey(KeyPath))
-                        {
-                            if (keyy != null)
-                            {
-                                if (keyy.GetValue(ValueName) != null)
-                                {
-                                    // Get the key's value
-                                    string temp = keyy.GetValue(ValueName).ToString();
-
-                                    if (keyy.GetValueKind(ValueName) == RegistryValueKind.String
-                                        || keyy.GetValueKind(ValueName) == RegistryValueKind.DWord)
-                                    {
-                                        rkbase.Dispose();
-                                        return temp;
-                                    }
-
-                                    // If the key is a binary key, get the byte array values in hex, and replace the dashes
-                                    if (keyy.GetValueKind(ValueName) == RegistryValueKind.Binary)
-                                    {
-                                        byte[] value = (byte[])keyy.GetValue(ValueName);
-                                        string valueAsString = BitConverter.ToString(value);
-                                        rkbase.Dispose();
-                                        return valueAsString.Replace("-", "");
-                                    }
-                                }
-                            }
-                        }
-                        rkbase.Dispose();
-                    }
-                }
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        public RegistryKey() { }
     }
 }

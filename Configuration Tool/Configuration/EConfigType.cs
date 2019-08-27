@@ -19,7 +19,7 @@
         Services,
         Features,
         Forensics,
-        Registry,
+        CustomRegistry,
         Other = 99,
     }
 }

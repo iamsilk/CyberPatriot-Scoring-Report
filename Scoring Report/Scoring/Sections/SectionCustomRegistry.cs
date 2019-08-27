@@ -28,25 +28,28 @@ namespace Scoring_Report.Scoring.Sections
             // Loop over all score keys
             foreach (RegistryKey registryKey in RegistryKeysScored)
             {
-                registryKey.Value = registryKey.GetRegistryValue();
+                string strValue;
 
-                if(registryKey.KeyEquals.IsScored)
+                // If can't get value, skip
+                if (!registryKey.TryGetRegistryValue(out strValue)) continue;
+
+                bool equals = false;
+
+                // For each comparison
+                foreach (IComparison comparison in registryKey.Comparisons)
                 {
-                    if (registryKey.Equalsbool) {
-                        if (registryKey.Value == registryKey.KeyEqualsStr)
-                        {
-                            details.Points++;
-                            details.Output.Add(TranslationManager.Translate("RegistryKeyCustomOutput", registryKey.customoutput));
-                        }
-                    }
-                    else
+                    // If comparison equals, set as so
+                    if (comparison.Equals(strValue))
                     {
-                        if (registryKey.Value != registryKey.KeyEqualsStr)
-                        {
-                            details.Points++;
-                            details.Output.Add(TranslationManager.Translate("RegistryKeyCustomOutput", registryKey.customoutput));
-                        }
+                        equals = true;
                     }
+                }
+
+                // If value equals status matches scoring, give points
+                if (registryKey.ValueEquals == equals)
+                {
+                    details.Points++;
+                    details.Output.Add(TranslationManager.Translate("RegistryKeyCustomOutput", registryKey.CustomOutput));
                 }
             }
 
@@ -64,7 +67,9 @@ namespace Scoring_Report.Scoring.Sections
             {
                 RegistryKey registryKey = RegistryKey.Parse(reader);
 
-                RegistryKeysScored.Add(registryKey);
+                // Only add scored items
+                if (registryKey.IsScored)
+                    RegistryKeysScored.Add(registryKey);
             }
         }
     }

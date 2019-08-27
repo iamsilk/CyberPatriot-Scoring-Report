@@ -201,12 +201,11 @@ namespace Configuration_Tool.Configuration
 
         public static ScoredItem<Range> ParseRange(BinaryReader reader)
         {
-            int min = reader.ReadInt32();
-            int max = reader.ReadInt32();
+            Range range = Range.Parse(reader);
 
             bool isScored = reader.ReadBoolean();
 
-            ScoredItem<Range> scoredItem = new ScoredItem<Range>(new Range(min, max), isScored);
+            ScoredItem<Range> scoredItem = new ScoredItem<Range>(range, isScored);
             return scoredItem;
         }
 
@@ -282,8 +281,7 @@ namespace Configuration_Tool.Configuration
                             break;
                         case "Range":
                             Range range = Value as Range;
-                            writer.Write(range.Min);
-                            writer.Write(range.Max);
+                            range.Write(writer);
                             break;
 
                     }

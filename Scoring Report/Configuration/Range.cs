@@ -1,4 +1,6 @@
-﻿namespace Scoring_Report.Configuration
+﻿using System.IO;
+
+namespace Scoring_Report.Configuration
 {
     public class Range
     {
@@ -25,6 +27,14 @@
             }
 
             return value > Min && value < Max;
+        }
+
+        public static Range Parse(BinaryReader reader)
+        {
+            int min = reader.ReadInt32();
+            int max = reader.ReadInt32();
+
+            return new Range(min, max);
         }
     }
 }

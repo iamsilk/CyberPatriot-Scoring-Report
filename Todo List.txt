@@ -3,7 +3,6 @@ Total Project:
 	Add configuration version checking for loading old configurations
 
 	Add Scored Sections:
-	-Custom registry checks
 	-Custom process output checks
 
 Configuration Tool:

@@ -1,4 +1,6 @@
-﻿namespace Configuration_Tool.Configuration
+﻿using System.IO;
+
+namespace Configuration_Tool.Configuration
 {
     public class Range
     {
@@ -25,6 +27,20 @@
             }
 
             return value > Min && value < Max;
+        }
+
+        public static Range Parse(BinaryReader reader)
+        {
+            int min = reader.ReadInt32();
+            int max = reader.ReadInt32();
+
+            return new Range(min, max);
+        }
+
+        public void Write(BinaryWriter writer)
+        {
+            writer.Write(Min);
+            writer.Write(Max);
         }
     }
 }

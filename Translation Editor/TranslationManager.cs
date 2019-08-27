@@ -104,7 +104,7 @@ namespace Translation_Editor
             { "SectionForensics",   "Forensic Questions:" },
             { "AnswerCorrect",    "'{0}' is correct" },
 
-            { "SectionCustomRegistry", "Customized Registry:" },
+            { "SectionCustomRegistry", "Custom Registry:" },
             { "RegistryKeyCustomOutput", "{0}" },
 
             { "SectionOther",   "Other:" },
