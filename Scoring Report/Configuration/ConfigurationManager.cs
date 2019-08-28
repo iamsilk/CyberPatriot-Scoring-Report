@@ -201,6 +201,8 @@ namespace Scoring_Report.Configuration
                     // Likely outdated configuration file with updated program. No action is likely needed.
                     // TODO, add version checking to allow outdated configuration files
                 }
+
+                LoadedConfigFromFile = true;
             }
         }
 

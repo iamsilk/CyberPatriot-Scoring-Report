@@ -73,8 +73,9 @@ namespace Scoring_Report
             // Loop until stopped
             while (IsRunning)
             {
-                // Check and output scores
-                ScoringManager.CheckAndOutput();
+                // If configuration is loaded, check and output scores
+                if (ConfigurationManager.LoadedConfigFromFile)
+                    ScoringManager.CheckAndOutput();
 
                 // Allow configuration to check for any config updates
                 ConfigurationManager.Loop();
