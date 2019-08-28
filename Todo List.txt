@@ -1,6 +1,6 @@
 Total Project:
 	Implement regex checking for Usernames and Security IDs (allowing for different domains with same config)
-	Add configuration version checking for loading old configurations
+	Add update checking
 
 	Add Scored Sections:
 	-Custom process output checks
