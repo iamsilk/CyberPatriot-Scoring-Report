@@ -101,7 +101,7 @@ namespace Scoring_Report.Scoring.Sections
                                     break;
                                 case EUserRightsIdentifierType.SecurityID:
                                     // If Security IDs match, match is found
-                                    if (identifier.Value == cfgId.Identifier)
+                                    if (identifier.MatchesConfig(cfgId.Identifier))
                                     {
                                         foundIdentifier = true;
 

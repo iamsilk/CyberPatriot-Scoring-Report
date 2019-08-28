@@ -89,8 +89,7 @@ namespace Scoring_Report.Scoring.Sections
 
                             if (settings.IdentifiedBySID)
                             {
-                                if (settings.SecurityID == tempSid)
-                                    isUser = true;
+                                isUser = user.Sid.MatchesConfig(settings.SecurityID);
                             }
                             else
                             {

@@ -155,6 +155,7 @@
     <Compile Include="Scoring\Sections\SectionUsers.cs" />
     <Compile Include="Policies\SeceditWrapper.cs" />
     <Compile Include="Policies\SecuritySettings.cs" />
+    <Compile Include="SecurityIDChecker.cs" />
     <Compile Include="WinAPI.cs" />
   </ItemGroup>
   <ItemGroup>

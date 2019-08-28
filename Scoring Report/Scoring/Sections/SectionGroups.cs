@@ -75,21 +75,21 @@ namespace Scoring_Report.Scoring.Sections
                                 // For each member in the group
                                 foreach (UserPrincipal member in membersGroup)
                                 {
-                                    string identifier = "";
+                                    bool matches = false;
 
                                     // Determine the id type and get identifier
                                     switch (memberConfig.IDType)
                                     {
                                         case "Username":
-                                            identifier = member.SamAccountName; 
+                                            matches = member.SamAccountName == memberConfig.Identifier; 
                                             break;
                                         case "SID":
-                                            identifier = member.Sid.Value;
+                                            matches = member.Sid.MatchesConfig(memberConfig.Identifier);
                                             break;
                                     }
 
                                     // If identifier matches config
-                                    if (identifier == memberConfig.Identifier)
+                                    if (matches)
                                     {
                                         foundMember = member;
                                         break;
