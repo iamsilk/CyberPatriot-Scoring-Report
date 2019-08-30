@@ -7,8 +7,6 @@ namespace Scoring_Report.Configuration.CustomRegistry
 {
     public class RegistryKey
     {
-        public RegistryView KeyView = RegistryView.Default;
-
         public RegistryHive Hive = RegistryHive.LocalMachine;
 
         public string KeyPath = string.Empty;
@@ -97,7 +95,7 @@ namespace Scoring_Report.Configuration.CustomRegistry
             })
             {
                 // Create reg key base
-                using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, KeyView))
+                using (Microsoft.Win32.RegistryKey rkbase = Microsoft.Win32.RegistryKey.OpenBaseKey(Hive, view))
                 {
                     // Try to open the Registry Key
                     using (Microsoft.Win32.RegistryKey key = rkbase.OpenSubKey(KeyPath))
@@ -108,8 +106,6 @@ namespace Scoring_Report.Configuration.CustomRegistry
                             // If value exists, get comparison value
                             if (TryGetComparisonValue(key, out strValue))
                             {
-                                KeyView = view;
-
                                 return true;
                             }
                         }
