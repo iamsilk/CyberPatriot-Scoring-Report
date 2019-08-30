@@ -7,8 +7,6 @@ namespace Scoring_Report.Configuration.CustomRegistry
 {
     public class RegistryKey
     {
-        public RegistryView KeyView = RegistryView.Default;
-
         public RegistryHive Hive = RegistryHive.LocalMachine;
 
         public string KeyPath = string.Empty;
