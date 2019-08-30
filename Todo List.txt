@@ -3,8 +3,10 @@ Total Project:
 
 	Add Scored Sections:
 	-Custom process output checks
+	-Regex file checking
 
 Configuration Tool:
+	Fix some consistencies with naming
 
 Scoring Report:
 	Optimization: Unload configurations which are not scored (not implemented prior to user rights)
