@@ -124,9 +124,9 @@ namespace Translation_Editor
 
         public static readonly string DefaultTranslationsPath = Path.Combine(DefaultTranslationsDirectory, DefaultTranslationsFile);
 
-        public static string CurrentTranslationsDirectory { get; private set; } = "";
+        public static string CurrentTranslationsDirectory { get; private set; } = DefaultTranslationsDirectory;
 
-        public static string CurrentTranslationsPath { get; private set; } = "";
+        public static string CurrentTranslationsPath { get; private set; } = DefaultTranslationsPath;
 
         public static byte[] DefaultTranslationsBytes { get; set; } = null;
 

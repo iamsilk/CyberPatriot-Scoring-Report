@@ -189,6 +189,20 @@
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_B9D9CA0981C040BDB37A37A16ECAD23B"
+            {
+            "Name" = "8:Primary output from Translation Editor (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_2FAC299660E841F0AC1E67524542C2F1"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:--write-defaults"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_1D7B4E80_53BB_4376_A8D4_8D55FF54E871"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_F1177FD1D5414A1E9F50E059136E5AE3"
             {
             "Name" = "8:Primary output from Scoring Report (Active)"

@@ -32,6 +32,15 @@ namespace Translation_Editor
                 startupParameter = commandLineArgs[1];
             }
 
+            // Check if startup parameter is '--write-defaults'
+            if (startupParameter == "--write-defaults")
+            {
+                TranslationManager.Save();
+
+                Environment.Exit(0);
+                return;
+            }
+
             TranslationManager.Startup(startupParameter);
         }
 
