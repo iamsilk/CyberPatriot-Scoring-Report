@@ -2,7 +2,6 @@ Total Project:
 	Add update checking
 
 	Add Scored Sections:
-	-Custom process output checks
 	-Regex file checking
 
 Configuration Tool:

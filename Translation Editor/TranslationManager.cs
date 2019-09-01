@@ -107,6 +107,9 @@ namespace Translation_Editor
             { "SectionCustomRegistry", "Custom Registry:" },
             { "RegistryKeyCustomOutput", "{0}" },
 
+            { "SectionCustomProcessOutput", "Custom Processes:" },
+            { "ProcessCustomOutput", "{0}" },
+
             { "SectionOther",   "Other:" },
             { "RemoteDesktop",  "Remote Desktop allowance set correctly - {0}" },
             { "HostFile",       "Host file contains only default entries" },

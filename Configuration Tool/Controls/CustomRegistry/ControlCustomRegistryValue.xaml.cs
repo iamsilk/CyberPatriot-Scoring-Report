@@ -1,4 +1,4 @@
-﻿using Configuration_Tool.Controls.CustomRegistry.Comparisons;
+﻿using Configuration_Tool.Controls.Comparisons;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -171,17 +171,17 @@ namespace Configuration_Tool.Controls.CustomRegistry
             writer.Write(IsScored);
         }
 
-        private void btnAddSimple_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnAddSimple_Click(object sender, RoutedEventArgs e)
         {
             itemsComparisons.Items.Add(new ControlComparisonSimple());
         }
 
-        private void btnAddRegex_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnAddRegex_Click(object sender, RoutedEventArgs e)
         {
             itemsComparisons.Items.Add(new ControlComparisonRegex());
         }
 
-        private void btnAddRange_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnAddRange_Click(object sender, RoutedEventArgs e)
         {
             itemsComparisons.Items.Add(new ControlComparisonRange());
         }

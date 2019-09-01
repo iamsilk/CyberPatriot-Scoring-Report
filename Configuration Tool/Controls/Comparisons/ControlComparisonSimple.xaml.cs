@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Configuration_Tool.Controls.CustomRegistry.Comparisons
+namespace Configuration_Tool.Controls.Comparisons
 {
     /// <summary>
     /// Interaction logic for ControlComparisonSimple.xaml

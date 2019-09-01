@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Scoring_Report.Configuration.CustomRegistry.Comparisons
+namespace Scoring_Report.Configuration.Comparisons
 {
     public class ComparisonRegex : IComparison
     {

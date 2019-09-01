@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Scoring_Report.Configuration.CustomRegistry.Comparisons
+namespace Scoring_Report.Configuration.Comparisons
 {
     public class ComparisonRange : IComparison
     {

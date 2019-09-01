@@ -1,13 +1,12 @@
 ﻿using System.IO;
 
-namespace Scoring_Report.Configuration.CustomRegistry
+namespace Configuration_Tool.Controls
 {
     public interface IComparison
     {
         EComparison Type { get; }
 
-        bool Equals(string value);
-
         void Load(BinaryReader reader);
+        void Write(BinaryWriter writer);
     }
 }

@@ -20,6 +20,7 @@
         Features,
         Forensics,
         CustomRegistry,
+        CustomProcessOutput,
         Other = 99,
     }
 }

@@ -57,11 +57,12 @@
     <Compile Include="Configuration\Audit\AuditPolicy.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Audit\EAuditSettings.cs" />
-    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonRange.cs" />
-    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonRegex.cs" />
-    <Compile Include="Configuration\CustomRegistry\Comparisons\ComparisonSimple.cs" />
-    <Compile Include="Configuration\CustomRegistry\IComparison.cs" />
-    <Compile Include="Configuration\CustomRegistry\EComparison.cs" />
+    <Compile Include="Configuration\Comparisons\ComparisonRange.cs" />
+    <Compile Include="Configuration\Comparisons\ComparisonRegex.cs" />
+    <Compile Include="Configuration\Comparisons\ComparisonSimple.cs" />
+    <Compile Include="Configuration\CustomProcessOutput\ProcessOutput.cs" />
+    <Compile Include="Configuration\IComparison.cs" />
+    <Compile Include="Configuration\EComparison.cs" />
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Firewall\FirewallProfile.cs" />
     <Compile Include="Configuration\Firewall\Rule.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionCustomProcessOutput.cs" />
     <Compile Include="Scoring\Sections\SectionCustomRegistry.cs" />
     <Compile Include="Scoring\Sections\SectionForensics.cs" />
     <Compile Include="Scoring\Sections\SectionFeatures.cs" />

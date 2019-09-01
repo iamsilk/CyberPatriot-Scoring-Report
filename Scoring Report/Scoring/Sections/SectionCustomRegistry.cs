@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Scoring_Report.Configuration;
+using Scoring_Report.Configuration.CustomRegistry;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scoring_Report.Configuration.CustomRegistry;
 
 namespace Scoring_Report.Scoring.Sections
 {
     class SectionCustomRegistry : ISection
     {
-        public ESectionType Type => ESectionType.Registry;
+        public ESectionType Type => ESectionType.CustomRegistry;
 
         public string Header => TranslationManager.Translate("SectionCustomRegistry");
 

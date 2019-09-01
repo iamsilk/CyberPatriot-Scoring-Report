@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Scoring_Report.Configuration.CustomRegistry.Comparisons;
+using Scoring_Report.Configuration.Comparisons;
 using System;
 using System.IO;
 
