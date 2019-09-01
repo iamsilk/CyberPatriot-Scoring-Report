@@ -457,7 +457,7 @@
                         <Button VerticalAlignment="Top" Margin="10,10,10,5" 
                                 Content="Add User Configuration Row" Click="btnAddUserConfig_Click"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
-                            <ItemsControl x:Name="listUserConfigs" HorizontalContentAlignment="Stretch">
+                            <ItemsControl x:Name="itemsUserConfig" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style>
                                         <Setter Property="FrameworkElement.Margin" Value="10,0,10,5"/>
@@ -472,7 +472,7 @@
                         <Button VerticalAlignment="Top" Margin="10,10,10,0"
                                 Content="Add Group Configuration" Click="btnAddGroupConfig_Click"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,35,10,10">
-                            <ItemsControl x:Name="listGroupConfigs" HorizontalContentAlignment="Stretch">
+                            <ItemsControl x:Name="itemsGroupConfigs" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style>
                                         <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
@@ -485,7 +485,7 @@
                 <TabItem Header="Installed Programs">
                     <Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
-                            <ItemsControl x:Name="listPrograms" HorizontalContentAlignment="Stretch">
+                            <ItemsControl x:Name="itemsPrograms" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style>
                                         <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
@@ -673,7 +673,7 @@
                     <Grid Margin="10">
                         <Button VerticalAlignment="Top" Content="Add Forensic Question" Click="btnAddForensicQuestion_Click"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,25,0,0">
-                            <ItemsControl x:Name="listForensicQuestions" HorizontalContentAlignment="Stretch">
+                            <ItemsControl x:Name="itemsForensicQuestions" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style>
                                         <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
@@ -687,7 +687,7 @@
                     <Grid Margin="10">
                         <Button VerticalAlignment="Top" Content="Add Custom Registry Value" Click="btnAddCustomRegistryValue"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,25,0,0">
-                            <ItemsControl x:Name="listCustomRegistryValues" HorizontalContentAlignment="Stretch">
+                            <ItemsControl x:Name="itemsCustomRegistryValues" HorizontalContentAlignment="Stretch">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style>
                                         <Setter Property="FrameworkElement.Margin" Value="0,0,5,5"/>

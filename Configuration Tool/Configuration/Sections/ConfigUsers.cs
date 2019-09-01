@@ -14,7 +14,7 @@ namespace Configuration_Tool.Configuration.Sections
         public void Load(BinaryReader reader)
         {
             // Clear current list of user settings
-            MainWindow.listUserConfigs.Items.Clear();
+            MainWindow.itemsUserConfig.Items.Clear();
 
             // Number of user settings instances
             int count = reader.ReadInt32();
@@ -29,18 +29,18 @@ namespace Configuration_Tool.Configuration.Sections
                 ControlUserSettings control = new ControlUserSettings(settings);
 
                 // Add user settings to user settings items control
-                MainWindow.listUserConfigs.Items.Add(control);
+                MainWindow.itemsUserConfig.Items.Add(control);
             }
         }
 
         public void Save(BinaryWriter writer)
         {
             // Get number of user settings instances and write
-            int count = MainWindow.listUserConfigs.Items.Count;
+            int count = MainWindow.itemsUserConfig.Items.Count;
             writer.Write(count);
 
             // For each user settings control
-            foreach (ControlUserSettings control in MainWindow.listUserConfigs.Items)
+            foreach (ControlUserSettings control in MainWindow.itemsUserConfig.Items)
             {
                 // Get user settings instance
                 UserSettings settings = control.Settings;

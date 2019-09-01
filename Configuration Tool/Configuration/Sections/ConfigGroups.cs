@@ -14,7 +14,7 @@ namespace Configuration_Tool.Configuration.Sections
         public void Load(BinaryReader reader)
         {
             // Clear current list of group settings
-            MainWindow.listGroupConfigs.Items.Clear();
+            MainWindow.itemsGroupConfigs.Items.Clear();
 
             // Get number of group settings instances
             int count = reader.ReadInt32();
@@ -29,18 +29,18 @@ namespace Configuration_Tool.Configuration.Sections
                 ControlGroupSettings control = new ControlGroupSettings(settings);
 
                 // Add instance to group settings items control
-                MainWindow.listGroupConfigs.Items.Add(control);
+                MainWindow.itemsGroupConfigs.Items.Add(control);
             }
         }
 
         public void Save(BinaryWriter writer)
         {
             // Get number of group settings instances and write
-            int count = MainWindow.listGroupConfigs.Items.Count;
+            int count = MainWindow.itemsGroupConfigs.Items.Count;
             writer.Write(count);
 
             // For each group settings control
-            foreach (ControlGroupSettings control in MainWindow.listGroupConfigs.Items)
+            foreach (ControlGroupSettings control in MainWindow.itemsGroupConfigs.Items)
             {
                 // Get group settings instance and write
                 GroupSettings settings = control.Settings;

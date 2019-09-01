@@ -31,7 +31,7 @@ namespace Configuration_Tool.Controls.Users
                 if (window is MainWindow)
                 {
                     MainWindow mainWindow = (MainWindow)window;
-                    mainWindow.listUserConfigs.Items.Remove(this);
+                    mainWindow.itemsUserConfig.Items.Remove(this);
                 }
             }
         }

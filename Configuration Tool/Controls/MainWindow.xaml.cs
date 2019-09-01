@@ -96,14 +96,14 @@ namespace Configuration_Tool.Controls
         {
             ControlUserSettings userSettings = new ControlUserSettings();
 
-            listUserConfigs.Items.Add(userSettings);
+            itemsUserConfig.Items.Add(userSettings);
         }
 
         private void btnAddGroupConfig_Click(object sender, RoutedEventArgs e)
         {
             ControlGroupSettings groupSettings = new ControlGroupSettings();
 
-            listGroupConfigs.Items.Add(groupSettings);
+            itemsGroupConfigs.Items.Add(groupSettings);
         }
 
         private void FileOpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -318,7 +318,7 @@ namespace Configuration_Tool.Controls
                 ControlSettingProgram control = new ControlSettingProgram();
                 control.Header = program;
 
-                listPrograms.Items.Add(control);
+                itemsPrograms.Items.Add(control);
             }
         }
 
@@ -401,7 +401,7 @@ namespace Configuration_Tool.Controls
             int i = 1;
 
             // While a question exists with the title of 'Forensic Question ' with index succeeding, increment index
-            while (listForensicQuestions.Items.OfType<ControlForensicQuestion>()
+            while (itemsForensicQuestions.Items.OfType<ControlForensicQuestion>()
                 .FirstOrDefault(x => x.Title == "Forensic Question " + i) != null)
             {
                 i++;
@@ -409,14 +409,14 @@ namespace Configuration_Tool.Controls
 
             control.Title = "Forensic Question " + i;
 
-            listForensicQuestions.Items.Add(control);
+            itemsForensicQuestions.Items.Add(control);
         }
 
         private void btnAddCustomRegistryValue(object sender, RoutedEventArgs e)
         {
             ControlCustomRegistryValue control = new ControlCustomRegistryValue();
 
-            listCustomRegistryValues.Items.Add(control);
+            itemsCustomRegistryValues.Items.Add(control);
         }
 
         private void btnAddCustomProcessOutput_Click(object sender, RoutedEventArgs e)

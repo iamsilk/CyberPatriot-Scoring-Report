@@ -24,7 +24,7 @@ namespace Configuration_Tool.Configuration.Sections
                 bool installed = reader.ReadBoolean();
 
                 // Search for control with header matching config
-                ControlSettingProgram control = MainWindow.listPrograms.Items.Cast<ControlSettingProgram>()
+                ControlSettingProgram control = MainWindow.itemsPrograms.Items.Cast<ControlSettingProgram>()
                     .FirstOrDefault(x => x.Header == header);
 
                 // If no control was found
@@ -40,7 +40,7 @@ namespace Configuration_Tool.Configuration.Sections
                     // All written programs are scored
                     control.IsScored = true;
 
-                    MainWindow.listPrograms.Items.Add(control);
+                    MainWindow.itemsPrograms.Items.Add(control);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Configuration_Tool.Configuration.Sections
         public void Save(BinaryWriter writer)
         {
             // Get list of controls and filter off unscored
-            IEnumerable<ControlSettingProgram> programs = MainWindow.listPrograms.Items.Cast<ControlSettingProgram>()
+            IEnumerable<ControlSettingProgram> programs = MainWindow.itemsPrograms.Items.Cast<ControlSettingProgram>()
                 .Where(x => x.IsScored);
 
             // Write number of programs

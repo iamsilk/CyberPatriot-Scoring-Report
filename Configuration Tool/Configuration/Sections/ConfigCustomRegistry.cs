@@ -13,7 +13,7 @@ namespace Configuration_Tool.Configuration.Sections
         public void Load(BinaryReader reader)
         {
             // Clear custom registry values
-            MainWindow.listCustomRegistryValues.Items.Clear();
+            MainWindow.itemsCustomRegistryValues.Items.Clear();
 
             // Get number of custom registry values
             int count = reader.ReadInt32();
@@ -24,17 +24,17 @@ namespace Configuration_Tool.Configuration.Sections
                 ControlCustomRegistryValue control = ControlCustomRegistryValue.Parse(reader);
 
                 // Add control to ItemsControl
-                MainWindow.listCustomRegistryValues.Items.Add(control);
+                MainWindow.itemsCustomRegistryValues.Items.Add(control);
             }
         }
 
         public void Save(BinaryWriter writer)
         {
             // Save number of custom registry values
-            writer.Write(MainWindow.listCustomRegistryValues.Items.Count);
+            writer.Write(MainWindow.itemsCustomRegistryValues.Items.Count);
 
             // Save each custom registry value
-            foreach (ControlCustomRegistryValue control in MainWindow.listCustomRegistryValues.Items)
+            foreach (ControlCustomRegistryValue control in MainWindow.itemsCustomRegistryValues.Items)
             {
                 control.Write(writer);
             }

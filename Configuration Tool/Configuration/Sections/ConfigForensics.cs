@@ -13,7 +13,7 @@ namespace Configuration_Tool.Configuration.Sections
         public void Load(BinaryReader reader)
         {
             // Clear list of questions
-            MainWindow.listForensicQuestions.Items.Clear();
+            MainWindow.itemsForensicQuestions.Items.Clear();
 
             // Read count
             int count = reader.ReadInt32();
@@ -24,17 +24,17 @@ namespace Configuration_Tool.Configuration.Sections
                 ControlForensicQuestion control = ControlForensicQuestion.Parse(reader);
 
                 // Add control to list
-                MainWindow.listForensicQuestions.Items.Add(control);
+                MainWindow.itemsForensicQuestions.Items.Add(control);
             }
         }
 
         public void Save(BinaryWriter writer)
         {
             // Write count
-            writer.Write(MainWindow.listForensicQuestions.Items.Count);
+            writer.Write(MainWindow.itemsForensicQuestions.Items.Count);
 
             // Write each forensic question
-            foreach (ControlForensicQuestion control in MainWindow.listForensicQuestions.Items)
+            foreach (ControlForensicQuestion control in MainWindow.itemsForensicQuestions.Items)
                 control.Write(writer);
         }
     }
