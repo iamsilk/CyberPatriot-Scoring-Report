@@ -73,6 +73,7 @@
     <Compile Include="Configuration\Features\WindowsFeature.cs" />
     <Compile Include="Configuration\Forensics\EAnswerType.cs" />
     <Compile Include="Configuration\Forensics\IAnswer.cs" />
+    <Compile Include="Configuration\Sections\ConfigCustomFiles.cs" />
     <Compile Include="Configuration\Sections\ConfigCustomProcessOutput.cs" />
     <Compile Include="Configuration\Sections\ConfigCustomRegistry.cs" />
     <Compile Include="Configuration\Sections\ConfigFeatures.cs" />
@@ -93,6 +94,9 @@
     </Compile>
     <Compile Include="Controls\Comparisons\ControlComparisonSimple.xaml.cs">
       <DependentUpon>ControlComparisonSimple.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomFiles\ControlCustomFile.xaml.cs">
+      <DependentUpon>ControlCustomFile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CustomRegistry\ControlCustomRegistryValue.xaml.cs">
       <DependentUpon>ControlCustomRegistryValue.xaml</DependentUpon>
@@ -143,6 +147,10 @@
     <Page Include="Controls\Comparisons\ControlComparisonSimple.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomFiles\ControlCustomFile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CustomRegistry\ControlCustomRegistryValue.xaml">
       <SubType>Designer</SubType>

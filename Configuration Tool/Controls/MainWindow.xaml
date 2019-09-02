@@ -711,6 +711,20 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Custom Files">
+                    <Grid Margin="10">
+                        <Button VerticalAlignment="Top" Content="Add Custom File" Click="btnAddCustomFile_Click"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,25,0,0">
+                            <ItemsControl x:Name="itemsCustomFiles" HorizontalContentAlignment="Stretch">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="0,0,5,5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Other">
                     <ScrollViewer Margin="10" VerticalScrollBarVisibility="Auto">
                         <ItemsControl HorizontalContentAlignment="Stretch">

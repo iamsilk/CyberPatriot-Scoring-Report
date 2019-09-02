@@ -110,6 +110,9 @@ namespace Translation_Editor
             { "SectionCustomProcessOutput", "Custom Processes:" },
             { "ProcessCustomOutput", "{0}" },
 
+            { "SectionCustomFiles", "Custom Files:" },
+            { "CustomFilesCustomOutput", "{0}" },
+
             { "SectionOther",   "Other:" },
             { "RemoteDesktop",  "Remote Desktop allowance set correctly - {0}" },
             { "HostFile",       "Host file contains only default entries" },

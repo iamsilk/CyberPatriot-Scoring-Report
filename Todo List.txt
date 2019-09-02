@@ -1,9 +1,6 @@
 Total Project:
 	Add update checking
 
-	Add Scored Sections:
-	-Regex file checking
-
 Configuration Tool:
 
 Scoring Report:

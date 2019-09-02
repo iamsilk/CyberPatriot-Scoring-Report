@@ -60,6 +60,7 @@
     <Compile Include="Configuration\Comparisons\ComparisonRange.cs" />
     <Compile Include="Configuration\Comparisons\ComparisonRegex.cs" />
     <Compile Include="Configuration\Comparisons\ComparisonSimple.cs" />
+    <Compile Include="Configuration\CustomFiles\CustomFile.cs" />
     <Compile Include="Configuration\CustomProcessOutput\ProcessOutput.cs" />
     <Compile Include="Configuration\IComparison.cs" />
     <Compile Include="Configuration\EComparison.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Scoring\SectionDetails.cs" />
     <Compile Include="Scoring\ISection.cs" />
     <Compile Include="Scoring\ScoringManager.cs" />
+    <Compile Include="Scoring\Sections\SectionCustomFiles.cs" />
     <Compile Include="Scoring\Sections\SectionCustomProcessOutput.cs" />
     <Compile Include="Scoring\Sections\SectionCustomRegistry.cs" />
     <Compile Include="Scoring\Sections\SectionForensics.cs" />

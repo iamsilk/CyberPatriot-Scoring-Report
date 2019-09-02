@@ -3,6 +3,7 @@ using Configuration_Tool.Configuration.Features;
 using Configuration_Tool.Configuration.Firewall;
 using Configuration_Tool.Configuration.Services;
 using Configuration_Tool.Configuration.Startup;
+using Configuration_Tool.Controls.CustomFiles;
 using Configuration_Tool.Controls.CustomProcesses;
 using Configuration_Tool.Controls.CustomRegistry;
 using Configuration_Tool.Controls.Files;
@@ -424,6 +425,13 @@ namespace Configuration_Tool.Controls
             ControlCustomProcessOutput control = new ControlCustomProcessOutput();
 
             itemsCustomProcessOutputs.Items.Add(control);
+        }
+
+        private void btnAddCustomFile_Click(object sender, RoutedEventArgs e)
+        {
+            ControlCustomFile control = new ControlCustomFile();
+
+            itemsCustomFiles.Items.Add(control);
         }
     }
 }
