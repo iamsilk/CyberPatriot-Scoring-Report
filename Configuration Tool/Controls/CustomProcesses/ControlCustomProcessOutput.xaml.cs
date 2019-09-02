@@ -181,5 +181,14 @@ namespace Configuration_Tool.Controls.CustomProcesses
         {
             itemsComparisons.Items.Add(new ControlComparisonRange());
         }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            // Get items control parent
+            ItemsControl parent = (ItemsControl)this.Parent;
+
+            // Remove self from items control
+            parent.Items.Remove(this);
+        }
     }
 }

@@ -11,10 +11,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid>
-            <TextBlock Text="Custom Output:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,1,0,0"/>
-            <TextBox x:Name="txtCustomOutput" VerticalAlignment="Top" Margin="89,0,0,0"/>
-            <Grid VerticalAlignment="Top" Margin="0,25,0,0" Height="20">
+        <ItemsControl>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="FrameworkElement.Margin" Value="0,0,0,5"/>
+                    <Setter Property="FrameworkElement.Height" Value="20"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <Grid>
+                <TextBlock Text="Custom Output:" HorizontalAlignment="Left" Margin="0,1,0,0"/>
+                <TextBox x:Name="txtCustomOutput" Margin="89,0,51,0"/>
+                <Button HorizontalAlignment="Right" Content="Remove" Click="btnRemove_Click"/>
+            </Grid>
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -24,11 +33,11 @@
                 <TextBox Grid.Column="1" Margin="5,0,5,0" x:Name="txtPath"/>
                 <Button Grid.Column="2" Content="Browse File..." Click="btnBrowseFile_Click"/>
             </Grid>
-            <Grid VerticalAlignment="Top" Margin="0,50,0,0" Height="20">
+            <Grid>
                 <TextBlock HorizontalAlignment="Left" Text="Arguments:"/>
                 <TextBox x:Name="txtArguments" Margin="66,0,0,0"/>
             </Grid>
-            <Grid VerticalAlignment="Top" Margin="0,75,0,0" Height="20">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -40,7 +49,7 @@
                 <CheckBox x:Name="checkBoxIsScored" Grid.Column="2" VerticalAlignment="Top" Margin="5,2,0,0" Content="Is Scored"/>
                 <CheckBox x:Name="checkBoxMatches" Grid.Column="3" VerticalAlignment="Top" Margin="5,2,0,0" Content="Matches" IsChecked="True"/>
             </Grid>
-            <Grid VerticalAlignment="Top" Margin="0,100,0,5" Height="20">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5"/>
@@ -52,7 +61,7 @@
                 <Button Grid.Column="4" Content="Add Regex Output" Click="btnAddRegexMatch_Click"/>
                 <Button Content="Add Exit Code Range" Click="btnAddExitCodeRange_Click"/>
             </Grid>
-        </Grid>
+        </ItemsControl>
         <ItemsControl x:Name="itemsComparisons" Grid.Row="1">
             <ItemsControl.ItemContainerStyle>
                 <Style>
