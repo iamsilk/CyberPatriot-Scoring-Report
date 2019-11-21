@@ -34,11 +34,11 @@ namespace Scoring_Report.Scoring.Sections
                 string answerLine = null;
 
                 // Find line with answer
-                foreach (string line in lines)
+                for (int i = lines.Length - 1; i >= 0; i--)
                 {
-                    if (line.StartsWith(question.AnswerPrefix))
+                    if (lines[i].StartsWith(question.AnswerPrefix))
                     {
-                        answerLine = line;
+                        answerLine = lines[i];
                         break;
                     }
                 }
@@ -57,7 +57,7 @@ namespace Scoring_Report.Scoring.Sections
                     switch (possibleAnswer.Type)
                     {
                         case EAnswerType.Text:
-                            if (answer == possibleAnswer.Info)
+                            if (answer.TrimEnd() == possibleAnswer.Info)
                                 matches = true;
                             break;
                         case EAnswerType.Regex:
