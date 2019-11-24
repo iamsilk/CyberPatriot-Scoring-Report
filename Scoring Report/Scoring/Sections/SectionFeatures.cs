@@ -60,6 +60,9 @@ namespace Scoring_Report.Scoring.Sections
 
         public void Load(BinaryReader reader)
         {
+            // Clear current features list
+            ScoredFeatures.Clear();
+
             // Get number of features
             int count = reader.ReadInt32();
 
