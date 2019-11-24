@@ -22,7 +22,7 @@ namespace Translation_Editor
             { "SecurityID",                 "SID" },
             { "Username",                   "Username" },
             { "UserExists",                 "User {3} - Exists on local machine ({2})" },
-            { "PasswordChanged",            "User {3} - Password changed from default" },
+            { "PasswordChanged",            "User {2} - Password changed from default" },
             { "PasswordExpired",            "User {3} - Password must be changed at next logon set to {2}" },
             { "PasswordChangeDisabled",     "User {3} - Password change disabled set to {2}" },
             { "PasswordNeverExpires",       "User {3} - Password never expires set to {2}" },
