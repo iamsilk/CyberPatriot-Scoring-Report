@@ -183,9 +183,9 @@
                                         <secoptions:ControlRegistryComboBox Header="Accounts: Limit local account use of blank passwords to console logon only"
                                                                             Items="Disabled;Enabled" SelectedItem="Enabled"
                                                                             Key="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Lsa" ValueName="LimitBlankPasswordUse"/>
-                                        <secoptions:ControlSeceditTextRegex Header="Accounts: Rename administrator account" Regex="/admin/i" RegexMatches="False"
+                                        <secoptions:ControlSeceditTextRegex Header="Accounts: Rename administrator account" Regex="(?i)admin" RegexMatches="False"
                                                                             Section="System Access" Key="NewAdministratorName"/>
-                                        <secoptions:ControlSeceditTextRegex Header="Accounts: Rename guest account" Regex="/guest/i" RegexMatches="False"
+                                        <secoptions:ControlSeceditTextRegex Header="Accounts: Rename guest account" Regex="(?i)guest" RegexMatches="False"
                                                                             Section="System Access" Key="NewGuestName"/>
                                         <secoptions:ControlRegistryComboBox Header="Audit: Audit the access of global system objects"
                                                                             Items="Disabled;Enabled" SelectedItem="Disabled"
