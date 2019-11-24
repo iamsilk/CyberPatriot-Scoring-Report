@@ -62,7 +62,7 @@ namespace Scoring_Report.Scoring.Sections
                             }
 
                             // Copy the list so we may remove elements
-                            List<UserPrincipal> membersGroup = new List<UserPrincipal>(group.Members.Cast<UserPrincipal>());
+                            List<UserPrincipal> membersGroup = new List<UserPrincipal>(group.Members.OfType<UserPrincipal>());
 
                             bool groupsMatch = true;
 
@@ -114,7 +114,7 @@ namespace Scoring_Report.Scoring.Sections
                                 details.Points++;
 
                                 // Get list of members' names separated by commas
-                                string members = string.Join(TranslationManager.Translate("Delimiter"), group.Members.Cast<UserPrincipal>().Select(x => x.SamAccountName));
+                                string members = string.Join(TranslationManager.Translate("Delimiter"), group.Members.OfType<UserPrincipal>().Select(x => x.SamAccountName));
 
                                 details.Output.Add(TranslationManager.Translate("Group", settings.GroupName, members));
                             }
