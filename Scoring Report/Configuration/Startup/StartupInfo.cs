@@ -116,16 +116,19 @@ namespace Scoring_Report.Configuration.Startup
                         string profileStartupFolder = profileImagePath + @"\AppData\Roaming" + startupFolder;
 
                         // Loop over each file in startup folder
-                        foreach (string startupFile in Directory.GetFiles(profileStartupFolder))
+                        if (Directory.Exists(profileStartupFolder))
                         {
-                            // If file is the desktop.ini file, skip
-                            if (startupFile.EndsWith("desktop.ini")) continue;
+                            foreach (string startupFile in Directory.GetFiles(profileStartupFolder))
+                            {
+                                // If file is the desktop.ini file, skip
+                                if (startupFile.EndsWith("desktop.ini")) continue;
 
-                            // Get name of file
-                            string name = Path.GetFileNameWithoutExtension(startupFile);
+                                // Get name of file
+                                string name = Path.GetFileNameWithoutExtension(startupFile);
 
-                            // Add startup info to list
-                            infos.Add(new StartupInfo(username, name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                                // Add startup info to list
+                                infos.Add(new StartupInfo(username, name, startupFile, EStartupType.StartupFolder, startupFile, false));
+                            }
                         }
                     }
                 }
