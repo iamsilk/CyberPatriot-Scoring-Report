@@ -260,8 +260,15 @@ namespace Scoring_Report.Scoring.Sections
                 // Parse user settings instance from binary reader
                 UserSettings settings = UserSettings.Parse(reader);
 
-                // Add user settings to main list
-                Users.Add(settings);
+                // Add user settings to main list, if any parts are scored
+                if (settings.Exists.IsScored ||
+                    settings.Password.IsScored ||
+                    settings.PasswordExpired.IsScored ||
+                    settings.PasswordChangeDisabled.IsScored ||
+                    settings.PasswordNeverExpires.IsScored ||
+                    settings.AccountDisabled.IsScored ||
+                    settings.AccountLockedOut.IsScored)
+                    Users.Add(settings);
             }
         }
     }

@@ -262,10 +262,10 @@
                                                                          TotalMinimum="0" TotalMaximum="599940" Minimum="0" Maximum="599940"
                                                                          Key="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System" ValueName="InactivityTimeoutSecs"/>
                                         <secoptions:ControlRegistryTextRegex Header="Interactive logon: Message text for users attempting to log on"
-                                                                             Regex="/./s" RegexMatches="True"
+                                                                             Regex="(?s)." RegexMatches="True"
                                                                              Key="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System" ValueName="LegalNoticeText"/>
                                         <secoptions:ControlRegistryTextRegex Header="Interactive logon: Message title for users attempting to log on"
-                                                                             Regex="/./s" RegexMatches="True"
+                                                                             Regex="(?s)." RegexMatches="True"
                                                                              Key="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System" ValueName="LegalNoticeCaption"/>
                                         <secoptions:ControlRegistryRange Header="Interactive logon: Number of previous logons to cache (in case domain controller is not available)"
                                                                          TotalMinimum="0" TotalMaximum="50" Minimum="0" Maximum="50"
