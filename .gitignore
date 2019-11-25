@@ -11,4 +11,4 @@ Output/*
 Translation Editor/bin/*
 Translation Editor/obj/*
 Translation Editor/Translation Editor.csproj.user
-UpgradeLog.htm
+UpgradeLog*.htm
