@@ -13,6 +13,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="txtHeader"/>
         <CheckBox x:Name="checkBoxScored" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,5,0" Content="Scored"/>
-        <ComboBox x:Name="comboBox" Grid.Column="2" IsEditable="True"/>
+        <ComboBox x:Name="comboBox" Grid.Column="2"/>
     </Grid>
 </UserControl>

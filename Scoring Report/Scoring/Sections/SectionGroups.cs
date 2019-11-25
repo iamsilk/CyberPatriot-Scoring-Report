@@ -17,7 +17,17 @@ namespace Scoring_Report.Scoring.Sections
 
         public int MaxScore()
         {
-            return Groups.Count;
+            // Set max to 0
+            int max = 0;
+
+            // For each group settings in list
+            foreach (GroupSettings group in Groups)
+            {
+                // If group is scored, increment max
+                if (group.IsScored) max++;
+            }
+
+            return max;
         }
 
         public SectionDetails GetScore()
@@ -129,8 +139,8 @@ namespace Scoring_Report.Scoring.Sections
                 // Get instance of group settings
                 GroupSettings settings = GroupSettings.Parse(reader);
 
-                // Add group settings to list, if it is scored
-                if (settings.IsScored) Groups.Add(settings);
+                // Add group settings to list
+                Groups.Add(settings);
             }
         }
     }
