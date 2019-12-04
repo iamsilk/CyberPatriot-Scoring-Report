@@ -2,6 +2,7 @@
 using Scoring_Report.Scoring.Output;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -78,11 +79,18 @@ namespace Scoring_Report.Scoring
                 // Increment total max score by section's
                 MaxScore += maxScore;
 
-                // Get scoring details for specific section
-                SectionDetails sectionScore = section.GetScore();
+                try
+                {
+                    // Get scoring details for specific section
+                    SectionDetails sectionScore = section.GetScore();
 
-                // Add details to list
-                details.Add(sectionScore);
+                    // Add details to list
+                    details.Add(sectionScore);
+                }
+                catch (Exception ex)
+                {
+                    EventLog.WriteEntry(".NET Runtime", ex.ToString(), EventLogEntryType.Error, 1026);
+                }
             }
 
             return details;
