@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:Installer"
+"ProjectName" = "8:Installer x86"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_131430A21AA44CA9BCFDBE480665387C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1A56C611D33441C2934BDDB99BABDF06"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -28,12 +34,6 @@
         "Entry"
         {
         "MsmKey" = "8:_1FCA92A47EB04FA090387115AB9CDD86"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -94,13 +94,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
+        "OwnerKey" = "8:_131430A21AA44CA9BCFDBE480665387C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2FAC299660E841F0AC1E67524542C2F1"
+        "OwnerKey" = "8:_C7941B268B434455862F1613031E7AB4"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -111,7 +111,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Installer.msi"
+        "OutputFilename" = "8:..\\Output\\x86\\Debug\\CyberPatriot Practice Scoring Report.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -143,7 +143,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\CyberPatriot Practice Scoring Report.msi"
+        "OutputFilename" = "8:..\\Output\\x86\\Release\\CyberPatriot Practice Scoring Report.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -175,6 +175,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_5DFE46EB5AED4CD19EE4B56518770C46"
+            {
+            "Name" = "8:Primary output from Translation Editor (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_131430A21AA44CA9BCFDBE480665387C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:--write-defaults"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_F9064662_B8D8_461D_A538_55AAD26B421A"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_AB1A1E7F6AB449338FB27F5C5743895B"
             {
             "Name" = "8:Primary output from Scoring Report (Active)"
@@ -186,20 +200,6 @@
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
             "Identifier" = "8:_80120256_4B0E_457A_A7E8_E38AE7C32831"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_B9D9CA0981C040BDB37A37A16ECAD23B"
-            {
-            "Name" = "8:Primary output from Translation Editor (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_2FAC299660E841F0AC1E67524542C2F1"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:--write-defaults"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:2"
-            "Identifier" = "8:_1D7B4E80_53BB_4376_A8D4_8D55FF54E871"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
@@ -488,11 +488,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CyberPatriot Practice Scoring Report"
         "ProductCode" = "8:{0C6D3EDA-5325-456B-ACB6-3BFD928ADA22}"
-        "PackageCode" = "8:{2E52879D-DD5D-4602-AFEF-0F1F073C1D4F}"
+        "PackageCode" = "8:{EE7147D3-29D1-485B-ACE7-901616CE70C4}"
         "UpgradeCode" = "8:{16E4AD58-93EB-4A8E-958E-E2EB5C3FEFC0}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
@@ -608,20 +608,6 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1754DB8729464C98A60CCD166A8F9287"
-            {
-            "Name" = "8:Translation Editor"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_2FAC299660E841F0AC1E67524542C2F1"
-            "Folder" = "8:_A03800BB2F02489F9444275E2E0B376C"
-            "WorkingFolder" = "8:_A017F374235A4F6782504C6F69C67782"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_54994944B26945F1B7B40F509ABEC7E9"
             {
             "Name" = "8:Configuration Tool"
@@ -631,6 +617,20 @@
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
             "Target" = "8:_C7941B268B434455862F1613031E7AB4"
+            "Folder" = "8:_A03800BB2F02489F9444275E2E0B376C"
+            "WorkingFolder" = "8:_A017F374235A4F6782504C6F69C67782"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CE285F3CA4604230AF41D806BF626DEF"
+            {
+            "Name" = "8:Translation Editor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_131430A21AA44CA9BCFDBE480665387C"
             "Folder" = "8:_A03800BB2F02489F9444275E2E0B376C"
             "WorkingFolder" = "8:_A017F374235A4F6782504C6F69C67782"
             "Icon" = "8:"
@@ -1049,9 +1049,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2FAC299660E841F0AC1E67524542C2F1"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_131430A21AA44CA9BCFDBE480665387C"
             {
-            "SourcePath" = "8:..\\Translation Editor\\obj\\Debug\\Translation Editor.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
@@ -1079,7 +1079,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C7941B268B434455862F1613031E7AB4"
             {
-            "SourcePath" = "8:..\\Configuration Tool\\obj\\Debug\\Configuration Tool.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A017F374235A4F6782504C6F69C67782"
@@ -1107,7 +1107,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E94618A06CEF40689943A9FDD8F322EE"
             {
-            "SourcePath" = "8:..\\Scoring Report\\obj\\Debug\\Scoring Report.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A017F374235A4F6782504C6F69C67782"

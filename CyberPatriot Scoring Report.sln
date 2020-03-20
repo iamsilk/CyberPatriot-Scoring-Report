@@ -30,9 +30,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scoring Report.html_format"
 		Output Dependent Files\Scoring Report.html_format\sectiontext_suffix.txt = Output Dependent Files\Scoring Report.html_format\sectiontext_suffix.txt
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{26081A63-1995-47D8-9609-CE60E4A59102}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translation Editor", "Translation Editor\Translation Editor.csproj", "{2DDEEE85-2455-4D37-A451-9EE64B3C2034}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer x64", "Installer x64\Installer x64.vdproj", "{A4F71653-AF96-4689-AE01-EA118235B700}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034} = {2DDEEE85-2455-4D37-A451-9EE64B3C2034}
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer x86", "Installer x86\Installer x86.vdproj", "{306B2480-0B77-4945-B42E-C77B71684E12}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DDEEE85-2455-4D37-A451-9EE64B3C2034} = {2DDEEE85-2455-4D37-A451-9EE64B3C2034}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,14 +66,6 @@ Global
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|x64.Build.0 = Release|x64
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|x86.ActiveCfg = Release|x86
 		{18104C95-B028-4D17-93AF-0FB1CA0E7114}.Release|x86.Build.0 = Release|x86
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|x64.ActiveCfg = Debug
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|x64.Build.0 = Debug
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|x86.ActiveCfg = Debug
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Debug|x86.Build.0 = Debug
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|x64.ActiveCfg = Release
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|x64.Build.0 = Release
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|x86.ActiveCfg = Release
-		{26081A63-1995-47D8-9609-CE60E4A59102}.Release|x86.Build.0 = Release
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Debug|x64.ActiveCfg = Debug|x64
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Debug|x64.Build.0 = Debug|x64
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Debug|x86.ActiveCfg = Debug|x86
@@ -74,6 +74,18 @@ Global
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Release|x64.Build.0 = Release|x64
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Release|x86.ActiveCfg = Release|x86
 		{2DDEEE85-2455-4D37-A451-9EE64B3C2034}.Release|x86.Build.0 = Release|x86
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Debug|x64.ActiveCfg = Debug
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Debug|x64.Build.0 = Debug
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Debug|x86.ActiveCfg = Debug
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Release|x64.ActiveCfg = Release
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Release|x64.Build.0 = Release
+		{A4F71653-AF96-4689-AE01-EA118235B700}.Release|x86.ActiveCfg = Release
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Debug|x64.ActiveCfg = Debug
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Debug|x86.ActiveCfg = Debug
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Debug|x86.Build.0 = Debug
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Release|x64.ActiveCfg = Release
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Release|x86.ActiveCfg = Release
+		{306B2480-0B77-4945-B42E-C77B71684E12}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
