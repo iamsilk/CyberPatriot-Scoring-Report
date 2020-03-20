@@ -62,7 +62,9 @@ namespace Scoring_Report
             #endif
         }
 
-        #if !DEBUG
+#if !DEBUG
+        private const int WaitForRunTimeout = 5; // seconds
+
         private static int InstallService()
         {
             ScoringReport service = new ScoringReport();
@@ -76,6 +78,11 @@ namespace Scoring_Report
 
                 // Install the service with the Windows Service Control Manager (SCM)
                 ManagedInstallerClass.InstallHelper(new string[] { path });
+
+                ServiceController serviceMgr = new ServiceController("Scoring Report");
+
+                serviceMgr.Start();
+                serviceMgr.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(WaitForRunTimeout));
             }
             catch (Exception ex)
             {
@@ -96,6 +103,7 @@ namespace Scoring_Report
             if (File.Exists("InstallUtil.InstallLog")) File.Delete("InstallUtil.InstallLog");
             if (File.Exists("Scoring Report.InstallLog")) File.Delete("Scoring Report.InstallLog");
             if (File.Exists("Scoring Report.InstallState")) File.Delete("Scoring Report.InstallState");
+            if (File.Exists("Translation Editor.InstallState")) File.Delete("Translation Editor.InstallState");
 
             return code;
         }
@@ -130,6 +138,7 @@ namespace Scoring_Report
             if (File.Exists("InstallUtil.InstallLog")) File.Delete("InstallUtil.InstallLog");
             if (File.Exists("Scoring Report.InstallLog")) File.Delete("Scoring Report.InstallLog");
             if (File.Exists("Scoring Report.InstallState")) File.Delete("Scoring Report.InstallState");
+            if (File.Exists("Translation Editor.InstallState")) File.Delete("Translation Editor.InstallState");
 
             return code;
         }
