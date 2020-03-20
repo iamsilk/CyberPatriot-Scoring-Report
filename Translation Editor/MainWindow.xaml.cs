@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -33,9 +34,15 @@ namespace Translation_Editor
             }
 
             // Check if startup parameter is '--write-defaults'
-            if (startupParameter == "--write-defaults")
+            if (startupParameter == "/defaults")
             {
                 TranslationManager.Save();
+
+                // Remove file logs to reduce clutter in directory
+                if (File.Exists("InstallUtil.InstallLog")) File.Delete("InstallUtil.InstallLog");
+                if (File.Exists("Scoring Report.InstallLog")) File.Delete("Scoring Report.InstallLog");
+                if (File.Exists("Scoring Report.InstallState")) File.Delete("Scoring Report.InstallState");
+                if (File.Exists("Translation Editor.InstallState")) File.Delete("Translation Editor.InstallState");
 
                 Environment.Exit(0);
                 return;
